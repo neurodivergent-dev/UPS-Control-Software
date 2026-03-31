@@ -39,9 +39,9 @@ const Events: React.FC = () => {
         </div>
 
         {warnings.length > 0 ? (
-          warnings.map((warn, i) => (
+          warnings.map((warn) => (
             <div
-              key={i}
+              key={warn}
               className="glass-panel p-6 xs:p-8 sm:p-10 rounded-[2rem] xs:rounded-[2.5rem] border-red-500/30 bg-red-500/[0.03] flex flex-col xs:flex-row items-start xs:items-center justify-between gap-4 xs:gap-0 group overflow-hidden hover:-translate-y-1 transition-all duration-500 cursor-default relative"
             >
               {/* Premium Rotating Border Light */}
@@ -84,7 +84,7 @@ const Events: React.FC = () => {
         </div>
 
         <div className="space-y-3 xs:space-y-4">
-            {mockEvents.map((event, i) => (
+            {mockEvents.map((event) => (
                 <div
                     key={event.id}
                     className="glass-panel p-6 xs:p-8 rounded-[2rem] xs:rounded-[2.5rem] flex flex-col xs:flex-row items-start xs:items-center justify-between gap-4 xs:gap-0 group hover:bg-white/[0.03] transition-all duration-500 border-white/5 hover:-translate-y-1 cursor-default relative overflow-hidden"
