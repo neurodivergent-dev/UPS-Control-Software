@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 
 interface MetricCardProps {
   label: string;
@@ -19,11 +18,8 @@ const MetricCard: React.FC<MetricCardProps> = ({
   alert
 }) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -5, transition: { duration: 0.2 } }}
-      className={`glass-panel p-6 xs:p-8 rounded-[2rem] relative overflow-hidden group transition-all duration-500 h-full flex flex-col ${alert ? 'border-red-500/30' : 'hover:border-accent/40'}`}
+    <div
+      className={`glass-panel p-6 xs:p-8 rounded-[2rem] relative overflow-hidden group transition-all duration-500 h-full flex flex-col hover:-translate-y-2 cursor-default ${alert ? 'border-red-500/30' : 'border-white/5 hover:border-accent/40'}`}
     >
       {/* Background radial highlight */}
       <div className={`absolute -right-4 -top-4 w-24 h-24 blur-3xl opacity-10 rounded-full transition-colors duration-700 ${alert ? 'bg-red-500' : 'bg-accent'}`} />
@@ -55,11 +51,9 @@ const MetricCard: React.FC<MetricCardProps> = ({
       {progress !== undefined && (
         <div className="mt-6 xs:mt-8 space-y-2">
           <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: `${progress}%` }}
-              transition={{ duration: 1.5, ease: "easeOut" }}
-              className={`h-full rounded-full ${alert ? 'bg-red-500' : 'bg-accent'} shadow-glow-accent`}
+            <div
+              style={{ width: `${progress}%` }}
+              className={`h-full rounded-full transition-all duration-1000 ease-out ${alert ? 'bg-red-500' : 'bg-accent'} shadow-glow-accent`}
             />
           </div>
           <div className="flex justify-between text-[8px] xs:text-[9px] font-black uppercase tracking-widest text-white/20">
@@ -69,7 +63,7 @@ const MetricCard: React.FC<MetricCardProps> = ({
           </div>
         </div>
       )}
-    </motion.div>
+    </div>
   );
 };
 

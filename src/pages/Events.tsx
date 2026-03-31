@@ -1,7 +1,6 @@
 import React from 'react';
 import { useUPSData } from '../services/upsService';
 import { AlertTriangle, CheckCircle, ShieldCheck, History, Activity } from 'lucide-react';
-import { motion } from 'framer-motion';
 
 const Events: React.FC = () => {
   const { data } = useUPSData();
@@ -41,11 +40,9 @@ const Events: React.FC = () => {
 
         {warnings.length > 0 ? (
           warnings.map((warn, i) => (
-            <motion.div
-              initial={{ x: -20, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
+            <div
               key={i}
-              className="glass-panel p-6 xs:p-8 sm:p-10 rounded-[2rem] xs:rounded-[2.5rem] border-red-500/30 bg-red-500/[0.03] flex flex-col xs:flex-row items-start xs:items-center justify-between gap-4 xs:gap-0 group overflow-hidden"
+              className="glass-panel p-6 xs:p-8 sm:p-10 rounded-[2rem] xs:rounded-[2.5rem] border-red-500/30 bg-red-500/[0.03] flex flex-col xs:flex-row items-start xs:items-center justify-between gap-4 xs:gap-0 group overflow-hidden hover:-translate-y-1 transition-all duration-500 cursor-default"
             >
                <div className="flex items-center space-x-6 xs:space-x-8 sm:space-x-10 relative z-10 w-full">
                   <div className="p-4 xs:p-5 bg-red-500 text-black rounded-xl xs:rounded-2xl shadow-[0_0_30px_rgba(239,68,68,0.3)] flex-shrink-0">
@@ -57,10 +54,10 @@ const Events: React.FC = () => {
                   </div>
                </div>
                <div className="absolute -right-10 -top-10 w-40 h-40 bg-red-500 blur-[100px] opacity-10 rounded-full" />
-            </motion.div>
+            </div>
           ))
         ) : (
-          <div className="glass-panel p-6 xs:p-8 sm:p-10 rounded-[2.5rem] xs:rounded-[3rem] border-accent/20 bg-accent/[0.02] flex flex-col xs:flex-row items-start xs:items-center justify-between gap-4 xs:gap-0 group overflow-hidden relative">
+          <div className="glass-panel p-6 xs:p-8 sm:p-10 rounded-[2.5rem] xs:rounded-[3rem] border-accent/20 bg-accent/[0.02] flex flex-col xs:flex-row items-start xs:items-center justify-between gap-4 xs:gap-0 group overflow-hidden relative hover:-translate-y-1 transition-all duration-500 cursor-default">
              <div className="flex items-center space-x-6 xs:space-x-8 sm:space-x-10 relative z-10 w-full">
                 <div className="p-4 xs:p-5 bg-accent text-black rounded-xl xs:rounded-2xl shadow-glow-accent flex-shrink-0">
                    <CheckCircle size={24} strokeWidth={2.5} />
@@ -84,12 +81,9 @@ const Events: React.FC = () => {
 
         <div className="space-y-3 xs:space-y-4">
             {mockEvents.map((event, i) => (
-                <motion.div
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: i * 0.1 }}
+                <div
                     key={event.id}
-                    className="glass-panel p-6 xs:p-8 rounded-[2rem] xs:rounded-[2.5rem] flex flex-col xs:flex-row items-start xs:items-center justify-between gap-4 xs:gap-0 group hover:bg-white/[0.03] transition-all duration-500 border-white/5"
+                    className="glass-panel p-6 xs:p-8 rounded-[2rem] xs:rounded-[2.5rem] flex flex-col xs:flex-row items-start xs:items-center justify-between gap-4 xs:gap-0 group hover:bg-white/[0.03] transition-all duration-500 border-white/5 hover:-translate-y-1 cursor-default"
                 >
                     <div className="flex items-center space-x-6 xs:space-x-8 sm:space-x-12 w-full">
                         <div className="flex flex-col flex-shrink-0">
@@ -113,7 +107,7 @@ const Events: React.FC = () => {
                     }`}>
                         {event.type}
                     </div>
-                </motion.div>
+                </div>
             ))}
         </div>
       </section>

@@ -95,7 +95,7 @@ const Dashboard: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 xs:gap-8 sm:gap-10 items-stretch">
-        <div className="lg:col-span-8">
+        <div className="lg:col-span-8 group hover:-translate-y-2 transition-all duration-500 cursor-default">
           <VoltageChart
             currentVoltage={currentData.workInfo.inputVoltage}
             history={voltageHistory}
@@ -103,8 +103,8 @@ const Dashboard: React.FC = () => {
           />
         </div>
 
-        <div className="lg:col-span-4 flex flex-col">
-          <div className={`glass-panel p-6 xs:p-8 sm:p-10 rounded-[2rem] xs:rounded-[3rem] relative overflow-hidden transition-all duration-700 flex flex-col justify-between h-full ${isBatteryMode ? 'border-red-500/30' : 'border-white/5 hover:border-accent/20'}`}>
+        <div className="lg:col-span-4 flex flex-col group/status hover:-translate-y-2 transition-all duration-500 cursor-default">
+          <div className={`glass-panel p-6 xs:p-8 sm:p-10 rounded-[2rem] xs:rounded-[3rem] relative overflow-hidden transition-all duration-500 flex flex-col justify-between h-full ${isBatteryMode ? 'border-red-500/30' : 'border-white/5 group-hover/status:border-accent/20'}`}>
             <div className={`absolute -right-12 -top-12 w-48 h-48 blur-[100px] opacity-10 rounded-full transition-colors ${isBatteryMode ? 'bg-red-500' : 'bg-accent'}`} />
 
             <div className="flex justify-between items-center mb-6 xs:mb-8 sm:mb-10">
@@ -145,12 +145,12 @@ const Dashboard: React.FC = () => {
             </div>
 
             <div className="pt-6 xs:pt-8">
-              <div className="flex items-center justify-between px-4 py-3 rounded-2xl transition-all duration-300 group cursor-default" 
-                   style={{ 
-                     backgroundColor: 'rgba(var(--color-accent-rgb), 0.08)', 
-                     border: '1px solid rgba(var(--color-accent-rgb), 0.3)',
-                     boxShadow: '0 0 20px rgba(var(--color-accent-rgb), 0.1)'
-                   }}>
+              <div className="flex items-center justify-between px-4 py-3 rounded-2xl transition-all duration-300 group cursor-default"
+                style={{
+                  backgroundColor: 'rgba(var(--color-accent-rgb), 0.08)',
+                  border: '1px solid rgba(var(--color-accent-rgb), 0.3)',
+                  boxShadow: '0 0 20px rgba(var(--color-accent-rgb), 0.1)'
+                }}>
                 <div className="flex items-center space-x-3">
                   <div className="relative">
                     <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
@@ -161,10 +161,10 @@ const Dashboard: React.FC = () => {
                   </p>
                 </div>
                 <span className="font-mono text-[9px] xs:text-[10px] text-accent font-black tracking-tighter px-2.5 py-1 rounded-lg transition-colors"
-                      style={{ 
-                        backgroundColor: 'rgba(var(--color-accent-rgb), 0.15)',
-                        border: '1px solid rgba(var(--color-accent-rgb), 0.4)'
-                      }}>
+                  style={{
+                    backgroundColor: 'rgba(var(--color-accent-rgb), 0.15)',
+                    border: '1px solid rgba(var(--color-accent-rgb), 0.4)'
+                  }}>
                   ASYN-4A0D
                 </span>
               </div>

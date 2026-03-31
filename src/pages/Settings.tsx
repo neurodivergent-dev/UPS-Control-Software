@@ -15,10 +15,24 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loginError, setLoginError] = useState('');
   const [loginSuccess, setLoginSuccess] = useState(false);
-  
+
   // Active settings section
   const [activeSection, setActiveSection] = useState<'power' | 'battery' | 'alerts' | 'local'>('power');
-  
+
+  // Tema renklerini tanımla
+  const themeColors: Record<string, string> = {
+    cyan: '#00F0FF',
+    tokyo: '#BC00FF',
+    solar: '#FF4E00',
+    neon: '#00FF00',
+    crimson: '#FF003C',
+    gold: '#FFD700',
+    rose: '#FF66B2',
+    lime: '#BFFF00',
+  };
+
+  const currentThemeColor = themeColors[currentTheme || 'cyan'];
+
   // UPS Shutdown settings state
   const [shutdownSettings, setShutdownSettings] = useState({
     batModeShutdownTime: 0,
@@ -40,14 +54,14 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
   });
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [saveError, setSaveError] = useState('');
-  
+
   const controlMutation = useUPSControlMutation();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoginError('');
     setLoginSuccess(false);
-    
+
     try {
       await loginToViewPower(username, password);
       setIsLoggedIn(true);
@@ -61,7 +75,7 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
   const handleSaveShutdownSettings = async () => {
     setSaveError('');
     setSaveSuccess(false);
-    
+
     try {
       await updateShutdownSettings(shutdownSettings);
       setSaveSuccess(true);
@@ -81,7 +95,7 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
     } catch (err: any) {
       // Hata mesajını daha açıklayıcı yap
       const errorMsg = err.message || 'Unknown error';
-      
+
       // ViewPower bazen HTML error döndürür
       if (errorMsg.includes('NullPointerException') || errorMsg.includes('error')) {
         alert(`ViewPower control endpoint error.\n\nThis is a ViewPower server issue, not a client issue.\n\nTry:\n1. Restart ViewPower service\n2. Login via web interface first\n3. Check UPS connection`);
@@ -121,7 +135,7 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
           <h3 className="text-[10px] sm:text-xs font-black uppercase tracking-[0.25em] sm:tracking-[0.3em] text-white/40">UPS Authentication</h3>
         </div>
 
-        <div className="glass-panel p-6 sm:p-8 lg:p-10 rounded-[2rem] sm:rounded-[3rem] border-white/10 relative overflow-hidden">
+        <div className="glass-panel p-6 sm:p-8 lg:p-10 rounded-[2rem] sm:rounded-[3rem] border-0 relative overflow-hidden group hover:-translate-y-1 transition-all duration-500 cursor-default">
           <div className="absolute -right-16 sm:-right-20 -top-16 sm:-top-20 w-48 sm:w-64 h-48 sm:h-64 bg-accent/5 blur-[80px] sm:blur-[100px] rounded-full" />
 
           <div className="relative z-10">
@@ -244,7 +258,7 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
           <Monitor size={16} className="sm:w-[18px] sm:h-[18px] text-accent flex-shrink-0" />
           <h3 className="text-[10px] sm:text-xs font-black uppercase tracking-[0.25em] sm:tracking-[0.3em] text-white/40">Theme Mode</h3>
         </div>
-        <div className="grid grid-cols-1 xs:grid-cols-3 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 xs:grid-cols-3 lg:flex lg:flex-row gap-4 sm:gap-6">
           {[
             { id: 'light', label: 'Light', icon: Sun, color: '#F5F5F7' },
             { id: 'dark', label: 'Dark', icon: Moon, color: '#1A1A1A' },
@@ -254,17 +268,17 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
               key={id}
               onClick={() => setThemeMode(id as 'light' | 'dark' | 'system')}
               className={`
-                group relative p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] transition-all duration-500 overflow-hidden border-2
-                ${themeMode === id ? 'border-accent bg-accent/[0.05]' : 'border-white/5 bg-white/[0.02] hover:border-white/20'}
+                group relative p-8 sm:p-10 rounded-[2.5rem] sm:rounded-[3rem] transition-all duration-500 overflow-hidden border-2 flex-1
+                ${themeMode === id ? 'border-accent bg-accent/[0.05] -translate-y-2' : 'border-white/5 bg-white/[0.02] hover:border-white/20 hover:-translate-y-2'}
               `}
             >
-              <div className="absolute -right-6 sm:-right-8 -top-6 sm:-top-8 w-20 sm:w-24 h-20 sm:h-24 blur-2xl sm:blur-3xl opacity-20 rounded-full transition-transform group-hover:scale-150" style={{ backgroundColor: color }} />
+              <div className="absolute -right-8 sm:-right-10 -top-8 sm:-top-10 w-24 sm:w-28 h-24 sm:h-28 blur-3xl opacity-20 rounded-full transition-transform group-hover:scale-150" style={{ backgroundColor: color }} />
 
-              <div className="flex flex-col items-center space-y-3 sm:space-y-4 relative z-10">
-                <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl flex items-center justify-center transition-all duration-500 ${themeMode === id ? 'bg-accent text-black shadow-glow-accent' : 'bg-white/5 text-white/40'}`}>
-                  <Icon size={24} className="sm:w-7 sm:h-7" strokeWidth={2.5} />
+              <div className="flex flex-col items-center space-y-4 sm:space-y-5 relative z-10">
+                <div className={`w-16 h-16 sm:w-20 sm:h-20 rounded-2xl sm:rounded-[2rem] flex items-center justify-center transition-all duration-500 ${themeMode === id ? 'bg-accent text-black shadow-glow-accent' : 'bg-white/5 text-white/40'}`}>
+                  <Icon size={32} strokeWidth={2.5} />
                 </div>
-                <span className={`text-[10px] sm:text-[11px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] ${themeMode === id ? 'text-white' : 'text-white/40'}`}>
+                <span className={`text-sm sm:text-base font-black uppercase tracking-[0.2em] ${themeMode === id ? 'text-white' : 'text-white/40'}`}>
                   {label}
                 </span>
               </div>
@@ -286,7 +300,7 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
               onClick={() => setTheme?.(t.id)}
               className={`
                 group relative p-6 sm:p-8 lg:p-10 rounded-[2rem] sm:rounded-[3rem] transition-all duration-700 overflow-hidden border-2
-                ${currentTheme === t.id ? 'border-accent bg-accent/[0.03]' : 'border-white/5 bg-white/[0.02] hover:border-white/20'}
+                ${currentTheme === t.id ? 'border-accent bg-accent/[0.03] -translate-y-2' : 'border-white/5 bg-white/[0.02] hover:border-white/20 hover:-translate-y-2'}
               `}
             >
               {/* The Color Orb */}
@@ -319,7 +333,7 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
           </div>
 
           {/* Section Tabs - Like ViewPower top navigation */}
-          <div className="flex items-center space-x-1.5 sm:space-x-2 glass-panel p-1.5 sm:p-2 rounded-xl sm:rounded-2xl border-white/10 overflow-x-auto max-w-full">
+          <div className="flex items-center space-x-2 sm:space-x-2 glass-panel p-2 sm:p-2 rounded-xl sm:rounded-2xl border-0 overflow-x-auto max-w-full">
             {[
               { id: 'power', label: 'Power', icon: Power },
               { id: 'battery', label: 'Battery', icon: Battery },
@@ -330,14 +344,14 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
                 key={id}
                 onClick={() => setActiveSection(id as typeof activeSection)}
                 className={`
-                  px-3 sm:px-4 py-2 rounded-lg sm:rounded-xl flex items-center space-x-1.5 sm:space-x-2 transition-all flex-shrink-0
+                  px-4 sm:px-4 py-3 sm:py-2 rounded-xl sm:rounded-xl flex items-center space-x-2 sm:space-x-2 transition-all flex-shrink-0
                   ${activeSection === id
                     ? 'bg-accent text-black shadow-glow-accent'
                     : 'text-white/40 hover:text-white hover:bg-white/5'}
                 `}
               >
-                <Icon size={14} className="sm:w-4 sm:h-4" strokeWidth={2.5} />
-                <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-widest whitespace-nowrap">{label}</span>
+                <Icon size={18} className="sm:w-4 sm:h-4" strokeWidth={2.5} />
+                <span className="text-[10px] sm:text-[9px] font-black uppercase tracking-widest whitespace-nowrap">{label}</span>
               </button>
             ))}
           </div>
@@ -346,7 +360,7 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
         {/* Power Section */}
         {activeSection === 'power' && (
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
-            <div className="glass-panel p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] border-white/10">
+            <div className="glass-panel p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] border-0 hover:-translate-y-1 transition-all duration-500 cursor-default">
               <div className="flex items-center space-x-3 mb-6">
                 <div className="p-2 bg-accent/10 text-accent rounded-xl flex-shrink-0">
                   <Battery size={18} className="sm:w-5 sm:h-5" strokeWidth={2.5} />
@@ -358,14 +372,42 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
                   <label className="block text-[8px] sm:text-[9px] font-black uppercase tracking-widest text-white/60 mb-2">
                     Shutdown at Battery {shutdownSettings.batCapacity}%
                   </label>
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={shutdownSettings.batCapacity}
-                    onChange={(e) => setShutdownSettings({ ...shutdownSettings, batCapacity: parseInt(e.target.value) })}
-                    className="w-full h-2 bg-white/5 rounded-lg appearance-none cursor-pointer accent-accent"
-                  />
+                  <div className="relative">
+                    <input
+                      type="range"
+                      min="0"
+                      max="100"
+                      step="5"
+                      value={shutdownSettings.batCapacity}
+                      onChange={(e) => setShutdownSettings({ ...shutdownSettings, batCapacity: parseInt(e.target.value) })}
+                      className="w-full h-3 bg-white/20 rounded-lg appearance-none cursor-pointer slider-themed"
+                      style={{
+                        background: `linear-gradient(to right, ${currentThemeColor} 0%, ${currentThemeColor} ${shutdownSettings.batCapacity}%, rgba(255,255,255,0.2) ${shutdownSettings.batCapacity}%, rgba(255,255,255,0.2) 100%)`
+                      }}
+                    />
+                  </div>
+                  <style>{`
+                    .slider-themed::-webkit-slider-thumb {
+                      -webkit-appearance: none;
+                      appearance: none;
+                      width: 20px;
+                      height: 20px;
+                      border-radius: 50%;
+                      background: ${currentThemeColor};
+                      cursor: pointer;
+                      box-shadow: 0 0 15px ${currentThemeColor}99, 0 0 30px ${currentThemeColor}44;
+                      border: 2px solid rgba(255,255,255,0.3);
+                    }
+                    .slider-themed::-moz-range-thumb {
+                      width: 20px;
+                      height: 20px;
+                      border-radius: 50%;
+                      background: ${currentThemeColor};
+                      cursor: pointer;
+                      border: 2px solid rgba(255,255,255,0.3);
+                      box-shadow: 0 0 15px ${currentThemeColor}99, 0 0 30px ${currentThemeColor}44;
+                    }
+                  `}</style>
                 </div>
                 <label className="flex items-center justify-between p-3 sm:p-4 bg-white/5 rounded-xl sm:rounded-2xl cursor-pointer">
                   <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-white/60">Also shutdown UPS</span>
@@ -373,13 +415,14 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
                     type="checkbox"
                     checked={shutdownSettings.batModeShutdownUps}
                     onChange={(e) => setShutdownSettings({ ...shutdownSettings, batModeShutdownUps: e.target.checked })}
-                    className="w-4 h-4 rounded accent-accent"
+                    className="w-4 h-4 rounded"
+                    style={{ accentColor: currentThemeColor }}
                   />
                 </label>
               </div>
             </div>
 
-            <div className="glass-panel p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] border-white/10">
+            <div className="glass-panel p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] border-0 hover:-translate-y-1 transition-all duration-500 cursor-default">
               <div className="flex items-center space-x-3 mb-6">
                 <div className="p-2 bg-red-500/10 text-red-500 rounded-xl flex-shrink-0">
                   <AlertTriangle size={18} className="sm:w-5 sm:h-5" strokeWidth={2.5} />
@@ -392,7 +435,8 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
                     type="checkbox"
                     checked={shutdownSettings.lowBatShutdown}
                     onChange={(e) => setShutdownSettings({ ...shutdownSettings, lowBatShutdown: e.target.checked })}
-                    className="w-4 h-4 rounded accent-accent"
+                    className="w-4 h-4 rounded"
+                    style={{ accentColor: currentThemeColor }}
                   />
                   <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-white/80">Shut down immediately</span>
                 </label>
@@ -403,9 +447,10 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
                       name="upsMode"
                       checked={shutdownSettings.lowBatShutdownUPS === 0}
                       onChange={() => setShutdownSettings({ ...shutdownSettings, lowBatShutdownUPS: 0 })}
-                      className="w-3 h-3 accent-accent"
+                      className="w-3 h-3"
+                      style={{ accentColor: currentThemeColor }}
                     />
-                    <span className="text-[8px] sm:text-[9px] font-black text-white/70">UPS shutdown immediately</span>
+                    <span className="text-[8px] sm:text-[9px] font-black text-gray-700 dark:text-white/70">UPS shutdown immediately</span>
                   </label>
                   <label className="flex items-center space-x-2 cursor-pointer">
                     <input
@@ -413,15 +458,16 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
                       name="upsMode"
                       checked={shutdownSettings.lowBatShutdownUPS === 2}
                       onChange={() => setShutdownSettings({ ...shutdownSettings, lowBatShutdownUPS: 2 })}
-                      className="w-3 h-3 accent-accent"
+                      className="w-3 h-3"
+                      style={{ accentColor: currentThemeColor }}
                     />
-                    <span className="text-[8px] sm:text-[9px] font-black text-white/70">UPS stays on</span>
+                    <span className="text-[8px] sm:text-[9px] font-black text-gray-700 dark:text-white/70">UPS stays on</span>
                   </label>
                 </div>
               </div>
             </div>
 
-            <div className="glass-panel p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] border-white/10">
+            <div className="glass-panel p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] border-0 hover:-translate-y-1 transition-all duration-500 cursor-default">
               <div className="flex items-center space-x-3 mb-6">
                 <div className="p-2 bg-accent/10 text-accent rounded-xl flex-shrink-0">
                   <Clock size={18} className="sm:w-5 sm:h-5" strokeWidth={2.5} />
@@ -431,15 +477,23 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
               <div className="space-y-4">
                 <div>
                   <label className="block text-[8px] sm:text-[9px] font-black uppercase tracking-widest text-white/60 mb-2">Mode</label>
-                  <select
-                    value={shutdownSettings.modeShutdown}
-                    onChange={(e) => setShutdownSettings({ ...shutdownSettings, modeShutdown: parseInt(e.target.value) })}
-                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-white/5 border border-white/10 rounded-lg sm:rounded-xl text-white font-black text-sm focus:outline-none focus:border-accent/50"
-                  >
-                    <option value="0" className="bg-[var(--color-bg)]">Shutdown</option>
-                    <option value="1" className="bg-[var(--color-bg)]">Sleep</option>
-                    <option value="2" className="bg-[var(--color-bg)]">Depend on UPS</option>
-                  </select>
+                  <div className="relative">
+                    <select
+                      value={shutdownSettings.modeShutdown}
+                      onChange={(e) => setShutdownSettings({ ...shutdownSettings, modeShutdown: parseInt(e.target.value) })}
+                      className="w-full px-4 py-2.5 sm:py-3 pr-12 bg-gray-100 dark:bg-white/5 border border-gray-300 dark:border-white/10 rounded-lg sm:rounded-xl text-gray-900 dark:text-white font-black text-sm focus:outline-none focus:border-accent/50 cursor-pointer appearance-none"
+                      style={{ backgroundImage: 'none' }}
+                    >
+                      <option value="0" className="bg-white dark:bg-[var(--color-bg)]">Shutdown</option>
+                      <option value="1" className="bg-white dark:bg-[var(--color-bg)]">Sleep</option>
+                      <option value="2" className="bg-white dark:bg-[var(--color-bg)]">Depend on UPS</option>
+                    </select>
+                    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                      <svg className="w-4 h-4 text-gray-500 dark:text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  </div>
                 </div>
                 <div>
                   <label className="block text-[8px] sm:text-[9px] font-black uppercase tracking-widest text-white/60 mb-2">
@@ -461,7 +515,7 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
         {activeSection === 'battery' && (
           <div className="space-y-6 sm:space-y-8">
             {/* Battery Mode Delay */}
-            <div className="glass-panel p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] border-white/10">
+            <div className="glass-panel p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] border-0 hover:-translate-y-1 transition-all duration-500 cursor-default">
               <div className="flex items-center space-x-3 mb-6">
                 <div className="p-2 bg-accent/10 text-accent rounded-xl flex-shrink-0">
                   <Clock size={18} className="sm:w-5 sm:h-5" strokeWidth={2.5} />
@@ -530,48 +584,7 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
               </div>
             </div>
 
-            {/* Battery Capacity Shutdown */}
-            <div className="glass-panel p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] border-white/10">
-              <div className="flex items-center space-x-3 mb-6">
-                <div className="p-2 bg-accent/10 text-accent rounded-xl flex-shrink-0">
-                  <Battery size={18} className="sm:w-5 sm:h-5" strokeWidth={2.5} />
-                </div>
-                <h4 className="text-xs sm:text-sm font-black uppercase tracking-widest text-white">Battery Capacity Shutdown</h4>
-              </div>
 
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-[8px] sm:text-[9px] font-black uppercase tracking-widest text-white/60 mb-2">
-                    Local shutdown when the capacity of battery down to {shutdownSettings.batCapacity}%
-                  </label>
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={shutdownSettings.batCapacity}
-                    onChange={(e) => setShutdownSettings({ ...shutdownSettings, batCapacity: parseInt(e.target.value) })}
-                    className="w-full h-2 bg-white/5 rounded-lg appearance-none cursor-pointer accent-accent"
-                  />
-                  <div className="flex justify-between text-[7px] sm:text-[8px] font-black uppercase tracking-widest text-white/30 mt-1">
-                    <span>0%</span>
-                    <span className="text-accent">{shutdownSettings.batCapacity}%</span>
-                    <span>100%</span>
-                  </div>
-                </div>
-                
-                <label className="flex items-center space-x-3 p-3 sm:p-4 bg-white/5 rounded-xl sm:rounded-2xl cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={shutdownSettings.batModeShutdownUps}
-                    onChange={(e) => setShutdownSettings({ ...shutdownSettings, batModeShutdownUps: e.target.checked })}
-                    className="w-4 h-4 rounded accent-accent"
-                  />
-                  <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-white/80">
-                    Also shut down the UPS after shutting down the local system
-                  </span>
-                </label>
-              </div>
-            </div>
           </div>
         )}
 
@@ -579,7 +592,7 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
         {activeSection === 'alerts' && (
           <div className="space-y-6 sm:space-y-8">
             {/* Warning Dialog */}
-            <div className="glass-panel p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] border-white/10">
+            <div className="glass-panel p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] border-0 hover:-translate-y-1 transition-all duration-500 cursor-default">
               <div className="flex items-center space-x-3 mb-6">
                 <div className="p-2 bg-accent/10 text-accent rounded-xl flex-shrink-0">
                   <ShieldAlert size={18} className="sm:w-5 sm:h-5" strokeWidth={2.5} />
@@ -628,7 +641,7 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
         {activeSection === 'local' && (
           <div className="space-y-6 sm:space-y-8">
             {/* UPS Battery Running Low */}
-            <div className="glass-panel p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] border-white/10">
+            <div className="glass-panel p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] border-0 hover:-translate-y-1 transition-all duration-500 cursor-default">
               <div className="flex items-center space-x-3 mb-6">
                 <div className="p-2 bg-red-500/10 text-red-500 rounded-xl flex-shrink-0">
                   <AlertTriangle size={18} className="sm:w-5 sm:h-5" strokeWidth={2.5} />
@@ -642,7 +655,8 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
                     type="checkbox"
                     checked={shutdownSettings.lowBatShutdown}
                     onChange={(e) => setShutdownSettings({ ...shutdownSettings, lowBatShutdown: e.target.checked })}
-                    className="w-4 h-4 rounded accent-accent"
+                    className="w-4 h-4 rounded"
+                    style={{ accentColor: currentThemeColor }}
                   />
                   <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-white/80">
                     Shut down the local system immediately
@@ -660,9 +674,10 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
                         name="lowBatUps"
                         checked={shutdownSettings.lowBatShutdownUPS === 0}
                         onChange={() => setShutdownSettings({ ...shutdownSettings, lowBatShutdownUPS: 0 })}
-                        className="w-3 h-3 accent-accent"
+                        className="w-3 h-3"
+                        style={{ accentColor: currentThemeColor }}
                       />
-                      <span className="text-[8px] sm:text-[9px] font-black text-white/70 uppercase tracking-wide">UPS will shutdown immediately</span>
+                      <span className="text-[8px] sm:text-[9px] font-black text-gray-700 dark:text-white/70 uppercase tracking-wide">UPS will shutdown immediately</span>
                     </label>
                     <label className="flex items-center space-x-2 cursor-pointer">
                       <input
@@ -670,9 +685,10 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
                         name="lowBatUps"
                         checked={shutdownSettings.lowBatShutdownUPS === 2}
                         onChange={() => setShutdownSettings({ ...shutdownSettings, lowBatShutdownUPS: 2 })}
-                        className="w-3 h-3 accent-accent"
+                        className="w-3 h-3"
+                        style={{ accentColor: currentThemeColor }}
                       />
-                      <span className="text-[8px] sm:text-[9px] font-black text-white/70 uppercase tracking-wide">UPS is still on</span>
+                      <span className="text-[8px] sm:text-[9px] font-black text-gray-700 dark:text-white/70 uppercase tracking-wide">UPS is still on</span>
                     </label>
                   </div>
                 </div>
@@ -680,7 +696,7 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
             </div>
 
             {/* When Scheduled Shutdown Triggered */}
-            <div className="glass-panel p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] border-white/10">
+            <div className="glass-panel p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] border-0 hover:-translate-y-1 transition-all duration-500 cursor-default">
               <div className="flex items-center space-x-3 mb-6">
                 <div className="p-2 bg-accent/10 text-accent rounded-xl flex-shrink-0">
                   <Clock size={18} className="sm:w-5 sm:h-5" strokeWidth={2.5} />
@@ -701,9 +717,10 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
                           name="shutdownMode"
                           checked={shutdownSettings.shutdownMode === 0}
                           onChange={() => setShutdownSettings({ ...shutdownSettings, shutdownMode: 0 })}
-                          className="w-3 h-3 accent-accent"
+                          className="w-3 h-3"
+                          style={{ accentColor: currentThemeColor }}
                         />
-                        <span className="text-[8px] sm:text-[9px] font-black text-white/70 uppercase tracking-wide">Shutdown</span>
+                        <span className="text-[8px] sm:text-[9px] font-black text-gray-700 dark:text-white/70 uppercase tracking-wide">Shutdown</span>
                       </label>
                       <label className="flex items-center space-x-2 cursor-pointer p-3 bg-white/5 rounded-xl border border-white/5">
                         <input
@@ -711,9 +728,10 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
                           name="shutdownMode"
                           checked={shutdownSettings.shutdownMode === 1}
                           onChange={() => setShutdownSettings({ ...shutdownSettings, shutdownMode: 1 })}
-                          className="w-3 h-3 accent-accent"
+                          className="w-3 h-3"
+                          style={{ accentColor: currentThemeColor }}
                         />
-                        <span className="text-[8px] sm:text-[9px] font-black text-white/70 uppercase tracking-wide">Go to sleep</span>
+                        <span className="text-[8px] sm:text-[9px] font-black text-gray-700 dark:text-white/70 uppercase tracking-wide">Go to sleep</span>
                       </label>
                     </div>
                   </div>
@@ -784,7 +802,7 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
         )}
 
         {/* Save Button */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 sm:p-6 bg-accent/5 border border-accent/10 rounded-xl sm:rounded-2xl">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 sm:p-6 bg-accent/5 rounded-xl sm:rounded-2xl">
           <div className="flex items-center space-x-3">
             <div className="w-2 h-2 rounded-full bg-accent animate-pulse flex-shrink-0" />
             <p className="text-[9px] sm:text-[10px] text-accent/80 font-black uppercase tracking-wider">
@@ -814,28 +832,29 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
           </div>
         )}
       </section>
-      <div className="relative group overflow-hidden rounded-[2.5rem] sm:rounded-[3.5rem] p-6 sm:p-8 lg:p-12 glass-panel border-white/10 transition-all duration-700 hover:border-accent/20">
-        <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8 lg:gap-10">
-          <div className="space-y-4 sm:space-y-6 max-w-xl w-full">
-            <div className="flex items-center space-x-2 sm:space-x-3">
-              <Terminal className="text-accent flex-shrink-0 sm:w-5 sm:h-5" size={16} />
-              <h3 className="text-[9px] sm:text-sm font-black uppercase tracking-[0.4em] sm:tracking-[0.5em] text-white/60">Security & Kernel</h3>
+      <div className="relative group overflow-hidden rounded-[2.5rem] sm:rounded-[3.5rem] p-8 sm:p-10 lg:p-14 glass-panel border border-white/5 transition-all duration-700 hover:border-accent/30 hover:bg-white/[0.03] hover:-translate-y-2 cursor-default">
+        <div className="absolute inset-0 bg-gradient-to-r from-accent/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+        <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
+          <div className="space-y-5 max-w-2xl w-full">
+            <div className="flex items-center space-x-3">
+              <div className="p-2.5 bg-accent/10 rounded-xl text-accent flex items-center justify-center">
+                <Terminal size={20} strokeWidth={2.5} />
+              </div>
+              <div className="flex items-center">
+                <h3 className="text-sm font-black uppercase tracking-[0.4em] text-accent leading-none">Security & Kernel</h3>
+              </div>
             </div>
-            <p className="text-[10px] sm:text-xs text-white/40 font-bold uppercase tracking-widest leading-relaxed">
+            <p className="text-xs text-white/50 font-bold uppercase tracking-widest leading-relaxed">
               All hardware commands are signed and transmitted via ViewPower /control/realTimeCtrl endpoint. Unauthorized access protocol active.
             </p>
           </div>
-          <div className="flex items-center space-x-4 sm:space-x-6 w-full md:w-auto justify-between md:justify-end">
-            <div className="text-right">
-              <span className="block text-[8px] sm:text-[10px] font-black text-white/40 uppercase tracking-widest">System Build</span>
-              <span className="text-xs sm:text-sm font-black text-white italic">VIBRANT-V3.0.PRO</span>
-            </div>
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-accent text-black flex items-center justify-center shadow-glow-accent flex-shrink-0">
-              <ShieldCheck size={20} className="sm:w-6 sm:h-6" strokeWidth={2.5} />
+          <div className="flex items-center gap-6 w-full lg:w-auto justify-end">
+            <div className="w-14 h-14 rounded-2xl bg-accent text-black flex items-center justify-center shadow-glow-accent group-hover:scale-110 transition-transform duration-500 shrink-0">
+              <ShieldCheck size={24} strokeWidth={2.5} />
             </div>
           </div>
         </div>
-        <div className="absolute -left-16 sm:-left-20 -bottom-16 sm:-bottom-20 w-64 sm:w-80 h-64 sm:h-80 bg-accent/5 blur-[100px] sm:blur-[120px] rounded-full pointer-events-none" />
+        <div className="absolute -left-20 -bottom-20 w-96 h-96 bg-accent/10 blur-[150px] rounded-full pointer-events-none group-hover:bg-accent/15 transition-colors duration-700" />
       </div>
     </div>
   );

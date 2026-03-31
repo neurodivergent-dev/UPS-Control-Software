@@ -12,7 +12,7 @@ const PowerFlow: React.FC<PowerFlowProps> = ({ workMode, loadPercent }) => {
   const isFault = workMode.toLowerCase().includes('fault');
 
   return (
-    <div className={`glass-panel p-6 xs:p-8 sm:p-10 lg:p-12 mb-8 xs:mb-10 sm:mb-12 rounded-[2.5rem] xs:rounded-[3rem] select-none overflow-hidden relative group hover:border-accent/30 transition-all duration-700`}>
+    <div className={`glass-panel p-6 xs:p-8 sm:p-10 lg:p-12 mb-8 xs:mb-10 sm:mb-12 rounded-[2.5rem] xs:rounded-[3rem] select-none overflow-hidden relative group hover:border-accent/30 hover:-translate-y-2 transition-all duration-500 cursor-default`}>
       
       {/* Background Glow */}
       <div className={`absolute -right-16 -top-16 w-80 h-80 blur-[120px] opacity-10 rounded-full transition-colors duration-1000 ${isBatteryMode ? 'bg-red-500' : 'bg-accent'}`} />

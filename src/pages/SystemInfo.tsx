@@ -8,12 +8,12 @@ const SystemInfo: React.FC = () => {
 
   const SpecCard = ({ label, value, icon: Icon }: { label: string, value: string, icon: any }) => (
     <div
-      className="glass-panel p-10 rounded-[3rem] relative overflow-hidden group transition-all duration-700 hover:border-accent/30"
+      className="glass-panel p-10 rounded-[3rem] relative overflow-hidden group transition-all duration-500 hover:border-accent/30 hover:-translate-y-2 cursor-default"
     >
       <div className="absolute -right-8 -top-8 w-32 h-32 bg-accent blur-[80px] opacity-10 rounded-full" />
 
       <div className="flex justify-between items-start mb-10">
-        <div className="p-4 bg-accent/10 text-accent rounded-2xl group-hover:bg-accent/20 transition-all duration-500 shadow-glow-accent">
+        <div className="p-4 bg-accent/10 text-accent rounded-2xl group-hover:bg-accent/20 transition-all duration-500 shadow-glow-accent group-hover:-translate-y-1">
           <Icon size={28} strokeWidth={2.5} />
         </div>
         <div className="w-1.5 h-1.5 bg-accent/20 rounded-full" />
@@ -46,7 +46,7 @@ const SystemInfo: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 xs:gap-8 sm:gap-10">
-        <div className="glass-panel p-8 xs:p-10 sm:p-12 rounded-[3rem] xs:rounded-[3.5rem] border-white/5 bg-white/[0.02] relative overflow-hidden group h-full transition-all duration-700 hover:border-accent/30">
+        <div className="glass-panel p-8 xs:p-10 sm:p-12 rounded-[3rem] xs:rounded-[3.5rem] border-white/5 bg-white/[0.02] relative overflow-hidden group h-full transition-all duration-500 hover:border-accent/30 hover:-translate-y-2 cursor-default">
           <div className="relative z-10 space-y-6 xs:space-y-8">
             <div className="flex items-center space-x-3 xs:space-x-4">
               <div className="w-2 h-2 rounded-full bg-accent shadow-glow-accent animate-pulse" />
@@ -64,9 +64,9 @@ const SystemInfo: React.FC = () => {
           <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-accent/10 blur-[130px] rounded-full" />
         </div>
 
-        <div className="glass-panel p-8 xs:p-10 sm:p-12 rounded-[3rem] xs:rounded-[3.5rem] border-white/5 bg-white/[0.02] relative overflow-hidden h-full flex flex-col justify-center transition-all duration-700 hover:border-accent/30">
-          <div className="flex items-center space-x-4 xs:space-x-6 mb-6 xs:mb-8 group hover:translate-x-1 transition-transform">
-            <div className="p-3 xs:p-4 bg-accent/10 text-accent rounded-xl xs:rounded-2xl shadow-glow-accent transition-all duration-500 group-hover:bg-accent/20">
+        <div className="glass-panel p-8 xs:p-10 sm:p-12 rounded-[3rem] xs:rounded-[3.5rem] border-white/5 bg-white/[0.02] relative overflow-hidden h-full flex flex-col justify-center group transition-all duration-500 hover:border-accent/30 hover:-translate-y-2 cursor-default">
+          <div className="flex items-center space-x-4 xs:space-x-6 mb-6 xs:mb-8 group/icon">
+            <div className="p-3 xs:p-4 bg-accent/10 text-accent rounded-xl xs:rounded-2xl shadow-glow-accent transition-all duration-500 group-hover/icon:bg-accent/20 group-hover/icon:-translate-y-1">
               <Zap size={24} strokeWidth={2.5} />
             </div>
             <div className="flex flex-col">
@@ -96,12 +96,12 @@ const SystemInfo: React.FC = () => {
       </div>
 
       {/* FINAL CLEAN FOOTER - NO BLACK BOXES/STRIPES EVER AGAIN */}
-      <div className="glass-panel p-8 xs:p-10 sm:p-12 rounded-[2.5rem] xs:rounded-[3rem] relative overflow-hidden transition-all duration-700 hover:border-accent/30">
+      <div className="glass-panel p-8 xs:p-10 sm:p-12 rounded-[2.5rem] xs:rounded-[3rem] relative overflow-hidden transition-all duration-500 hover:border-accent/30 hover:-translate-y-2 cursor-default group/footer">
         <div className="absolute -right-20 -top-20 w-80 h-80 bg-accent/5 blur-[100px] rounded-full" />
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 xs:gap-10 relative z-10">
           <div className="flex items-center space-x-8 xs:space-x-10 sm:space-x-12 w-full md:w-auto">
-            <div className="relative flex-shrink-0">
+            <div className="relative flex-shrink-0 group-hover/footer:-translate-y-1 transition-transform duration-500">
               <Shield size={46} className="text-accent relative z-30" />
               <div className="absolute inset-0 bg-accent/5 blur-3xl rounded-full scale-110" />
             </div>

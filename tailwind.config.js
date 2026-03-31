@@ -8,6 +8,7 @@ export default {
   theme: {
     extend: {
       colors: {
+        accent: "var(--color-accent)",
         background: "#000000",
         neon: "#00FF00",
         alert: "#FF8000",
