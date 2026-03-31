@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --color-accent: #00FF00;
+  --color-accent-rgb: 0, 255, 0;
+  --color-bg: #030303;
+  --font-main: 'Outfit', sans-serif;
+  --font-mono: 'Fira Code', monospace;
+}
+
+[data-theme="tokyo"] {
+  --color-accent: #BC00FF;
+  --color-accent-rgb: 188, 0, 255;
+  --color-bg: #05000A;
+}
+
+[data-theme="solar"] {
+  --color-accent: #FF4E00;
+  --color-accent-rgb: 255, 78, 0;
+  --color-bg: #0A0200;
+}
+
+[data-theme="cyan"] {
+  --color-accent: #00F0FF;
+  --color-accent-rgb: 0, 240, 255;
+  --color-bg: #00080A;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-bg);
+  color: #FFFFFF;
+  font-family: var(--font-main);
+  overflow-x: hidden;
+  transition: background-color 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Glass Design System */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: none;
+}
+
+.text-accent {
+  color: var(--color-accent);
+}
+
+.bg-accent {
+  background-color: var(--color-accent);
+}
+
+.border-accent {
+  border-color: var(--color-accent);
+}
+
+.glow-heavy {
+  filter: drop-shadow(0 0 15px rgba(var(--color-accent-rgb), 0.5));
+}
+
+.shadow-glow-accent {
+  box-shadow: 0 0 40px rgba(var(--color-accent-rgb), 0.15);
+}
+
+/* Background Atmosphere */
+.vibe-glow {
+  position: fixed;
+  width: 60vw;
+  height: 60vw;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(circle, var(--color-accent), transparent 70%);
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-20px) rotate(2deg);
+  }
+}
+
+.animate-float {
+  animation: float 10s ease-in-out infinite;
+}
