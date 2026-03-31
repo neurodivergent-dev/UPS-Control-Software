@@ -29,6 +29,14 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
     gold: '#FFD700',
     rose: '#FF66B2',
     lime: '#BFFF00',
+    sapphire: '#0066FF',
+    emerald: '#10B981',
+    midnight: '#60A5FA',
+    amber: '#F59E0B',
+    cyberpunk: '#FFE600',
+    vulcan: '#FF4D00',
+    ocean: '#2DD4BF',
+    ghost: '#94A3B8',
   };
 
   const currentThemeColor = themeColors[currentTheme || 'cyan'];
@@ -114,6 +122,14 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
     { id: 'gold', label: 'Royal Gold', color: '#FFD700', desc: 'Premium Elite' },
     { id: 'rose', label: 'Neon Rose', color: '#FF66B2', desc: 'Synthwave Pink' },
     { id: 'lime', label: 'Toxic Lime', color: '#BFFF00', desc: 'Radioactive Green' },
+    { id: 'sapphire', label: 'Sapphire Node', color: '#0066FF', desc: 'Deep Sea Blue' },
+    { id: 'emerald', label: 'Emerald Grid', color: '#10B981', desc: 'Natural Green' },
+    { id: 'midnight', label: 'Midnight Frost', color: '#60A5FA', desc: 'Arctic Ice Blue' },
+    { id: 'amber', label: 'Amber Alert', color: '#F59E0B', desc: 'Industrial Glow' },
+    { id: 'cyberpunk', label: 'Cyberpunk', color: '#FFE600', desc: 'High-Contrast Neon' },
+    { id: 'vulcan', label: 'Vulcan Forge', color: '#FF4D00', desc: 'Deep Inferno Pulse' },
+    { id: 'ocean', label: 'Deep Ocean', color: '#2DD4BF', desc: 'Tranquil Teal Water' },
+    { id: 'ghost', label: 'Ghost Protocol', color: '#94A3B8', desc: 'Silent Slate' },
   ];
 
   return (
@@ -136,6 +152,9 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
         </div>
 
         <div className="glass-panel p-6 sm:p-8 lg:p-10 rounded-[2rem] sm:rounded-[3rem] border-0 relative overflow-hidden group hover:-translate-y-1 transition-all duration-500 cursor-default">
+          {/* Premium Rotating Border Light */}
+          <div className="border-beam transition-opacity duration-500 opacity-0 group-hover:opacity-100" />
+          
           <div className="absolute -right-16 sm:-right-20 -top-16 sm:-top-20 w-48 sm:w-64 h-48 sm:h-64 bg-accent/5 blur-[80px] sm:blur-[100px] rounded-full" />
 
           <div className="relative z-10">
@@ -272,6 +291,8 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
                 ${themeMode === id ? 'border-accent bg-accent/[0.05] -translate-y-2' : 'border-white/5 bg-white/[0.02] hover:border-white/20 hover:-translate-y-2'}
               `}
             >
+              {/* Premium Rotating Border Light */}
+              <div className={`border-beam transition-opacity duration-500 opacity-0 group-hover:opacity-100 ${themeMode === id ? 'opacity-40' : ''}`} />
               <div className="absolute -right-8 sm:-right-10 -top-8 sm:-top-10 w-24 sm:w-28 h-24 sm:h-28 blur-3xl opacity-20 rounded-full transition-transform group-hover:scale-150" style={{ backgroundColor: color }} />
 
               <div className="flex flex-col items-center space-y-4 sm:space-y-5 relative z-10">
@@ -303,6 +324,8 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
                 ${currentTheme === t.id ? 'border-accent bg-accent/[0.03] -translate-y-2' : 'border-white/5 bg-white/[0.02] hover:border-white/20 hover:-translate-y-2'}
               `}
             >
+              {/* Premium Rotating Border Light */}
+              <div className={`border-beam transition-opacity duration-500 opacity-0 group-hover:opacity-100 ${currentTheme === t.id ? 'opacity-40' : ''}`} />
               {/* The Color Orb */}
               <div className="absolute -right-6 sm:-right-8 -top-6 sm:-top-8 w-20 sm:w-24 h-20 sm:h-24 blur-2xl sm:blur-3xl opacity-20 rounded-full transition-transform group-hover:scale-150" style={{ backgroundColor: t.color }} />
 
@@ -344,12 +367,14 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
                 key={id}
                 onClick={() => setActiveSection(id as typeof activeSection)}
                 className={`
-                  px-4 sm:px-4 py-3 sm:py-2 rounded-xl sm:rounded-xl flex items-center space-x-2 sm:space-x-2 transition-all flex-shrink-0
+                  relative px-4 sm:px-4 py-3 sm:py-2 rounded-xl sm:rounded-xl flex items-center space-x-2 sm:space-x-2 transition-all flex-shrink-0 overflow-hidden group
                   ${activeSection === id
                     ? 'bg-accent text-black shadow-glow-accent'
                     : 'text-white/40 hover:text-white hover:bg-white/5'}
                 `}
               >
+                {/* Premium Rotating Border Light */}
+                <div className={`border-beam transition-opacity duration-500 opacity-0 group-hover:opacity-100 ${activeSection === id ? 'opacity-40' : ''}`} />
                 <Icon size={18} className="sm:w-4 sm:h-4" strokeWidth={2.5} />
                 <span className="text-[10px] sm:text-[9px] font-black uppercase tracking-widest whitespace-nowrap">{label}</span>
               </button>
@@ -360,7 +385,9 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
         {/* Power Section */}
         {activeSection === 'power' && (
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
-            <div className="glass-panel p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] border-0 hover:-translate-y-1 transition-all duration-500 cursor-default">
+            <div className="glass-panel p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] border-0 hover:-translate-y-1 transition-all duration-500 cursor-default relative overflow-hidden group">
+              {/* Premium Rotating Border Light */}
+              <div className="border-beam transition-opacity duration-500 opacity-0 group-hover:opacity-100" />
               <div className="flex items-center space-x-3 mb-6">
                 <div className="p-2 bg-accent/10 text-accent rounded-xl flex-shrink-0">
                   <Battery size={18} className="sm:w-5 sm:h-5" strokeWidth={2.5} />
@@ -422,7 +449,9 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
               </div>
             </div>
 
-            <div className="glass-panel p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] border-0 hover:-translate-y-1 transition-all duration-500 cursor-default">
+            <div className="glass-panel p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] border-0 hover:-translate-y-1 transition-all duration-500 cursor-default relative overflow-hidden group">
+              {/* Premium Rotating Border Light */}
+              <div className="border-beam border-beam-red transition-opacity duration-500 opacity-0 group-hover:opacity-100" />
               <div className="flex items-center space-x-3 mb-6">
                 <div className="p-2 bg-red-500/10 text-red-500 rounded-xl flex-shrink-0">
                   <AlertTriangle size={18} className="sm:w-5 sm:h-5" strokeWidth={2.5} />
@@ -467,7 +496,9 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
               </div>
             </div>
 
-            <div className="glass-panel p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] border-0 hover:-translate-y-1 transition-all duration-500 cursor-default">
+            <div className="glass-panel p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] border-0 hover:-translate-y-1 transition-all duration-500 cursor-default relative overflow-hidden group">
+              {/* Premium Rotating Border Light */}
+              <div className="border-beam transition-opacity duration-500 opacity-0 group-hover:opacity-100" />
               <div className="flex items-center space-x-3 mb-6">
                 <div className="p-2 bg-accent/10 text-accent rounded-xl flex-shrink-0">
                   <Clock size={18} className="sm:w-5 sm:h-5" strokeWidth={2.5} />
@@ -515,7 +546,9 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
         {activeSection === 'battery' && (
           <div className="space-y-6 sm:space-y-8">
             {/* Battery Mode Delay */}
-            <div className="glass-panel p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] border-0 hover:-translate-y-1 transition-all duration-500 cursor-default">
+            <div className="glass-panel p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] border-0 hover:-translate-y-1 transition-all duration-500 cursor-default relative overflow-hidden group">
+              {/* Premium Rotating Border Light */}
+              <div className="border-beam transition-opacity duration-500 opacity-0 group-hover:opacity-100" />
               <div className="flex items-center space-x-3 mb-6">
                 <div className="p-2 bg-accent/10 text-accent rounded-xl flex-shrink-0">
                   <Clock size={18} className="sm:w-5 sm:h-5" strokeWidth={2.5} />
@@ -592,7 +625,9 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
         {activeSection === 'alerts' && (
           <div className="space-y-6 sm:space-y-8">
             {/* Warning Dialog */}
-            <div className="glass-panel p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] border-0 hover:-translate-y-1 transition-all duration-500 cursor-default">
+            <div className="glass-panel p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] border-0 hover:-translate-y-1 transition-all duration-500 cursor-default relative overflow-hidden group">
+              {/* Premium Rotating Border Light */}
+              <div className="border-beam transition-opacity duration-500 opacity-0 group-hover:opacity-100" />
               <div className="flex items-center space-x-3 mb-6">
                 <div className="p-2 bg-accent/10 text-accent rounded-xl flex-shrink-0">
                   <ShieldAlert size={18} className="sm:w-5 sm:h-5" strokeWidth={2.5} />
@@ -641,7 +676,9 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
         {activeSection === 'local' && (
           <div className="space-y-6 sm:space-y-8">
             {/* UPS Battery Running Low */}
-            <div className="glass-panel p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] border-0 hover:-translate-y-1 transition-all duration-500 cursor-default">
+            <div className="glass-panel p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] border-0 hover:-translate-y-1 transition-all duration-500 cursor-default relative overflow-hidden group">
+              {/* Premium Rotating Border Light (Alert variant) */}
+              <div className="border-beam border-beam-red transition-opacity duration-500 opacity-0 group-hover:opacity-100" />
               <div className="flex items-center space-x-3 mb-6">
                 <div className="p-2 bg-red-500/10 text-red-500 rounded-xl flex-shrink-0">
                   <AlertTriangle size={18} className="sm:w-5 sm:h-5" strokeWidth={2.5} />
@@ -696,7 +733,9 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
             </div>
 
             {/* When Scheduled Shutdown Triggered */}
-            <div className="glass-panel p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] border-0 hover:-translate-y-1 transition-all duration-500 cursor-default">
+            <div className="glass-panel p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] border-0 hover:-translate-y-1 transition-all duration-500 cursor-default relative overflow-hidden group">
+              {/* Premium Rotating Border Light */}
+              <div className="border-beam transition-opacity duration-500 opacity-0 group-hover:opacity-100" />
               <div className="flex items-center space-x-3 mb-6">
                 <div className="p-2 bg-accent/10 text-accent rounded-xl flex-shrink-0">
                   <Clock size={18} className="sm:w-5 sm:h-5" strokeWidth={2.5} />
@@ -833,6 +872,8 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
         )}
       </section>
       <div className="relative group overflow-hidden rounded-[2.5rem] sm:rounded-[3.5rem] p-8 sm:p-10 lg:p-14 glass-panel border border-white/5 transition-all duration-700 hover:border-accent/30 hover:bg-white/[0.03] hover:-translate-y-2 cursor-default">
+        {/* Premium Rotating Border Light */}
+        <div className="border-beam transition-opacity duration-500 opacity-0 group-hover:opacity-100" />
         <div className="absolute inset-0 bg-gradient-to-r from-accent/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
         <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
           <div className="space-y-5 max-w-2xl w-full">

@@ -14,8 +14,16 @@ const PowerFlow: React.FC<PowerFlowProps> = ({ workMode, loadPercent }) => {
   return (
     <div className={`glass-panel p-6 xs:p-8 sm:p-10 lg:p-12 mb-8 xs:mb-10 sm:mb-12 rounded-[2.5rem] xs:rounded-[3rem] select-none overflow-hidden relative group hover:border-accent/30 hover:-translate-y-2 transition-all duration-500 cursor-default`}>
       
+      {/* Premium Rotating Border Light */}
+      <div className={`border-beam transition-opacity duration-500 opacity-0 group-hover:opacity-100 ${isBatteryMode ? 'border-beam-red' : ''}`} />
+      
       {/* Background Glow */}
       <div className={`absolute -right-16 -top-16 w-80 h-80 blur-[120px] opacity-10 rounded-full transition-colors duration-1000 ${isBatteryMode ? 'bg-red-500' : 'bg-accent'}`} />
+      
+      {/* Cyber Scanning Line */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-20">
+        <div className="w-full h-1 bg-gradient-to-r from-transparent via-accent to-transparent animate-cyber-scan" />
+      </div>
 
       {/* Mobile: Stack vertically, Desktop: Row layout */}
       <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 relative z-10">

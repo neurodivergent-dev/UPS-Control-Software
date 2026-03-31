@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Battery, Zap, Activity, ShieldAlert, Cpu, Database, Gauge } from 'lucide-react';
 import MetricCard from '../components/MetricCard';
 import VoltageChart from '../components/VoltageChart';
@@ -54,58 +55,74 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="space-y-6 xs:space-y-8 sm:space-y-10 lg:space-y-12 animate-in fade-in duration-700 pb-16">
-      <div className="mb-8 xs:mb-10 sm:mb-14">
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="mb-8 xs:mb-10 sm:mb-14"
+      >
         <PowerFlow
           workMode={currentData.workInfo.workMode}
           loadPercent={parseInt(currentData.workInfo.outputLoadPercent)}
         />
-      </div>
+      </motion.div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 xs:gap-6 sm:gap-8 items-stretch">
-        <MetricCard
-          label="Battery Level"
-          value={currentData.workInfo.batteryCapacity}
-          unit="%"
-          icon={Battery}
-          progress={currentData.workInfo.batteryCapacity}
-          alert={currentData.workInfo.batteryCapacity < 30 || isBatteryMode}
-        />
-        <MetricCard
-          label="Input Voltage"
-          value={parseFloat(currentData.workInfo.inputVoltage).toFixed(1)}
-          unit="V"
-          icon={Zap}
-          alert={parseFloat(currentData.workInfo.inputVoltage) < 200 || parseFloat(currentData.workInfo.inputVoltage) > 240}
-        />
-        <MetricCard
-          label="Output Load"
-          value={parseInt(currentData.workInfo.outputLoadPercent)}
-          unit="%"
-          icon={Gauge}
-          progress={parseInt(currentData.workInfo.outputLoadPercent)}
-          alert={parseInt(currentData.workInfo.outputLoadPercent) > 80}
-        />
-        <MetricCard
-          label="Grid Frequency"
-          value={currentData.workInfo.inputFrequency}
-          unit="Hz"
-          icon={Activity}
-          alert={parseFloat(currentData.workInfo.inputFrequency) < 49 || parseFloat(currentData.workInfo.inputFrequency) > 51}
-        />
+        {[
+          { label: "Battery Level", value: currentData.workInfo.batteryCapacity, unit: "%", icon: Battery, progress: currentData.workInfo.batteryCapacity, alert: currentData.workInfo.batteryCapacity < 30 || isBatteryMode },
+          { label: "Input Voltage", value: parseFloat(currentData.workInfo.inputVoltage).toFixed(1), unit: "V", icon: Zap, alert: parseFloat(currentData.workInfo.inputVoltage) < 200 || parseFloat(currentData.workInfo.inputVoltage) > 240 },
+          { label: "Output Load", value: parseInt(currentData.workInfo.outputLoadPercent), unit: "%", icon: Gauge, progress: parseInt(currentData.workInfo.outputLoadPercent), alert: parseInt(currentData.workInfo.outputLoadPercent) > 80 },
+          { label: "Grid Frequency", value: currentData.workInfo.inputFrequency, unit: "Hz", icon: Activity, alert: parseFloat(currentData.workInfo.inputFrequency) < 49 || parseFloat(currentData.workInfo.inputFrequency) > 51 }
+        ].map((card, idx) => (
+          <motion.div
+            key={card.label}
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 + (idx * 0.1), ease: "easeOut" }}
+          >
+            <MetricCard {...card} />
+          </motion.div>
+        ))}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 xs:gap-8 sm:gap-10 items-stretch">
-        <div className="lg:col-span-8 group hover:-translate-y-2 transition-all duration-500 cursor-default">
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="lg:col-span-8 group hover:-translate-y-2 transition-all duration-500 cursor-default relative overflow-hidden rounded-[2rem] xs:rounded-[3rem]"
+        >
+          {/* Premium Rotating Border Light */}
+          <div className={`border-beam transition-opacity duration-500 opacity-0 group-hover:opacity-100 ${isBatteryMode ? 'border-beam-red' : ''}`} />
+
+          {/* Chart Energy Overlay */}
+
+          <div className="absolute inset-0 pointer-events-none opacity-5 z-20">
+            <div className="w-full h-full animate-energy-flow" />
+          </div>
           <VoltageChart
             currentVoltage={currentData.workInfo.inputVoltage}
             history={voltageHistory}
             alert={isBatteryMode}
           />
-        </div>
+        </motion.div>
 
-        <div className="lg:col-span-4 flex flex-col group/status hover:-translate-y-2 transition-all duration-500 cursor-default">
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className="lg:col-span-4 flex flex-col group/status hover:-translate-y-2 transition-all duration-500 cursor-default"
+        >
           <div className={`glass-panel p-6 xs:p-8 sm:p-10 rounded-[2rem] xs:rounded-[3rem] relative overflow-hidden transition-all duration-500 flex flex-col justify-between h-full ${isBatteryMode ? 'border-red-500/30' : 'border-white/5 group-hover/status:border-accent/20'}`}>
+            {/* Premium Rotating Border Light */}
+            <div className={`border-beam transition-opacity duration-500 opacity-0 group-hover/status:opacity-100 ${isBatteryMode ? 'border-beam-red' : ''}`} />
+
             <div className={`absolute -right-12 -top-12 w-48 h-48 blur-[100px] opacity-10 rounded-full transition-colors ${isBatteryMode ? 'bg-red-500' : 'bg-accent'}`} />
+
+            {/* Cyber Scanning Line */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-10">
+              <div className="w-full h-1 bg-gradient-to-r from-transparent via-accent to-transparent animate-cyber-scan" style={{ animationDelay: '2s' }} />
+            </div>
 
             <div className="flex justify-between items-center mb-6 xs:mb-8 sm:mb-10">
               <div className="flex items-center space-x-3 xs:space-x-4">
@@ -170,7 +187,7 @@ const Dashboard: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
 
     </div>

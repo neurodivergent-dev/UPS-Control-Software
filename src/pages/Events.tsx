@@ -42,8 +42,10 @@ const Events: React.FC = () => {
           warnings.map((warn, i) => (
             <div
               key={i}
-              className="glass-panel p-6 xs:p-8 sm:p-10 rounded-[2rem] xs:rounded-[2.5rem] border-red-500/30 bg-red-500/[0.03] flex flex-col xs:flex-row items-start xs:items-center justify-between gap-4 xs:gap-0 group overflow-hidden hover:-translate-y-1 transition-all duration-500 cursor-default"
+              className="glass-panel p-6 xs:p-8 sm:p-10 rounded-[2rem] xs:rounded-[2.5rem] border-red-500/30 bg-red-500/[0.03] flex flex-col xs:flex-row items-start xs:items-center justify-between gap-4 xs:gap-0 group overflow-hidden hover:-translate-y-1 transition-all duration-500 cursor-default relative"
             >
+              {/* Premium Rotating Border Light */}
+              <div className="border-beam border-beam-red transition-opacity duration-500 opacity-0 group-hover:opacity-100" />
                <div className="flex items-center space-x-6 xs:space-x-8 sm:space-x-10 relative z-10 w-full">
                   <div className="p-4 xs:p-5 bg-red-500 text-black rounded-xl xs:rounded-2xl shadow-[0_0_30px_rgba(239,68,68,0.3)] flex-shrink-0">
                      <AlertTriangle size={24} strokeWidth={2.5} />
@@ -58,6 +60,8 @@ const Events: React.FC = () => {
           ))
         ) : (
           <div className="glass-panel p-6 xs:p-8 sm:p-10 rounded-[2.5rem] xs:rounded-[3rem] border-accent/20 bg-accent/[0.02] flex flex-col xs:flex-row items-start xs:items-center justify-between gap-4 xs:gap-0 group overflow-hidden relative hover:-translate-y-1 transition-all duration-500 cursor-default">
+             {/* Premium Rotating Border Light */}
+             <div className="border-beam transition-opacity duration-500 opacity-0 group-hover:opacity-100" />
              <div className="flex items-center space-x-6 xs:space-x-8 sm:space-x-10 relative z-10 w-full">
                 <div className="p-4 xs:p-5 bg-accent text-black rounded-xl xs:rounded-2xl shadow-glow-accent flex-shrink-0">
                    <CheckCircle size={24} strokeWidth={2.5} />
@@ -83,8 +87,10 @@ const Events: React.FC = () => {
             {mockEvents.map((event, i) => (
                 <div
                     key={event.id}
-                    className="glass-panel p-6 xs:p-8 rounded-[2rem] xs:rounded-[2.5rem] flex flex-col xs:flex-row items-start xs:items-center justify-between gap-4 xs:gap-0 group hover:bg-white/[0.03] transition-all duration-500 border-white/5 hover:-translate-y-1 cursor-default"
+                    className="glass-panel p-6 xs:p-8 rounded-[2rem] xs:rounded-[2.5rem] flex flex-col xs:flex-row items-start xs:items-center justify-between gap-4 xs:gap-0 group hover:bg-white/[0.03] transition-all duration-500 border-white/5 hover:-translate-y-1 cursor-default relative overflow-hidden"
                 >
+                    {/* Premium Rotating Border Light */}
+                    <div className={`border-beam transition-opacity duration-500 opacity-0 group-hover:opacity-100 ${event.type === 'warn' ? 'border-beam-red' : ''}`} />
                     <div className="flex items-center space-x-6 xs:space-x-8 sm:space-x-12 w-full">
                         <div className="flex flex-col flex-shrink-0">
                             <span className="text-[9px] xs:text-[10px] font-black text-white/20 uppercase tracking-widest leading-none mb-1">{event.date}</span>

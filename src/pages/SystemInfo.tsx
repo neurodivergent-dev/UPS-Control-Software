@@ -10,6 +10,9 @@ const SystemInfo: React.FC = () => {
     <div
       className="glass-panel p-10 rounded-[3rem] relative overflow-hidden group transition-all duration-500 hover:border-accent/30 hover:-translate-y-2 cursor-default"
     >
+      {/* Premium Rotating Border Light */}
+      <div className="border-beam transition-opacity duration-500 opacity-0 group-hover:opacity-100" />
+
       <div className="absolute -right-8 -top-8 w-32 h-32 bg-accent blur-[80px] opacity-10 rounded-full" />
 
       <div className="flex justify-between items-start mb-10">
@@ -47,6 +50,9 @@ const SystemInfo: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 xs:gap-8 sm:gap-10">
         <div className="glass-panel p-8 xs:p-10 sm:p-12 rounded-[3rem] xs:rounded-[3.5rem] border-white/5 bg-white/[0.02] relative overflow-hidden group h-full transition-all duration-500 hover:border-accent/30 hover:-translate-y-2 cursor-default">
+          {/* Premium Rotating Border Light */}
+          <div className="border-beam transition-opacity duration-500 opacity-0 group-hover:opacity-100" />
+
           <div className="relative z-10 space-y-6 xs:space-y-8">
             <div className="flex items-center space-x-3 xs:space-x-4">
               <div className="w-2 h-2 rounded-full bg-accent shadow-glow-accent animate-pulse" />
@@ -65,6 +71,8 @@ const SystemInfo: React.FC = () => {
         </div>
 
         <div className="glass-panel p-8 xs:p-10 sm:p-12 rounded-[3rem] xs:rounded-[3.5rem] border-white/5 bg-white/[0.02] relative overflow-hidden h-full flex flex-col justify-center group transition-all duration-500 hover:border-accent/30 hover:-translate-y-2 cursor-default">
+          {/* Premium Rotating Border Light */}
+          <div className="border-beam transition-opacity duration-500 opacity-0 group-hover:opacity-100" />
           <div className="flex items-center space-x-4 xs:space-x-6 mb-6 xs:mb-8 group/icon">
             <div className="p-3 xs:p-4 bg-accent/10 text-accent rounded-xl xs:rounded-2xl shadow-glow-accent transition-all duration-500 group-hover/icon:bg-accent/20 group-hover/icon:-translate-y-1">
               <Zap size={24} strokeWidth={2.5} />
@@ -97,6 +105,8 @@ const SystemInfo: React.FC = () => {
 
       {/* FINAL CLEAN FOOTER - NO BLACK BOXES/STRIPES EVER AGAIN */}
       <div className="glass-panel p-8 xs:p-10 sm:p-12 rounded-[2.5rem] xs:rounded-[3rem] relative overflow-hidden transition-all duration-500 hover:border-accent/30 hover:-translate-y-2 cursor-default group/footer">
+        {/* Premium Rotating Border Light */}
+        <div className="border-beam transition-opacity duration-500 opacity-0 group-hover/footer:opacity-100" />
         <div className="absolute -right-20 -top-20 w-80 h-80 bg-accent/5 blur-[100px] rounded-full" />
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 xs:gap-10 relative z-10">

@@ -7,29 +7,31 @@ const Diagnostics: React.FC = () => {
   const { data } = useUPSData();
   const info = data?.workInfo;
 
-  const DiagnosticCard = ({ label, value, status, icon: Icon, subValue }: { 
-    label: string, 
-    value: string, 
+  const DiagnosticCard = ({ label, value, status, icon: Icon, subValue }: {
+    label: string,
+    value: string,
     status: 'ok' | 'warn' | 'error',
     icon: any,
-    subValue?: string 
+    subValue?: string
   }) => (
-    <motion.div 
+    <motion.div
       whileHover={{ y: -5 }}
       className={`glass-panel p-10 rounded-[3rem] relative overflow-hidden group transition-all duration-700 ${status === 'error' ? 'border-red-500/30' : 'hover:border-accent/30'}`}
     >
+      {/* Premium Rotating Border Light */}
+      <div className={`border-beam transition-opacity duration-500 opacity-0 group-hover:opacity-100 ${status !== 'ok' ? 'border-beam-red' : ''}`} />
+
       {/* Background radial glow */}
       <div className={`absolute -right-10 -top-10 w-40 h-40 blur-[100px] opacity-10 rounded-full transition-colors ${status === 'ok' ? 'bg-accent' : status === 'warn' ? 'bg-yellow-500' : 'bg-red-500'}`} />
-      
+
       <div className="flex justify-between items-start mb-10">
         <div className={`p-4 rounded-2xl transition-all duration-700 ${status === 'ok' ? 'bg-accent/10 text-accent' : status === 'warn' ? 'bg-yellow-500/10 text-yellow-500' : 'bg-red-500/10 text-red-500'}`}>
           <Icon size={28} strokeWidth={2.5} />
         </div>
-        <div className={`px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border ${
-          status === 'ok' ? 'bg-accent/10 border-accent/20 text-accent shadow-glow-accent' : 
-          status === 'warn' ? 'bg-yellow-500/10 border-yellow-500/20 text-yellow-500' : 
-          'bg-red-500/10 border-red-500/20 text-red-500'
-        }`}>
+        <div className={`px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border ${status === 'ok' ? 'bg-accent/10 border-accent/20 text-accent shadow-glow-accent' :
+            status === 'warn' ? 'bg-yellow-500/10 border-yellow-500/20 text-yellow-500' :
+              'bg-red-500/10 border-red-500/20 text-red-500'
+          }`}>
           {status === 'ok' ? 'Nominal' : status === 'warn' ? 'Check' : 'Critical'}
         </div>
       </div>
@@ -37,8 +39,8 @@ const Diagnostics: React.FC = () => {
       <div className="space-y-2">
         <span className="text-[11px] font-black uppercase tracking-[0.4em] text-white/30 truncate block">{label}</span>
         <div className="flex flex-col">
-            <span className="text-3xl font-black text-white tracking-tighter uppercase">{value}</span>
-            {subValue && <span className="text-xs font-bold text-white/20 uppercase tracking-widest mt-1">{subValue}</span>}
+          <span className="text-3xl font-black text-white tracking-tighter uppercase">{value}</span>
+          {subValue && <span className="text-xs font-bold text-white/20 uppercase tracking-widest mt-1">{subValue}</span>}
         </div>
       </div>
     </motion.div>
@@ -48,22 +50,22 @@ const Diagnostics: React.FC = () => {
     <div className="space-y-8 xs:space-y-10 sm:space-y-12 animate-in fade-in duration-1000 pb-16 xs:pb-20">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4 xs:space-x-6">
-            <div className="p-3 xs:p-4 bg-accent rounded-2xl xs:rounded-3xl text-black shadow-glow-accent">
-                <ShieldCheck size={28} strokeWidth={2.5} />
-            </div>
-            <div>
-                <h2 className="text-2xl xs:text-3xl sm:text-4xl font-black tracking-tighter uppercase text-white">Diagnostic Core</h2>
-                <p className="text-[8px] xs:text-sm font-bold text-white/40 uppercase tracking-[0.3em]">Sector 7 Integrity Protocol</p>
-            </div>
+          <div className="p-3 xs:p-4 bg-accent rounded-2xl xs:rounded-3xl text-black shadow-glow-accent">
+            <ShieldCheck size={28} strokeWidth={2.5} />
+          </div>
+          <div>
+            <h2 className="text-2xl xs:text-3xl sm:text-4xl font-black tracking-tighter uppercase text-white">Diagnostic Core</h2>
+            <p className="text-[8px] xs:text-sm font-bold text-white/40 uppercase tracking-[0.3em]">Sector 7 Integrity Protocol</p>
+          </div>
         </div>
         <div className="hidden lg:flex items-center space-x-6">
-             <div className="flex flex-col text-right">
-                <span className="text-[10px] font-black uppercase text-white/20 tracking-widest leading-none mb-1">Link Strength</span>
-                <span className="text-xl font-black text-accent tracking-tighter">100% SECURE</span>
-             </div>
-             <div className="flex space-x-1">
-                {[1, 2, 3, 4, 5].map(i => <div key={i} className="w-1.5 h-6 bg-accent/20 rounded-full" />)}
-             </div>
+          <div className="flex flex-col text-right">
+            <span className="text-[10px] font-black uppercase text-white/20 tracking-widest leading-none mb-1">Link Strength</span>
+            <span className="text-xl font-black text-accent tracking-tighter">100% SECURE</span>
+          </div>
+          <div className="flex space-x-1">
+            {[1, 2, 3, 4, 5].map(i => <div key={i} className="w-1.5 h-6 bg-accent/20 rounded-full" />)}
+          </div>
         </div>
       </div>
 

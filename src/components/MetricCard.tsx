@@ -21,6 +21,9 @@ const MetricCard: React.FC<MetricCardProps> = ({
     <div
       className={`glass-panel p-6 xs:p-8 rounded-[2rem] relative overflow-hidden group transition-all duration-500 h-full flex flex-col hover:-translate-y-2 cursor-default ${alert ? 'border-red-500/30' : 'border-white/5 hover:border-accent/40'}`}
     >
+      {/* Premium Rotating Border Light */}
+      <div className={`border-beam transition-opacity duration-500 opacity-0 group-hover:opacity-100 ${alert ? 'border-beam-red' : ''}`} />
+
       {/* Background radial highlight */}
       <div className={`absolute -right-4 -top-4 w-24 h-24 blur-3xl opacity-10 rounded-full transition-colors duration-700 ${alert ? 'bg-red-500' : 'bg-accent'}`} />
 
@@ -29,10 +32,10 @@ const MetricCard: React.FC<MetricCardProps> = ({
           <Icon size={22} strokeWidth={2.5} />
         </div>
         {alert && (
-            <div className="flex items-center space-x-1 px-2 py-1 bg-red-500/10 border border-red-500/20 rounded-lg flex-shrink-0">
-                <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
-                <span className="text-[9px] xs:text-[10px] font-black uppercase text-red-500 tracking-tighter">Alert</span>
-            </div>
+          <div className="flex items-center space-x-1 px-2 py-1 bg-red-500/10 border border-red-500/20 rounded-lg flex-shrink-0">
+            <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
+            <span className="text-[9px] xs:text-[10px] font-black uppercase text-red-500 tracking-tighter">Alert</span>
+          </div>
         )}
       </div>
 
