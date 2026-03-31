@@ -18,6 +18,9 @@ export default {
       boxShadow: {
         'glow-neon': '0 0 10px rgba(0, 255, 0, 0.5), 0 0 20px rgba(0, 255, 0, 0.2)',
         'glow-alert': '0 0 10px rgba(255, 128, 0, 0.5), 0 0 20px rgba(255, 128, 0, 0.2)',
+      },
+      screens: {
+        'xs': '475px',
       }
     },
   },

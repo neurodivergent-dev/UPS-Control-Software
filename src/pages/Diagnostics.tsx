@@ -45,15 +45,15 @@ const Diagnostics: React.FC = () => {
   );
 
   return (
-    <div className="space-y-12 animate-in fade-in duration-1000 pb-20">
+    <div className="space-y-8 xs:space-y-10 sm:space-y-12 animate-in fade-in duration-1000 pb-16 xs:pb-20">
       <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-6">
-            <div className="p-4 bg-accent rounded-3xl text-black shadow-glow-accent">
-                <ShieldCheck size={32} strokeWidth={2.5} />
+        <div className="flex items-center space-x-4 xs:space-x-6">
+            <div className="p-3 xs:p-4 bg-accent rounded-2xl xs:rounded-3xl text-black shadow-glow-accent">
+                <ShieldCheck size={28} strokeWidth={2.5} />
             </div>
             <div>
-                <h2 className="text-4xl font-black tracking-tighter uppercase text-white">Diagnostic Core</h2>
-                <p className="text-sm font-bold text-white/40 uppercase tracking-[0.3em]">Sector 7 Integrity Protocol</p>
+                <h2 className="text-2xl xs:text-3xl sm:text-4xl font-black tracking-tighter uppercase text-white">Diagnostic Core</h2>
+                <p className="text-[8px] xs:text-sm font-bold text-white/40 uppercase tracking-[0.3em]">Sector 7 Integrity Protocol</p>
             </div>
         </div>
         <div className="hidden lg:flex items-center space-x-6">
@@ -67,7 +67,7 @@ const Diagnostics: React.FC = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 xs:gap-6 sm:gap-8 lg:gap-10">
         <DiagnosticCard label="Utility Grid Phase" value={`${info?.inputVoltage || '0'} VAC`} subValue={`${info?.inputFrequency || '0'}Hz Grid Sync`} status="ok" icon={Zap} />
         <DiagnosticCard label="Thermal Profile" value={`${info?.temperatureView || '0'} °C`} subValue="Cooling Active" status={parseFloat(String(info?.temperatureView || '0')) > 45 ? 'warn' : 'ok'} icon={Thermometer} />
         <DiagnosticCard label="Load Regulation" value={`${parseInt(String(info?.outputLoadPercent || '0'))}%`} subValue="Processing Task" status={parseInt(String(info?.outputLoadPercent || '0')) > 80 ? 'warn' : 'ok'} icon={Gauge} />
@@ -76,24 +76,6 @@ const Diagnostics: React.FC = () => {
         <DiagnosticCard label="Node Registry" value="Online" subValue="USB-4A0DAEE" status="ok" icon={Cpu} />
       </div>
 
-      <div className="relative group overflow-hidden rounded-[3.5rem] p-10 glass-panel border-white/10 shadow-2xl">
-         <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
-            <div className="space-y-4 max-w-xl text-center md:text-left">
-                <h3 className="text-2xl font-black uppercase tracking-tight text-white italic">Protocol Handshake Log</h3>
-                <div className="font-mono text-xs space-y-3 px-6 border-l-2 border-accent/30">
-                    <p className="text-white/40">{`> [${new Date().toLocaleTimeString()}] DEVICE: FSP CHAMP 1KVA ONLINE`}</p>
-                    <p className="text-white/40">{`> [${new Date().toLocaleTimeString()}] INPUT VOLTAGE: 226.8V RMS STABILIZED`}</p>
-                    <p className="text-accent font-black">{`> [${new Date().toLocaleTimeString()}] TOWER-TYPE HIGH-PRECISION ONLINE GRID PROTECTION ACTIVE`}</p>
-                </div>
-            </div>
-            <div className="flex space-x-4">
-                <button className="px-8 py-4 bg-accent text-black rounded-3xl font-black text-xs uppercase tracking-widest hover:scale-105 transition-transform">Run Deep Scan</button>
-                <button className="px-8 py-4 glass-panel rounded-3xl font-black text-xs uppercase tracking-widest border-white/10 hover:bg-white/5 transition-all">Clear Cache</button>
-            </div>
-         </div>
-         {/* Background glow orb that bleeds from right side */}
-         <div className="absolute -right-24 -bottom-24 w-80 h-80 bg-accent/20 blur-[120px] rounded-full pointer-events-none" />
-      </div>
     </div>
   );
 };

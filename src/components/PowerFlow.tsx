@@ -12,98 +12,107 @@ const PowerFlow: React.FC<PowerFlowProps> = ({ workMode, loadPercent }) => {
   const isFault = workMode.toLowerCase().includes('fault');
 
   return (
-    <div className={`glass-panel py-8 px-12 mb-12 rounded-[3.5rem] flex items-center justify-between select-none overflow-hidden relative group hover:border-accent/30 transition-all duration-700 min-h-[140px]`}>
+    <div className={`glass-panel p-6 xs:p-8 sm:p-10 lg:p-12 mb-8 xs:mb-10 sm:mb-12 rounded-[2.5rem] xs:rounded-[3rem] select-none overflow-hidden relative group hover:border-accent/30 transition-all duration-700`}>
       
-      {/* Matching the Metric Card Glow Pattern */}
+      {/* Background Glow */}
       <div className={`absolute -right-16 -top-16 w-80 h-80 blur-[120px] opacity-10 rounded-full transition-colors duration-1000 ${isBatteryMode ? 'bg-red-500' : 'bg-accent'}`} />
-      
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.01] to-transparent pointer-events-none" />
-      
-      {/* Grid Node - FIXED GRADIENT STYLE MATCHING METRIC CARDS */}
-      <div className="relative group/node flex items-center space-x-6 p-6 rounded-[2.5rem] border border-white/5 bg-white/[0.02] overflow-hidden transition-all duration-500 hover:border-accent/20">
-         {/* Subtle internal gradient bleed for the node card */}
-         <div className={`absolute -right-6 -top-6 w-16 h-16 blur-2xl opacity-10 rounded-full ${!isBatteryMode ? 'bg-accent' : 'bg-red-500'}`} />
-         
-         <div className={`p-4 rounded-2xl transition-all duration-700 ${!isBatteryMode ? 'bg-accent/10 text-accent shadow-glow-accent ring-1 ring-accent/20' : 'bg-white/5 text-white/20'}`}>
-            <Zap size={24} strokeWidth={2.5} />
-         </div>
-         <div className="flex flex-col">
-            <span className="text-[11px] uppercase tracking-[0.4em] font-black text-white/20 mb-1">Grid Source</span>
+
+      {/* Mobile: Stack vertically, Desktop: Row layout */}
+      <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 relative z-10">
+        
+        {/* Grid Node */}
+        <div className="w-full sm:w-auto flex items-center justify-between sm:justify-start space-x-4 p-4 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-accent/20 transition-all duration-500">
+          <div className={`p-3 rounded-xl transition-all duration-700 ${!isBatteryMode ? 'bg-accent/10 text-accent shadow-glow-accent' : 'bg-white/5 text-white/20'}`}>
+            <Zap size={22} strokeWidth={2.5} />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-[9px] uppercase tracking-widest font-black text-white/20">Grid Source</span>
             <div className="flex items-center space-x-2">
-                <span className={`text-base font-black uppercase tracking-widest ${!isBatteryMode ? 'text-white' : 'text-white/10'}`}>
-                    {isBatteryMode ? 'Offline' : 'Active'}
-                </span>
-                {!isBatteryMode && <div className="w-2 h-2 rounded-full bg-accent animate-pulse shadow-glow-accent" />}
+              <span className={`text-sm font-black uppercase ${!isBatteryMode ? 'text-white' : 'text-white/10'}`}>
+                {isBatteryMode ? 'Offline' : 'Active'}
+              </span>
+              {!isBatteryMode && <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />}
             </div>
-         </div>
-      </div>
-
-      {/* Path 1 */}
-      <div className="flex-1 h-0.5 bg-white/5 mx-8 relative rounded-full overflow-hidden">
-        <AnimatePresence>
-          {!isBatteryMode && (
-            <motion.div 
-              initial={{ left: '-20%', opacity: 0 }}
-              animate={{ left: '100%', opacity: [0, 1, 0] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-              className="absolute top-0 bottom-0 w-32 bg-gradient-to-r from-transparent via-accent/40 to-transparent"
-            />
-          )}
-        </AnimatePresence>
-      </div>
-
-      {/* UPS Core Node - THE PROCESSOR CARD */}
-      <div className="flex items-center space-x-5 px-8 py-5 bg-white/[0.03] rounded-[2.5rem] border border-white/5 relative z-10 hover:border-accent/20 transition-all duration-500">
-        <div className={`p-3 rounded-xl ${isBatteryMode ? 'bg-red-500/10 text-red-500' : 'bg-accent/10 text-accent'}`}>
-          <Cpu size={24} strokeWidth={2.5} />
+          </div>
         </div>
-        <div className="flex flex-col">
-             <span className="text-[10px] uppercase tracking-[0.3em] font-black text-white/20 mb-1 text-center">Protocol Node</span>
-             <span className={`text-[11px] font-black uppercase tracking-[0.4em] ${isBatteryMode ? 'text-red-500 animate-pulse' : 'text-accent'}`}>
-                {workMode}
-             </span>
+
+        {/* Connector Line - Desktop Only */}
+        <div className="hidden sm:block flex-1 h-0.5 bg-white/5 relative rounded-full overflow-hidden mx-2">
+          <AnimatePresence>
+            {!isBatteryMode && (
+              <motion.div
+                initial={{ left: '-20%', opacity: 0 }}
+                animate={{ left: '100%', opacity: [0, 1, 0] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                className="absolute top-0 bottom-0 w-32 bg-gradient-to-r from-transparent via-accent/40 to-transparent"
+              />
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* UPS Core Node - Protocol */}
+        <div className="w-full sm:w-auto flex items-center justify-between sm:justify-start space-x-4 p-4 rounded-2xl border border-white/5 bg-white/[0.03] hover:border-accent/20 transition-all duration-500">
+          <div className={`p-3 rounded-xl ${isBatteryMode ? 'bg-red-500/10 text-red-500' : 'bg-accent/10 text-accent'}`}>
+            <Cpu size={22} strokeWidth={2.5} />
+          </div>
+          <div className="flex flex-col min-w-0">
+            <span className="text-[8px] uppercase tracking-wider font-black text-white/20">Protocol</span>
+            <span className={`text-sm font-black uppercase truncate ${isBatteryMode ? 'text-red-500 animate-pulse' : 'text-accent'}`}>
+              {workMode}
+            </span>
+          </div>
+        </div>
+
+        {/* Connector Line - Desktop Only */}
+        <div className="hidden sm:block flex-1 h-0.5 bg-white/5 relative rounded-full overflow-hidden mx-2">
+          <AnimatePresence>
+            {!isFault && (
+              <motion.div
+                initial={{ left: '-20%', opacity: 0 }}
+                animate={{ left: '100%', opacity: [0, 1, 0] }}
+                transition={{
+                  duration: Math.max(1, 3 - (loadPercent / 40)),
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+                className="absolute top-0 bottom-0 w-40 bg-gradient-to-r from-transparent via-accent/40 to-transparent"
+              />
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Load Node */}
+        <div className="w-full sm:w-auto flex items-center justify-between sm:justify-start space-x-4 p-4 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-accent/20 transition-all duration-500">
+          <div className="flex flex-col text-right min-w-0">
+            <span className="text-[9px] uppercase tracking-widest font-black text-white/20">Load</span>
+            <span className={`text-sm font-black font-mono ${loadPercent > 0 ? 'text-white' : 'text-white/20'}`}>
+              {loadPercent}%
+            </span>
+          </div>
+          <div className={`p-3 rounded-xl border transition-all duration-700 ${loadPercent > 0 ? 'bg-accent/10 border-accent/20 text-accent shadow-glow-accent' : 'border-white/5 text-white/10'}`}>
+            <Terminal size={22} strokeWidth={2.5} />
+          </div>
         </div>
       </div>
 
-      {/* Path 2 */}
-      <div className="flex-1 h-0.5 bg-white/5 mx-8 relative rounded-full overflow-hidden">
-        <AnimatePresence>
-          {!isFault && (
-            <motion.div 
-              initial={{ left: '-20%', opacity: 0 }}
-              animate={{ left: '100%', opacity: [0, 1, 0] }}
-              transition={{ 
-                  duration: Math.max(1, 3 - (loadPercent / 40)), 
-                  repeat: Infinity, 
-                  ease: "linear" 
-              }}
-              className={`absolute top-0 bottom-0 w-40 bg-gradient-to-r from-transparent via-accent/40 to-transparent shadow-[0_0_30px_rgba(var(--color-accent-rgb),0.3)]`}
-            />
-          )}
-        </AnimatePresence>
-      </div>
-
-      {/* Systems Node - THE LOAD CARD */}
-      <div className="relative group/load flex items-center space-x-6 p-6 rounded-[2.5rem] border border-white/5 bg-white/[0.02] overflow-hidden transition-all duration-500 hover:border-accent/20">
-        <div className="flex flex-col text-right">
-          <span className="text-[11px] uppercase tracking-[0.4em] font-black text-white/20 mb-1">Load Cluster</span>
-          <span className={`text-base font-black ${loadPercent > 0 ? `text-white font-mono` : 'text-white/20'}`}>
-            {loadPercent}% STABLE
+      {/* Battery Status - Bottom Bar */}
+      <div className="mt-6 pt-6 border-t border-white/5 flex items-center justify-between">
+        <div className="flex items-center space-x-3">
+          <div className={`p-2.5 rounded-xl transition-all ${isBatteryMode ? 'bg-red-500/20 text-red-500 animate-pulse' : 'bg-white/5 text-white/20'}`}>
+            <Battery size={20} strokeWidth={2.5} />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-[8px] uppercase tracking-widest font-black text-white/20">Battery</span>
+            <span className={`text-xs font-black ${isBatteryMode ? 'text-red-500' : 'text-white/40'}`}>OPTIMIZED</span>
+          </div>
+        </div>
+        
+        {/* Status Indicator */}
+        <div className="flex items-center space-x-2 px-4 py-2 rounded-xl bg-white/[0.02] border border-white/5">
+          <div className={`w-2 h-2 rounded-full ${isBatteryMode ? 'bg-red-500 animate-pulse' : 'bg-accent animate-pulse'}`} />
+          <span className="text-[9px] uppercase tracking-wider font-black text-white/40">
+            {isBatteryMode ? 'Battery Mode' : 'Grid Active'}
           </span>
-        </div>
-        <div className={`p-4 rounded-2xl border transition-all duration-700 ${loadPercent > 0 ? 'bg-accent/10 border-accent/20 text-accent shadow-glow-accent' : 'border-white/5 text-white/10'}`}>
-          <Terminal size={24} strokeWidth={2.5} />
-        </div>
-      </div>
-
-      {/* Discrete Battery Status */}
-      <div className="ml-10 pl-10 border-l border-white/10 flex items-center space-x-5 relative z-10">
-        <div className={`p-2.5 rounded-xl transition-all ${isBatteryMode ? 'bg-red-500/20 text-red-500 animate-pulse' : 'bg-white/5 text-white/20'}`}>
-            <Battery size={22} strokeWidth={2.5} />
-        </div>
-        <div className="flex flex-col">
-            <span className="text-[9px] font-black uppercase tracking-widest text-white/10">Reservoir</span>
-            <span className={`text-[11px] font-black tracking-widest ${isBatteryMode ? 'text-red-500' : 'text-white/20'}`}>OPTIMIZED</span>
         </div>
       </div>
     </div>
