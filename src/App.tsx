@@ -10,6 +10,7 @@ import SystemInfo from './pages/SystemInfo';
 import Events from './pages/Events';
 import Settings from './pages/Settings';
 import Footer from './components/Footer';
+import BackgroundEffects from './components/BackgroundEffects';
 
 const queryClient = new QueryClient();
 
@@ -23,12 +24,11 @@ function AppContent() {
   }, [theme]);
 
   return (
-    <div className="min-h-screen transition-colors duration-500">
-      {/* Dynamic Background Glow Orbs */}
-      <div className="vibe-glow -top-24 -left-20 animate-float" />
-      <div className="vibe-glow -bottom-32 -right-32 animate-pulse-glow" style={{ animationDelay: '2s' }} />
+    <div className="min-h-screen transition-colors duration-500 overflow-x-hidden">
+      <BackgroundEffects />
 
       <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+
 
       <div className="flex min-h-[calc(100vh-5rem)]">
         <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />

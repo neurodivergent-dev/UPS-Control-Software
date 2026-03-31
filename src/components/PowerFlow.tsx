@@ -48,12 +48,29 @@ const PowerFlow: React.FC<PowerFlowProps> = ({ workMode, loadPercent }) => {
         <div className="hidden sm:block flex-1 h-0.5 bg-white/5 relative rounded-full overflow-hidden mx-2">
           <AnimatePresence>
             {!isBatteryMode && (
-              <motion.div
-                initial={{ left: '-20%', opacity: 0 }}
-                animate={{ left: '100%', opacity: [0, 1, 0] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                className="absolute top-0 bottom-0 w-32 bg-gradient-to-r from-transparent via-accent/40 to-transparent"
-              />
+              <div className="absolute inset-0">
+                <motion.div
+                  initial={{ left: '-20%', opacity: 0 }}
+                  animate={{ left: '100%', opacity: [0, 1, 0] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                  className="absolute top-0 bottom-0 w-32 bg-gradient-to-r from-transparent via-accent/40 to-transparent"
+                />
+                {/* Dynamic Energy Particles */}
+                {[...Array(3)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ left: '-10%', opacity: 0 }}
+                    animate={{ left: '110%', opacity: [0, 1, 1, 0] }}
+                    transition={{ 
+                      duration: 2, 
+                      repeat: Infinity, 
+                      delay: i * 0.6,
+                      ease: "easeInOut" 
+                    }}
+                    className="absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_10px_var(--color-accent)]"
+                  />
+                ))}
+              </div>
             )}
           </AnimatePresence>
         </div>
@@ -75,19 +92,37 @@ const PowerFlow: React.FC<PowerFlowProps> = ({ workMode, loadPercent }) => {
         <div className="hidden sm:block flex-1 h-0.5 bg-white/5 relative rounded-full overflow-hidden mx-2">
           <AnimatePresence>
             {!isFault && (
-              <motion.div
-                initial={{ left: '-20%', opacity: 0 }}
-                animate={{ left: '100%', opacity: [0, 1, 0] }}
-                transition={{
-                  duration: Math.max(1, 3 - (loadPercent / 40)),
-                  repeat: Infinity,
-                  ease: "linear"
-                }}
-                className="absolute top-0 bottom-0 w-40 bg-gradient-to-r from-transparent via-accent/40 to-transparent"
-              />
+              <div className="absolute inset-0">
+                <motion.div
+                  initial={{ left: '-20%', opacity: 0 }}
+                  animate={{ left: '100%', opacity: [0, 1, 0] }}
+                  transition={{
+                    duration: Math.max(1, 3 - (loadPercent / 40)),
+                    repeat: Infinity,
+                    ease: "linear"
+                  }}
+                  className="absolute top-0 bottom-0 w-40 bg-gradient-to-r from-transparent via-accent/40 to-transparent"
+                />
+                {/* Dynamic Data Particles */}
+                {[...Array(4)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ left: '-10%', opacity: 0 }}
+                    animate={{ left: '110%', opacity: [0, 1, 1, 0] }}
+                    transition={{ 
+                      duration: Math.max(0.8, 1.5 - (loadPercent / 50)), 
+                      repeat: Infinity, 
+                      delay: i * 0.4,
+                      ease: "linear" 
+                    }}
+                    className={`absolute top-1/2 -translate-y-1/2 w-1 h-1 rounded-full ${isBatteryMode ? 'bg-red-500 shadow-[0_0_8px_#ef4444]' : 'bg-accent shadow-[0_0_8px_var(--color-accent)]'}`}
+                  />
+                ))}
+              </div>
             )}
           </AnimatePresence>
         </div>
+
 
         {/* Load Node */}
         <div className="w-full sm:w-auto flex items-center justify-between sm:justify-start space-x-4 p-4 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-accent/20 transition-all duration-500">

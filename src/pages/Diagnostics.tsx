@@ -13,38 +13,63 @@ const Diagnostics: React.FC = () => {
     status: 'ok' | 'warn' | 'error',
     icon: any,
     subValue?: string
-  }) => (
-    <motion.div
-      whileHover={{ y: -5 }}
-      className={`glass-panel p-10 rounded-[3rem] relative overflow-hidden group transition-all duration-700 ${status === 'error' ? 'border-red-500/30' : 'hover:border-accent/30'}`}
-    >
-      {/* Premium Rotating Border Light */}
-      <div className={`border-beam transition-opacity duration-500 opacity-0 group-hover:opacity-100 ${status !== 'ok' ? 'border-beam-red' : ''}`} />
+  }) => {
+    const [rotate, setRotate] = React.useState({ x: 0, y: 0 });
 
-      {/* Background radial glow */}
-      <div className={`absolute -right-10 -top-10 w-40 h-40 blur-[100px] opacity-10 rounded-full transition-colors ${status === 'ok' ? 'bg-accent' : status === 'warn' ? 'bg-yellow-500' : 'bg-red-500'}`} />
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+      const card = e.currentTarget.getBoundingClientRect();
+      const x = e.clientX - card.left;
+      const y = e.clientY - card.top;
+      const centerX = card.width / 2;
+      const centerY = card.height / 2;
+      const rotateX = (y - centerY) / 12;
+      const rotateY = (centerX - x) / 12;
 
-      <div className="flex justify-between items-start mb-10">
-        <div className={`p-4 rounded-2xl transition-all duration-700 ${status === 'ok' ? 'bg-accent/10 text-accent' : status === 'warn' ? 'bg-yellow-500/10 text-yellow-500' : 'bg-red-500/10 text-red-500'}`}>
-          <Icon size={28} strokeWidth={2.5} />
-        </div>
-        <div className={`px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border ${status === 'ok' ? 'bg-accent/10 border-accent/20 text-accent shadow-glow-accent' :
-            status === 'warn' ? 'bg-yellow-500/10 border-yellow-500/20 text-yellow-500' :
-              'bg-red-500/10 border-red-500/20 text-red-500'
-          }`}>
-          {status === 'ok' ? 'Nominal' : status === 'warn' ? 'Check' : 'Critical'}
-        </div>
-      </div>
+      setRotate({ x: rotateX, y: rotateY });
+    };
 
-      <div className="space-y-2">
-        <span className="text-[11px] font-black uppercase tracking-[0.4em] text-white/30 truncate block">{label}</span>
-        <div className="flex flex-col">
-          <span className="text-3xl font-black text-white tracking-tighter uppercase">{value}</span>
-          {subValue && <span className="text-xs font-bold text-white/20 uppercase tracking-widest mt-1">{subValue}</span>}
+    const handleMouseLeave = () => {
+      setRotate({ x: 0, y: 0 });
+    };
+
+    return (
+      <motion.div
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          transform: `perspective(1000px) rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`,
+          transition: 'transform 0.1s ease-out'
+        }}
+        className={`glass-panel p-10 rounded-[3rem] relative overflow-hidden group transition-all duration-700 ${status === 'error' ? 'border-red-500/30 shadow-[0_0_20px_rgba(239,68,68,0.1)]' : 'hover:border-accent/30 shadow-sm'}`}
+      >
+        {/* Premium Rotating Border Light */}
+        <div className={`border-beam transition-opacity duration-500 opacity-0 group-hover:opacity-100 ${status !== 'ok' ? 'border-beam-red' : ''}`} />
+
+        {/* Background radial glow */}
+        <div className={`absolute -right-10 -top-10 w-40 h-40 blur-[100px] opacity-10 rounded-full transition-colors ${status === 'ok' ? 'bg-accent' : status === 'warn' ? 'bg-yellow-500' : 'bg-red-500'}`} />
+
+        <div className="flex justify-between items-start mb-10">
+          <div className={`p-4 rounded-2xl transition-all duration-700 ${status === 'ok' ? 'bg-accent/10 text-accent' : status === 'warn' ? 'bg-yellow-500/10 text-yellow-500' : 'bg-red-500/10 text-red-500'}`}>
+            <Icon size={28} strokeWidth={2.5} />
+          </div>
+          <div className={`px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border ${status === 'ok' ? 'bg-accent/10 border-accent/20 text-accent shadow-glow-accent' :
+              status === 'warn' ? 'bg-yellow-500/10 border-yellow-500/20 text-yellow-500' :
+                'bg-red-500/10 border-red-500/20 text-red-500'
+            }`}>
+            {status === 'ok' ? 'Nominal' : status === 'warn' ? 'Check' : 'Critical'}
+          </div>
         </div>
-      </div>
-    </motion.div>
-  );
+
+        <div className="space-y-2">
+          <span className="text-[11px] font-black uppercase tracking-[0.4em] text-white/30 truncate block">{label}</span>
+          <div className="flex flex-col">
+            <span className="text-3xl font-black text-white tracking-tighter uppercase">{value}</span>
+            {subValue && <span className="text-xs font-bold text-white/20 uppercase tracking-widest mt-1">{subValue}</span>}
+          </div>
+        </div>
+      </motion.div>
+    );
+  };
 
   return (
     <div className="space-y-8 xs:space-y-10 sm:space-y-12 animate-in fade-in duration-1000 pb-16 xs:pb-20">

@@ -17,10 +17,35 @@ const MetricCard: React.FC<MetricCardProps> = ({
   progress,
   alert
 }) => {
+  const [rotate, setRotate] = React.useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - card.left;
+    const y = e.clientY - card.top;
+    const centerX = card.width / 2;
+    const centerY = card.height / 2;
+    const rotateX = (y - centerY) / 10;
+    const rotateY = (centerX - x) / 10;
+
+    setRotate({ x: rotateX, y: rotateY });
+  };
+
+  const handleMouseLeave = () => {
+    setRotate({ x: 0, y: 0 });
+  };
+
   return (
     <div
-      className={`glass-panel p-6 xs:p-8 rounded-[2rem] relative overflow-hidden group transition-all duration-500 h-full flex flex-col hover:-translate-y-2 cursor-default ${alert ? 'border-red-500/30' : 'border-white/5 hover:border-accent/40'}`}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        transform: `perspective(1000px) rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`,
+        transition: 'transform 0.1s ease-out'
+      }}
+      className={`glass-panel p-6 xs:p-8 rounded-[2rem] relative overflow-hidden group h-full flex flex-col cursor-default ${alert ? 'border-red-500/30 shadow-[0_0_20px_rgba(239,68,68,0.1)]' : 'border-white/5 hover:border-accent/40 shadow-sm'}`}
     >
+
       {/* Premium Rotating Border Light */}
       <div className={`border-beam transition-opacity duration-500 opacity-0 group-hover:opacity-100 ${alert ? 'border-beam-red' : ''}`} />
 

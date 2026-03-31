@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Battery, Zap, Activity, ShieldAlert, Cpu, Database, Gauge } from 'lucide-react';
 import MetricCard from '../components/MetricCard';
 import VoltageChart from '../components/VoltageChart';
@@ -54,11 +54,15 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <div className="space-y-6 xs:space-y-8 sm:space-y-10 lg:space-y-12 animate-in fade-in duration-700 pb-16">
+    <motion.div 
+      layout
+      className="space-y-6 xs:space-y-8 sm:space-y-10 lg:space-y-12 animate-in fade-in duration-700 pb-16"
+    >
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        layout
+        initial={{ opacity: 0, y: 40, scale: 0.95 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className="mb-8 xs:mb-10 sm:mb-14"
       >
         <PowerFlow
@@ -67,7 +71,10 @@ const Dashboard: React.FC = () => {
         />
       </motion.div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 xs:gap-6 sm:gap-8 items-stretch">
+      <motion.div 
+        layout
+        className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 xs:gap-6 sm:gap-8 items-stretch"
+      >
         {[
           { label: "Battery Level", value: currentData.workInfo.batteryCapacity, unit: "%", icon: Battery, progress: currentData.workInfo.batteryCapacity, alert: currentData.workInfo.batteryCapacity < 30 || isBatteryMode },
           { label: "Input Voltage", value: parseFloat(currentData.workInfo.inputVoltage).toFixed(1), unit: "V", icon: Zap, alert: parseFloat(currentData.workInfo.inputVoltage) < 200 || parseFloat(currentData.workInfo.inputVoltage) > 240 },
@@ -76,27 +83,31 @@ const Dashboard: React.FC = () => {
         ].map((card, idx) => (
           <motion.div
             key={card.label}
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            initial={{ opacity: 0, scale: 0.8, y: 30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 + (idx * 0.1), ease: "easeOut" }}
+            transition={{ 
+              duration: 0.6, 
+              delay: 0.2 + (idx * 0.1), 
+              ease: [0.16, 1, 0.3, 1] 
+            }}
           >
             <MetricCard {...card} />
           </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 xs:gap-8 sm:gap-10 items-stretch">
         <motion.div
-          initial={{ opacity: 0, x: -30 }}
+          layout
+          initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="lg:col-span-8 group hover:-translate-y-2 transition-all duration-500 cursor-default relative overflow-hidden rounded-[2rem] xs:rounded-[3rem]"
+          transition={{ duration: 0.8, delay: 0.6, ease: "backOut" }}
+          className="lg:col-span-8 group relative overflow-hidden rounded-[2rem] xs:rounded-[3rem] transition-all duration-500"
         >
           {/* Premium Rotating Border Light */}
           <div className={`border-beam transition-opacity duration-500 opacity-0 group-hover:opacity-100 ${isBatteryMode ? 'border-beam-red' : ''}`} />
 
           {/* Chart Energy Overlay */}
-
           <div className="absolute inset-0 pointer-events-none opacity-5 z-20">
             <div className="w-full h-full animate-energy-flow" />
           </div>
@@ -108,10 +119,11 @@ const Dashboard: React.FC = () => {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, x: 30 }}
+          layout
+          initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="lg:col-span-4 flex flex-col group/status hover:-translate-y-2 transition-all duration-500 cursor-default"
+          transition={{ duration: 0.8, delay: 0.7, ease: "backOut" }}
+          className="lg:col-span-4 flex flex-col group/status cursor-default"
         >
           <div className={`glass-panel p-6 xs:p-8 sm:p-10 rounded-[2rem] xs:rounded-[3rem] relative overflow-hidden transition-all duration-500 flex flex-col justify-between h-full ${isBatteryMode ? 'border-red-500/30' : 'border-white/5 group-hover/status:border-accent/20'}`}>
             {/* Premium Rotating Border Light */}
@@ -140,7 +152,7 @@ const Dashboard: React.FC = () => {
             </div>
 
             <div className="space-y-4 xs:space-y-5 sm:space-y-6 flex-1">
-              <div className="flex justify-between items-center bg-white/[0.03] p-4 xs:p-6 rounded-[1.5rem] xs:rounded-[2rem] border border-white/5">
+              <div className="flex justify-between items-center bg-white/[0.03] p-4 xs:p-6 rounded-[1.5rem] xs:rounded-[2rem] border border-white/5 hover:bg-white/5 transition-colors">
                 <div className="flex items-center space-x-3 xs:space-x-4">
                   <Cpu size={16} className="text-white/20" />
                   <span className="text-[9px] xs:text-[11px] text-white/30 font-black uppercase tracking-widest">Protocol</span>
@@ -150,7 +162,7 @@ const Dashboard: React.FC = () => {
                 </span>
               </div>
 
-              <div className="flex justify-between items-center bg-white/[0.03] p-4 xs:p-6 rounded-[1.5rem] xs:rounded-[2rem] border border-white/5">
+              <div className="flex justify-between items-center bg-white/[0.03] p-4 xs:p-6 rounded-[1.5rem] xs:rounded-[2rem] border border-white/5 hover:bg-white/5 transition-colors">
                 <div className="flex items-center space-x-3 xs:space-x-4">
                   <Database size={16} className="text-white/20" />
                   <span className="text-[9px] xs:text-[11px] text-white/30 font-black uppercase tracking-widest">Potential</span>
@@ -189,8 +201,8 @@ const Dashboard: React.FC = () => {
           </div>
         </motion.div>
       </div>
+    </motion.div>
 
-    </div>
   );
 };
 

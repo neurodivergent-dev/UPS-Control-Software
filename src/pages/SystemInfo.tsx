@@ -1,33 +1,61 @@
 import React from 'react';
 import { useUPSData } from '../services/upsService';
+import { motion } from 'framer-motion';
 import { Monitor, Globe, Thermometer, ShieldCheck, Zap, Activity, Battery, Server, Shield, Network } from 'lucide-react';
+
 
 const SystemInfo: React.FC = () => {
   const { data } = useUPSData();
   const info = data?.workInfo;
 
-  const SpecCard = ({ label, value, icon: Icon }: { label: string, value: string, icon: any }) => (
-    <div
-      className="glass-panel p-10 rounded-[3rem] relative overflow-hidden group transition-all duration-500 hover:border-accent/30 hover:-translate-y-2 cursor-default"
-    >
-      {/* Premium Rotating Border Light */}
-      <div className="border-beam transition-opacity duration-500 opacity-0 group-hover:opacity-100" />
+  const SpecCard = ({ label, value, icon: Icon }: { label: string, value: string, icon: any }) => {
+    const [rotate, setRotate] = React.useState({ x: 0, y: 0 });
 
-      <div className="absolute -right-8 -top-8 w-32 h-32 bg-accent blur-[80px] opacity-10 rounded-full" />
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+      const card = e.currentTarget.getBoundingClientRect();
+      const x = e.clientX - card.left;
+      const y = e.clientY - card.top;
+      const centerX = card.width / 2;
+      const centerY = card.height / 2;
+      const rotateX = (y - centerY) / 12;
+      const rotateY = (centerX - x) / 12;
 
-      <div className="flex justify-between items-start mb-10">
-        <div className="p-4 bg-accent/10 text-accent rounded-2xl group-hover:bg-accent/20 transition-all duration-500 shadow-glow-accent group-hover:-translate-y-1">
-          <Icon size={28} strokeWidth={2.5} />
+      setRotate({ x: rotateX, y: rotateY });
+    };
+
+    const handleMouseLeave = () => {
+      setRotate({ x: 0, y: 0 });
+    };
+
+    return (
+      <div
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          transform: `perspective(1000px) rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`,
+          transition: 'transform 0.1s ease-out'
+        }}
+        className="glass-panel p-10 rounded-[3rem] relative overflow-hidden group transition-all duration-500 hover:border-accent/30 cursor-default shadow-sm"
+      >
+        {/* Premium Rotating Border Light */}
+        <div className="border-beam transition-opacity duration-500 opacity-0 group-hover:opacity-100" />
+
+        <div className="absolute -right-8 -top-8 w-32 h-32 bg-accent blur-[80px] opacity-10 rounded-full" />
+
+        <div className="flex justify-between items-start mb-10">
+          <div className="p-4 bg-accent/10 text-accent rounded-2xl group-hover:bg-accent/20 transition-all duration-500 shadow-glow-accent group-hover:-translate-y-1">
+            <Icon size={28} strokeWidth={2.5} />
+          </div>
+          <div className="w-1.5 h-1.5 bg-accent/20 rounded-full" />
         </div>
-        <div className="w-1.5 h-1.5 bg-accent/20 rounded-full" />
-      </div>
 
-      <div className="space-y-1">
-        <span className="text-[11px] font-black uppercase tracking-[0.4em] text-white/20 block mb-2">{label}</span>
-        <span className="text-xl font-black text-white tracking-tighter uppercase leading-none">{value}</span>
+        <div className="space-y-1">
+          <span className="text-[11px] font-black uppercase tracking-[0.4em] text-white/20 block mb-2">{label}</span>
+          <span className="text-xl font-black text-white tracking-tighter uppercase leading-none">{value}</span>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="space-y-8 xs:space-y-10 sm:space-y-12 pb-16 xs:pb-20">
@@ -104,9 +132,13 @@ const SystemInfo: React.FC = () => {
       </div>
 
       {/* FINAL CLEAN FOOTER - NO BLACK BOXES/STRIPES EVER AGAIN */}
-      <div className="glass-panel p-8 xs:p-10 sm:p-12 rounded-[2.5rem] xs:rounded-[3rem] relative overflow-hidden transition-all duration-500 hover:border-accent/30 hover:-translate-y-2 cursor-default group/footer">
+      <motion.div 
+        layout
+        className="glass-panel p-8 xs:p-10 sm:p-12 rounded-[2.5rem] xs:rounded-[3rem] relative overflow-hidden transition-all duration-500 hover:border-accent/30 cursor-default group/footer shadow-lg"
+      >
         {/* Premium Rotating Border Light */}
         <div className="border-beam transition-opacity duration-500 opacity-0 group-hover/footer:opacity-100" />
+
         <div className="absolute -right-20 -top-20 w-80 h-80 bg-accent/5 blur-[100px] rounded-full" />
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 xs:gap-10 relative z-10">
@@ -140,8 +172,9 @@ const SystemInfo: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
+
   );
 };
 

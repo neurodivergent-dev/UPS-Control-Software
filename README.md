@@ -1,73 +1,65 @@
-# React + TypeScript + Vite
+# ⚡ UPS Control Software
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![UPS Dashboard Preview](https://github.com/neurodivergent-dev/UPS-Control-Software/raw/main/public/preview.png)
 
-Currently, two official plugins are available:
+Modern, ultra-premium UPS (Uninterruptible Power Supply) management and monitoring software. Integrated with the **ViewPower** API, it provides hardware-level control and advanced data visualization.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Features
 
-## React Compiler
+-   **Real-Time Monitoring:** Track input/output voltage, load percentage, and battery capacity in real-time.
+-   **Dynamic Power Flow:** Watch energy transitions between grid and battery modes with high-fidelity animations.
+-   **Hardware Control:** Send UPS test, buzzer control, and system shutdown commands via ViewPower authentication.
+-   **Smart Shutdown Logic:** Customizable local system shutdown scenarios for low battery or scheduled events.
+-   **Ultra-Premium UI:** Built with Framer Motion, Glassmorphism design principles, and 15+ "Atmosphere" (Theme) presets.
+-   **Diagnostics & Event Logs:** Access detailed system diagnostic data and historical event tracking.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 Quick Start
 
-## Expanding the ESLint configuration
+### Prerequisites
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+-   **Node.js** (v18+)
+-   **ViewPower Pro** (Required as a background API service)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Installation
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+1.  Install dependencies:
+    ```bash
+    npm install
+    ```
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+2.  Launch development server:
+    ```bash
+    npm run dev
+    ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+3.  Build for production:
+    ```bash
+    npm run build
+    ```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🛠️ Technology Stack
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+-   **Framework:** React 19 + TypeScript
+-   **Build Tool:** Vite
+-   **Styling:** Tailwind CSS
+-   **Animations:** Framer Motion
+-   **Icons:** Lucide React
+-   **Data Fetching:** TanStack Query (React Query)
+-   **Charts:** Recharts
+
+## 🎨 Creative Atmospheres (Themes)
+
+Personalize your monitoring experience with a wide range of premium themes:
+-   **Tokyo Night:** Cyberpunk-inspired neon violet.
+-   **Matrix Core:** Classic tech green.
+-   **Glacier Blue:** High-contrast arctic blue.
+-   **Vulcan Forge:** Deep inferno red.
+-   ...and over 10 other unique presets.
+
+## 🔒 Security Note
+
+To execute hardware commands (Shutdown, Buzzer, etc.), you must log in via **Settings > UPS Authentication** using your ViewPower administrator credentials. Default credentials are usually `administrator` / `administrator`.
+
+## 📄 License
+
+This project is designed for personal and industrial monitoring use. All rights reserved.

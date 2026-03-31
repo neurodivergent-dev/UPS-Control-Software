@@ -707,3 +707,84 @@ body {
     transform: rotate(360deg);
   }
 }
+
+/* ===== ADVANCED ANIMATIONS & EFFECTS ===== */
+
+@keyframes magnetic-tilt {
+  0% { transform: perspective(1000px) rotateX(0deg) rotateY(0deg); }
+  25% { transform: perspective(1000px) rotateX(2deg) rotateY(-2deg); }
+  50% { transform: perspective(1000px) rotateX(-2deg) rotateY(2deg); }
+  100% { transform: perspective(1000px) rotateX(0deg) rotateY(0deg); }
+}
+
+@keyframes shimmer-gold {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-shimmer-gold {
+  background: linear-gradient(90deg, 
+    transparent 25%, 
+    rgba(255, 215, 0, 0.2) 50%, 
+    transparent 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer-gold 3s infinite;
+}
+
+@keyframes float-heavy {
+  0%, 100% { transform: translateY(0) scale(1); filter: blur(0px); }
+  50% { transform: translateY(-15px) scale(1.02); filter: blur(1px); }
+}
+
+.animate-float-heavy {
+  animation: float-heavy 8s ease-in-out infinite;
+}
+
+/* Enhanced Border Beam with Variable Speed */
+.border-beam-fast::after {
+  animation-duration: 2s !important;
+}
+
+.border-beam-slow::after {
+  animation-duration: 8s !important;
+}
+
+/* Data Stream Effect */
+@keyframes data-stream {
+  0% { transform: translateY(-100%); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateY(100%); opacity: 0; }
+}
+
+.data-stream-container {
+  mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+}
+
+.data-stream-item {
+  animation: data-stream 4s linear infinite;
+}
+
+/* Interactive Glow Trail Utility */
+.glow-trail {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, var(--color-accent), transparent 70%);
+  opacity: 0.1;
+  pointer-events: none;
+  filter: blur(80px);
+  z-index: 0;
+  transition: transform 0.15s ease-out;
+}
+
+/* Glass Card Depth */
+.glass-depth {
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.glass-depth:hover {
+  transform: perspective(1000px) rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg)) scale3d(1.02, 1.02, 1.02);
+}
