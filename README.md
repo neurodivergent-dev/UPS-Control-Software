@@ -2,7 +2,7 @@
 
 ![UPS Dashboard Preview](https://github.com/neurodivergent-dev/UPS-Control-Software/raw/main/public/preview.png)
 
-Modern, ultra-premium UPS (Uninterruptible Power Supply) management and monitoring software. Integrated with the **ViewPower** API, it provides hardware-level control and advanced data visualization.
+Modern, ultra-premium UPS (Uninterruptible Power Supply) management and monitoring software. Designed to be used with **ViewPower** software, it integrates with the **ViewPower** API to provide hardware-level control and advanced data visualization.
 
 ## ✨ Features
 
