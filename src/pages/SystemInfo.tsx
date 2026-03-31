@@ -1,13 +1,12 @@
 import React from 'react';
 import { useUPSData } from '../services/upsService';
-import { Fingerprint, Monitor, Globe, Thermometer, ShieldCheck, Zap, Activity, Battery, Server, Cpu, Shield, Network } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Monitor, Globe, Thermometer, ShieldCheck, Zap, Activity, Battery, Server, Shield, Network } from 'lucide-react';
 
 const SystemInfo: React.FC = () => {
   const { data } = useUPSData();
   const info = data?.workInfo;
 
-  const SpecCard = ({ label, value, icon: Icon, delay }: { label: string, value: string, icon: any, delay: number }) => (
+  const SpecCard = ({ label, value, icon: Icon }: { label: string, value: string, icon: any }) => (
     <div
       className="glass-panel p-10 rounded-[3rem] relative overflow-hidden group transition-all duration-700 hover:border-accent/30"
     >
@@ -40,10 +39,10 @@ const SystemInfo: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-10">
-        <SpecCard label="Model Identity" value="CHAMP 1K 1/1" icon={Monitor} delay={0.1} />
-        <SpecCard label="Grid Topology" value="ONLINE TOWER" icon={Globe} delay={0.2} />
-        <SpecCard label="Thermal Profile" value={`${info?.temperatureView || '0'} °C`} icon={Thermometer} delay={0.3} />
-        <SpecCard label="System Interface" value="ViewPower V1.0" icon={ShieldCheck} delay={0.4} />
+        <SpecCard label="Model Identity" value="CHAMP 1K 1/1" icon={Monitor} />
+        <SpecCard label="Grid Topology" value="ONLINE TOWER" icon={Globe} />
+        <SpecCard label="Thermal Profile" value={`${info?.temperatureView || '0'} °C`} icon={Thermometer} />
+        <SpecCard label="System Interface" value="ViewPower V1.0" icon={ShieldCheck} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
@@ -54,8 +53,8 @@ const SystemInfo: React.FC = () => {
               <h3 className="text-sm font-black uppercase tracking-[0.5em] text-white">Hardware Integrity Check</h3>
             </div>
             <p className="text-sm text-white/40 leading-relaxed font-bold uppercase tracking-tight max-w-lg">
-              Cihaz: <span className="text-white">FSP CHAMP 1KVA ONLINE.</span> <br />
-              Giriş gerilimi {info?.inputVoltage || '220'}V RMS olarak stabilize edilmiştir. Tower tipi yüksek hassasiyetli online şebeke koruması aktif.
+              Device: <span className="text-white">FSP CHAMP 1KVA ONLINE.</span> <br />
+              Input voltage stabilized at {info?.inputVoltage || '220'}V RMS. Tower-type high-precision online grid protection active.
             </p>
             <div className="flex space-x-3">
               <span className="px-4 py-2 bg-accent/10 border border-accent/20 rounded-xl text-[10px] font-black uppercase tracking-widest text-accent italic shadow-[0_0_15px_rgba(var(--color-accent-rgb),0.2)]">1KVA_CHAMP</span>
@@ -90,7 +89,7 @@ const SystemInfo: React.FC = () => {
                 <Battery size={16} className="text-accent/40" />
                 <span className="text-[10px] font-black text-white/30 uppercase tracking-widest">Battery Sync</span>
               </div>
-              <span className="text-sm font-bold text-white tracking-widest">{parseInt(info?.batteryCapacity || '0')}% SYNC</span>
+              <span className="text-sm font-bold text-white tracking-widest">{parseInt(String(info?.batteryCapacity || '0'))}% SYNC</span>
             </div>
           </div>
         </div>

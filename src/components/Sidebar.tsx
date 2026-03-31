@@ -1,10 +1,10 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { 
-  BarChart3, 
-  Activity, 
-  Settings as SettingsIcon, 
-  Info, 
+import {
+  BarChart3,
+  Activity,
+  Settings as SettingsIcon,
+  Info,
   LayoutDashboard,
   ShieldAlert
 } from 'lucide-react';
@@ -37,8 +37,8 @@ const Sidebar: React.FC = () => {
             to={item.path}
             className={({ isActive }) => `
               flex items-center space-x-4 px-6 py-4 rounded-2xl transition-all duration-500 group
-              ${isActive 
-                ? 'bg-accent/10 border border-accent/20 text-accent shadow-glow-accent' 
+              ${isActive
+                ? 'bg-accent/10 border border-accent/20 text-accent shadow-glow-accent'
                 : 'text-white/30 hover:bg-white/5 hover:text-white/60'}
             `}
           >

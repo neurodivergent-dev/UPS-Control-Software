@@ -6,7 +6,7 @@ import PowerFlow from '../components/PowerFlow';
 import { useUPSData, type UPSDataResponse } from '../services/upsService';
 
 const Dashboard: React.FC = () => {
-  const { data, isLoading, isError } = useUPSData();
+  const { data, isLoading } = useUPSData();
   const [voltageHistory, setVoltageHistory] = useState<Array<{ time: string; voltage: number }>>([]);
 
   const mockData: UPSDataResponse = {
@@ -72,14 +72,14 @@ const Dashboard: React.FC = () => {
         />
         <MetricCard
           label="Load Amperage"
-          value={currentData.workInfo.outputCurrent}
+          value={parseFloat(currentData.workInfo.outputCurrent).toFixed(1)}
           unit="A"
           icon={Zap}
           alert={parseFloat(currentData.workInfo.outputCurrent) > 5}
         />
         <MetricCard
             label="Output Load"
-            value={currentData.workInfo.outputLoadPercent}
+            value={parseInt(currentData.workInfo.outputLoadPercent)}
             unit="%"
             icon={Gauge}
             progress={parseInt(currentData.workInfo.outputLoadPercent)}

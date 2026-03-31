@@ -69,22 +69,21 @@ const Diagnostics: React.FC = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
         <DiagnosticCard label="Utility Grid Phase" value={`${info?.inputVoltage || '0'} VAC`} subValue={`${info?.inputFrequency || '0'}Hz Grid Sync`} status="ok" icon={Zap} />
-        <DiagnosticCard label="Thermal Profile" value={`${info?.temperatureView || '0'} °C`} subValue="Cooling Active" status={parseFloat(info?.temperatureView || '0') > 45 ? 'warn' : 'ok'} icon={Thermometer} />
-        <DiagnosticCard label="Load Regulation" value={`${parseInt(info?.outputLoadPercent || '0')}%`} subValue="Processing Task" status={parseInt(info?.outputLoadPercent || '0') > 80 ? 'warn' : 'ok'} icon={Gauge} />
-        <DiagnosticCard label="Cell Capacity" value={`${parseInt(info?.batteryCapacity || '0')}%`} subValue={`${info?.batteryVoltage || '0'} VDC Reserve`} status={parseInt(info?.batteryCapacity || '0') < 30 ? 'warn' : 'ok'} icon={Database} />
+        <DiagnosticCard label="Thermal Profile" value={`${info?.temperatureView || '0'} °C`} subValue="Cooling Active" status={parseFloat(String(info?.temperatureView || '0')) > 45 ? 'warn' : 'ok'} icon={Thermometer} />
+        <DiagnosticCard label="Load Regulation" value={`${parseInt(String(info?.outputLoadPercent || '0'))}%`} subValue="Processing Task" status={parseInt(String(info?.outputLoadPercent || '0')) > 80 ? 'warn' : 'ok'} icon={Gauge} />
+        <DiagnosticCard label="Cell Capacity" value={`${parseInt(String(info?.batteryCapacity || '0'))}%`} subValue={`${info?.batteryVoltage || '0'} VDC Reserve`} status={parseInt(String(info?.batteryCapacity || '0')) < 30 ? 'warn' : 'ok'} icon={Database} />
         <DiagnosticCard label="Back-up Vector" value={`${info?.batteryRemainTime || '0'} Min`} subValue="Estimated Orbit" status="ok" icon={Activity} />
         <DiagnosticCard label="Node Registry" value="Online" subValue="USB-4A0DAEE" status="ok" icon={Cpu} />
       </div>
 
-      <div className="relative group overflow-hidden rounded-[3.5rem] p-10 bg-gradient-to-br from-[#0c0c0c] to-accent/10 border border-white/5 shadow-2xl">
-         <div className="absolute inset-0 bg-white/[0.01] backdrop-blur-3xl pointer-events-none" />
+      <div className="relative group overflow-hidden rounded-[3.5rem] p-10 glass-panel border-white/10 shadow-2xl">
          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
             <div className="space-y-4 max-w-xl text-center md:text-left">
                 <h3 className="text-2xl font-black uppercase tracking-tight text-white italic">Protocol Handshake Log</h3>
-                <div className="font-mono text-xs space-y-3 opacity-40 px-6 border-l-2 border-accent/30">
-                    <p>{`> [${new Date().toLocaleTimeString()}] INITIATING HARDWARE HANDSHAKE...`}</p>
-                    <p>{`> [${new Date().toLocaleTimeString()}] RECEIVING TELEMETRY FROM USB-4A0DAEE`}</p>
-                    <p className="text-accent">{`> [${new Date().toLocaleTimeString()}] ALL SYSTEMS NOMINAL. LINK STABLE.`}</p>
+                <div className="font-mono text-xs space-y-3 px-6 border-l-2 border-accent/30">
+                    <p className="text-white/40">{`> [${new Date().toLocaleTimeString()}] DEVICE: FSP CHAMP 1KVA ONLINE`}</p>
+                    <p className="text-white/40">{`> [${new Date().toLocaleTimeString()}] INPUT VOLTAGE: 226.8V RMS STABILIZED`}</p>
+                    <p className="text-accent font-black">{`> [${new Date().toLocaleTimeString()}] TOWER-TYPE HIGH-PRECISION ONLINE GRID PROTECTION ACTIVE`}</p>
                 </div>
             </div>
             <div className="flex space-x-4">
