@@ -18,6 +18,14 @@ export interface UPSWorkInfo {
   warnings: string[];
 }
 
+export interface GroqResponse {
+  choices: {
+    message: {
+      content: string;
+    };
+  }[];
+}
+
 export interface UPSDataResponse {
   workInfo: UPSWorkInfo;
   version?: string;
@@ -258,4 +266,65 @@ export const useUPSControlMutation = () => {
       queryClient.invalidateQueries({ queryKey: ['upsData'] });
     },
   });
+};
+
+export const analyzeUPSWithAI = async (apiKey: string, data: UPSWorkInfo, model: string = 'llama-3.3-70b-versatile'): Promise<string> => {
+  const systemPrompt = `You are the UPS Core Intelligence. You are not an outside AI; you ARE the UPS system itself. 
+  
+  Your personality:
+  - Technical, precise, and hardware-focused.
+  - You view yourself as the silent guardian of the power grid.
+  - Address the user as 'Operator'. 
+  - When analyzing data, explain what the voltages and capacities mean for system health.
+  
+  Data for analysis:
+  - Battery: ${data.batteryCapacity}% at ${data.batteryVoltage}
+  - Remaining Runtime: ${data.batteryRemainTime} minutes
+  - Input Grid: ${data.inputVoltage} @ ${data.inputFrequency} Hz
+  - Output Logic: ${data.outputVoltage} @ ${data.outputCurrent}
+  - Output Load: ${data.outputLoadPercent}
+  - Thermal State: ${data.temperatureView}
+  - Operational Mode: ${data.workMode} (ECO: ${data.ecomode}, Converter: ${data.converterMode})
+  - Active Warnings: ${data.warnings.length > 0 ? data.warnings.join(', ') : 'None'}
+  
+  Instructions:
+  - Perform a deep technical audit of the power flow and hardware health.
+  - Analyze grid resonance and input frequency stability.
+  - Explain the relationship between load percentages and battery runtime projections.
+  - If warnings are present, prioritize them as critical system anomalies.
+  - Keep your response professional, slightly futuristic, and grounded in electrical engineering.
+  - Report on stability and potential risks.
+  - Keep your response concise (maximum 3-4 paragraphs).
+  - Use technical metaphors (e.g., 'Internal cells are stable', 'Input frequency matches grid resonance').
+  - DO NOT mention you are an AI or based on LLM.`;
+
+  try {
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: model,
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: 'Initiate system status analysis and report to Operator.' }
+        ],
+        temperature: 0.7,
+        max_tokens: 1024,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error?.message || 'Failed to communicate with Groq intelligence.');
+    }
+
+    const result: GroqResponse = await response.json();
+    return result.choices[0].message.content;
+  } catch (error: any) {
+    console.error('Core Analysis Error:', error);
+    throw error;
+  }
 };

@@ -6,6 +6,7 @@ import {
   Info,
   LayoutDashboard,
   Activity,
+  Brain,
   X
 } from 'lucide-react';
 
@@ -18,6 +19,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   const menuItems = [
     { icon: LayoutDashboard, label: 'Console', path: '/' },
     { icon: BarChart3, label: 'Diagnostics', path: '/diagnostics' },
+    { icon: Brain, label: 'Intelligence', path: '/ai-analysis' },
     { icon: Activity, label: 'Event Log', path: '/events' },
     { icon: Info, label: 'System Info', path: '/info' },
     { icon: SettingsIcon, label: 'Settings', path: '/settings' },

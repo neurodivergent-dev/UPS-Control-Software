@@ -9,6 +9,7 @@ import Diagnostics from './pages/Diagnostics';
 import SystemInfo from './pages/SystemInfo';
 import Events from './pages/Events';
 import Settings from './pages/Settings';
+import AIAnalysis from './pages/AIAnalysis';
 import Footer from './components/Footer';
 import BackgroundEffects from './components/BackgroundEffects';
 
@@ -70,6 +71,7 @@ function AppContent() {
               <Route path="/diagnostics" element={<Diagnostics />} />
               <Route path="/events" element={<Events />} />
               <Route path="/info" element={<SystemInfo />} />
+              <Route path="/ai-analysis" element={<AIAnalysis />} />
               <Route path="/settings" element={<Settings setTheme={setTheme} currentTheme={theme || 'tokyo'} />} />
             </Routes>
           </div>

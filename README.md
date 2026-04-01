@@ -11,6 +11,7 @@ Modern, ultra-premium UPS (Uninterruptible Power Supply) management and monitori
 -   **Dynamic Power Flow:** Watch energy transitions between grid and battery modes with high-fidelity animations.
 -   **Hardware Control:** Send UPS test, buzzer control, and system shutdown commands via ViewPower authentication.
 -   **Smart Shutdown Logic:** Customizable local system shutdown scenarios for low battery or scheduled events.
+-   **AI-Powered Core Intelligence:** Bring-Your-Own-Key (BYOK) Groq API integration for deep hardware diagnostics and natural language system analysis.
 -   **Ultra-Premium UI:** Built with Framer Motion, Glassmorphism design principles, and 15+ "Atmosphere" (Theme) presets.
 -   **Diagnostics & Event Logs:** Access detailed system diagnostic data and historical event tracking.
 
