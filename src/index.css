@@ -14,6 +14,7 @@
   --color-bg-rgb: 255, 255, 255;
   --color-bg-secondary: #F0F0F5;
   --color-text: #0D0D0D;
+  --color-text-rgb: 13, 13, 13;
   --color-text-secondary: #404040;
   --color-text-muted: #737373;
   --color-border: rgba(0, 0, 0, 0.12);
@@ -23,11 +24,88 @@
   --font-mono: 'Fira Code', monospace;
 }
 
+/* ===== LIGHT MODE THEME COLOR OVERRIDES ===== */
+:root:not(.dark)[data-theme="tokyo"],
+:root:not(.dark)[data-theme="sapphire"] {
+  --color-accent: #BC00FF;
+  --color-accent-rgb: 188, 0, 255;
+}
+
+:root:not(.dark)[data-theme="solar"] {
+  --color-accent: #FF4E00;
+  --color-accent-rgb: 255, 78, 0;
+}
+
+:root:not(.dark)[data-theme="cyan"] {
+  --color-accent: #00F0FF;
+  --color-accent-rgb: 0, 240, 255;
+}
+
+:root:not(.dark)[data-theme="neon"] {
+  --color-accent: #00FF00;
+  --color-accent-rgb: 0, 255, 0;
+}
+
+:root:not(.dark)[data-theme="emerald"] {
+  --color-accent: #10B981;
+  --color-accent-rgb: 16, 185, 129;
+}
+
+:root:not(.dark)[data-theme="cyberpunk"] {
+  --color-accent: #FFE600;
+  --color-accent-rgb: 255, 230, 0;
+}
+
+:root:not(.dark)[data-theme="vulcan"] {
+  --color-accent: #FF4D00;
+  --color-accent-rgb: 255, 77, 0;
+}
+
+:root:not(.dark)[data-theme="ocean"] {
+  --color-accent: #2DD4BF;
+  --color-accent-rgb: 45, 212, 191;
+}
+
+:root:not(.dark)[data-theme="midnight"] {
+  --color-accent: #60A5FA;
+  --color-accent-rgb: 96, 165, 250;
+}
+
+:root:not(.dark)[data-theme="amber"] {
+  --color-accent: #F59E0B;
+  --color-accent-rgb: 245, 158, 11;
+}
+
+:root:not(.dark)[data-theme="ghost"] {
+  --color-accent: #94A3B8;
+  --color-accent-rgb: 148, 163, 184;
+}
+
+:root:not(.dark)[data-theme="crimson"] {
+  --color-accent: #FF003C;
+  --color-accent-rgb: 255, 0, 60;
+}
+
+:root:not(.dark)[data-theme="gold"] {
+  --color-accent: #FFD700;
+  --color-accent-rgb: 255, 215, 0;
+}
+
+:root:not(.dark)[data-theme="rose"] {
+  --color-accent: #FF66B2;
+  --color-accent-rgb: 255, 102, 178;
+}
+
+:root:not(.dark)[data-theme="lime"] {
+  --color-accent: #BFFF00;
+  --color-accent-rgb: 191, 255, 0;
+}
+
 /* ===== DARK MODE (DEFAULT - no data-theme) ===== */
 .dark:not([data-theme]) {
   color-scheme: dark;
-  --color-accent: #00FF00;
-  --color-accent-rgb: 0, 255, 0;
+  --color-accent: #BC00FF;
+  --color-accent-rgb: 188, 0, 255;
   --color-bg: #030303;
   --color-bg-rgb: 3, 3, 3;
   --color-bg-secondary: #0A0A0A;
@@ -99,8 +177,8 @@
 }
 
 .dark[data-theme="sapphire"] {
-  --color-accent: #0066FF;
-  --color-accent-rgb: 0, 102, 255;
+  --color-accent: #BC00FF;
+  --color-accent-rgb: 188, 0, 255;
   --color-bg: #00040A;
   --color-bg-secondary: #000814;
   --color-text: #FFFFFF;
@@ -414,15 +492,19 @@ body {
 }
 
 :root:not(.dark) .text-white\/40 {
-  color: rgba(13, 13, 13, 0.4) !important;
+  color: rgba(var(--color-text-rgb, 13, 13, 13), 0.4) !important;
+}
+
+:root:not(.dark) .text-white\/50 {
+  color: rgba(var(--color-text-rgb, 13, 13, 13), 0.5) !important;
 }
 
 :root:not(.dark) .text-white\/60 {
-  color: rgba(13, 13, 13, 0.6) !important;
+  color: rgba(var(--color-text-rgb, 13, 13, 13), 0.6) !important;
 }
 
 :root:not(.dark) .text-white\/80 {
-  color: rgba(13, 13, 13, 0.8) !important;
+  color: rgba(var(--color-text-rgb, 13, 13, 13), 0.8) !important;
 }
 
 /* Override bg-white to use theme variable */
@@ -446,21 +528,21 @@ body {
   background: rgba(var(--color-bg-rgb, 245, 245, 247), 0.4) !important;
 }
 
-/* Light mode - ensure bg-white classes stay light */
+/* Light mode - ensure bg-white classes adapt to theme or use distinct color */
 :root:not(.dark) .bg-white\/5 {
-  background: rgba(245, 245, 247, 0.05) !important;
+  background: rgba(0, 0, 0, 0.03) !important;
 }
 
 :root:not(.dark) .bg-white\/10 {
-  background: rgba(245, 245, 247, 0.1) !important;
+  background: rgba(0, 0, 0, 0.05) !important;
 }
 
 :root:not(.dark) .bg-white\/20 {
-  background: rgba(245, 245, 247, 0.2) !important;
+  background: rgba(0, 0, 0, 0.08) !important;
 }
 
 :root:not(.dark) .bg-white\/40 {
-  background: rgba(245, 245, 247, 0.4) !important;
+  background: rgba(0, 0, 0, 0.12) !important;
 }
 
 /* Override border-white to use theme variable */
@@ -643,12 +725,14 @@ body {
   position: absolute;
   inset: 0;
   border: 3px solid transparent;
-  /* Thickened from 1.5px */
   border-radius: inherit;
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
+  /* Prevent bleed into content in build outputs */
+  mask-clip: border-box, content-box;
+  -webkit-mask-clip: border-box, content-box;
 }
 
 .border-beam::after {
@@ -711,30 +795,54 @@ body {
 /* ===== ADVANCED ANIMATIONS & EFFECTS ===== */
 
 @keyframes magnetic-tilt {
-  0% { transform: perspective(1000px) rotateX(0deg) rotateY(0deg); }
-  25% { transform: perspective(1000px) rotateX(2deg) rotateY(-2deg); }
-  50% { transform: perspective(1000px) rotateX(-2deg) rotateY(2deg); }
-  100% { transform: perspective(1000px) rotateX(0deg) rotateY(0deg); }
+  0% {
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+  }
+
+  25% {
+    transform: perspective(1000px) rotateX(2deg) rotateY(-2deg);
+  }
+
+  50% {
+    transform: perspective(1000px) rotateX(-2deg) rotateY(2deg);
+  }
+
+  100% {
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+  }
 }
 
 @keyframes shimmer-gold {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 .animate-shimmer-gold {
-  background: linear-gradient(90deg, 
-    transparent 25%, 
-    rgba(255, 215, 0, 0.2) 50%, 
-    transparent 75%
-  );
+  background: linear-gradient(90deg,
+      transparent 25%,
+      rgba(255, 215, 0, 0.2) 50%,
+      transparent 75%);
   background-size: 200% 100%;
   animation: shimmer-gold 3s infinite;
 }
 
 @keyframes float-heavy {
-  0%, 100% { transform: translateY(0) scale(1); filter: blur(0px); }
-  50% { transform: translateY(-15px) scale(1.02); filter: blur(1px); }
+
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
+  }
+
+  50% {
+    transform: translateY(-15px) scale(1.02);
+    filter: blur(1px);
+  }
 }
 
 .animate-float-heavy {
@@ -752,9 +860,19 @@ body {
 
 /* Data Stream Effect */
 @keyframes data-stream {
-  0% { transform: translateY(-100%); opacity: 0; }
-  50% { opacity: 1; }
-  100% { transform: translateY(100%); opacity: 0; }
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
 }
 
 .data-stream-container {

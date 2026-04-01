@@ -13,21 +13,19 @@ const PowerFlow: React.FC<PowerFlowProps> = ({ workMode, loadPercent }) => {
 
   return (
     <div className={`glass-panel p-6 xs:p-8 sm:p-10 lg:p-12 mb-8 xs:mb-10 sm:mb-12 rounded-[2.5rem] xs:rounded-[3rem] select-none overflow-hidden relative group hover:border-accent/30 hover:-translate-y-2 transition-all duration-500 cursor-default`}>
-      
+
       {/* Premium Rotating Border Light */}
       <div className={`border-beam transition-opacity duration-500 opacity-0 group-hover:opacity-100 ${isBatteryMode ? 'border-beam-red' : ''}`} />
-      
+
       {/* Background Glow */}
       <div className={`absolute -right-16 -top-16 w-80 h-80 blur-[120px] opacity-10 rounded-full transition-colors duration-1000 ${isBatteryMode ? 'bg-red-500' : 'bg-accent'}`} />
-      
+
       {/* Cyber Scanning Line */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-20">
-        <div className="w-full h-1 bg-gradient-to-r from-transparent via-accent to-transparent animate-cyber-scan" />
-      </div>
+      <div className="w-full h-[1.5px] bg-gradient-to-r from-transparent via-accent/40 to-transparent animate-cyber-scan" />
 
       {/* Mobile: Stack vertically, Desktop: Row layout */}
       <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 relative z-10">
-        
+
         {/* Grid Node */}
         <div className="w-full sm:w-auto flex items-center justify-between sm:justify-start space-x-4 p-4 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-accent/20 transition-all duration-500">
           <div className={`p-3 rounded-xl transition-all duration-700 ${!isBatteryMode ? 'bg-accent/10 text-accent shadow-glow-accent' : 'bg-white/5 text-white/20'}`}>
@@ -61,11 +59,11 @@ const PowerFlow: React.FC<PowerFlowProps> = ({ workMode, loadPercent }) => {
                     key={i}
                     initial={{ left: '-10%', opacity: 0 }}
                     animate={{ left: '110%', opacity: [0, 1, 1, 0] }}
-                    transition={{ 
-                      duration: 2, 
-                      repeat: Infinity, 
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
                       delay: i * 0.6,
-                      ease: "easeInOut" 
+                      ease: "easeInOut"
                     }}
                     className="absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_10px_var(--color-accent)]"
                   />
@@ -109,11 +107,11 @@ const PowerFlow: React.FC<PowerFlowProps> = ({ workMode, loadPercent }) => {
                     key={i}
                     initial={{ left: '-10%', opacity: 0 }}
                     animate={{ left: '110%', opacity: [0, 1, 1, 0] }}
-                    transition={{ 
-                      duration: Math.max(0.8, 1.5 - (loadPercent / 50)), 
-                      repeat: Infinity, 
+                    transition={{
+                      duration: Math.max(0.8, 1.5 - (loadPercent / 50)),
+                      repeat: Infinity,
                       delay: i * 0.4,
-                      ease: "linear" 
+                      ease: "linear"
                     }}
                     className={`absolute top-1/2 -translate-y-1/2 w-1 h-1 rounded-full ${isBatteryMode ? 'bg-red-500 shadow-[0_0_8px_#ef4444]' : 'bg-accent shadow-[0_0_8px_var(--color-accent)]'}`}
                   />
@@ -149,7 +147,7 @@ const PowerFlow: React.FC<PowerFlowProps> = ({ workMode, loadPercent }) => {
             <span className={`text-xs font-black ${isBatteryMode ? 'text-red-500' : 'text-white/40'}`}>OPTIMIZED</span>
           </div>
         </div>
-        
+
         {/* Status Indicator */}
         <div className="flex items-center space-x-2 px-4 py-2 rounded-xl bg-white/[0.02] border border-white/5">
           <div className={`w-2 h-2 rounded-full ${isBatteryMode ? 'bg-red-500 animate-pulse' : 'bg-accent animate-pulse'}`} />

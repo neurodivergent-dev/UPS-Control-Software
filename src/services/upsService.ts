@@ -26,10 +26,10 @@ export interface UPSDataResponse {
   hostName?: string;
 }
 
-const API_URL = '/api/ViewPower/workstatus/reqMonitorData';
-const LOGIN_URL = '/api/ViewPower/login/userLogin';
-const CONTROL_URL = '/api/ViewPower/control/realTimeCtrl';
-const SHUTDOWN_URL = '/api/ViewPower/shutdown/updateLocalShutdown';
+const API_URL = '/ViewPower/workstatus/reqMonitorData';
+const LOGIN_URL = '/ViewPower/login/userLogin';
+const CONTROL_URL = '/ViewPower/control/realTimeCtrl';
+const SHUTDOWN_URL = '/ViewPower/shutdown/updateLocalShutdown';
 
 // Session cookie'yi sakla
 let sessionCookie: string | null = null;

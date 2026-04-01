@@ -21,7 +21,7 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
 
   // Tema renklerini tanımla
   const themeColors: Record<string, string> = {
-    cyan: '#00F0FF',
+    cyan: '#BC00FF',
     tokyo: '#BC00FF',
     solar: '#FF4E00',
     neon: '#00FF00',
@@ -29,7 +29,7 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
     gold: '#FFD700',
     rose: '#FF66B2',
     lime: '#BFFF00',
-    sapphire: '#0066FF',
+    sapphire: '#BC00FF',
     emerald: '#10B981',
     midnight: '#60A5FA',
     amber: '#F59E0B',
@@ -122,7 +122,7 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
     { id: 'gold', label: 'Royal Gold', color: '#FFD700', desc: 'Premium Elite' },
     { id: 'rose', label: 'Neon Rose', color: '#FF66B2', desc: 'Synthwave Pink' },
     { id: 'lime', label: 'Toxic Lime', color: '#BFFF00', desc: 'Radioactive Green' },
-    { id: 'sapphire', label: 'Sapphire Node', color: '#0066FF', desc: 'Deep Sea Blue' },
+    { id: 'sapphire', label: 'Sapphire Node', color: '#BC00FF', desc: 'Neon Purple' },
     { id: 'emerald', label: 'Emerald Grid', color: '#10B981', desc: 'Natural Green' },
     { id: 'midnight', label: 'Midnight Frost', color: '#60A5FA', desc: 'Arctic Ice Blue' },
     { id: 'amber', label: 'Amber Alert', color: '#F59E0B', desc: 'Industrial Glow' },
@@ -281,7 +281,7 @@ const Settings: React.FC<SettingsProps> = ({ setTheme, currentTheme }) => {
           {[
             { id: 'light', label: 'Light', icon: Sun, color: '#F5F5F7' },
             { id: 'dark', label: 'Dark', icon: Moon, color: '#1A1A1A' },
-            { id: 'system', label: 'System', icon: Monitor, color: '#0066FF' },
+            { id: 'system', label: 'System', icon: Monitor, color: '#BC00FF' },
           ].map(({ id, label, icon: Icon, color }) => (
             <button
               key={id}
