@@ -1,0 +1,18 @@
+{
+  "chat": {
+    "header": "CORE CHAT",
+    "badge": "NEURAL_LINK",
+    "placeholder": "Query the system core...",
+    "clear_title": "CLEAR_CORE_LOGS",
+    "clear_message": "This action will permanently erase all communication records from the system core. Continue?",
+    "purge": "PURGE RECORDS",
+    "abort": "ABORT",
+    "error_api": "ERROR: NO_CORE_IDENTITY_FOUND. Please go to Control Panel and insert your Groq API Key.",
+    "error_comm": "COMMUNICATION ERROR: {{error}}",
+    "status": {
+      "processing": "PROCESSING",
+      "system_core": "SYSTEM_CORE",
+      "operator": "OPERATOR"
+    }
+  }
+}

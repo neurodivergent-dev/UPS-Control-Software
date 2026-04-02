@@ -1,0 +1,18 @@
+{
+  "chat": {
+    "header": "SİSTEM MESAJLAŞMA",
+    "badge": "NÖRAL_BAĞ",
+    "placeholder": "Sistem çekirdeğine sorgu gönder...",
+    "clear_title": "GÜNLÜKLERİ_TEMİZLE",
+    "clear_message": "Bu işlem tüm iletişim kayıtlarını sistem çekirdeğinden kalıcı olarak silecektir. Devam edilsin mi?",
+    "purge": "KAYITLARI SİL",
+    "abort": "İPTAL",
+    "error_api": "HATA: ÇEKİRDEK_KİMLİĞİ_BULUNAMADI. Lütfen Kontrol Paneline giderek API Anahtarınızı girin.",
+    "error_comm": "İLETİŞİM HATASI: {{error}}",
+    "status": {
+      "processing": "İŞLENİYOR",
+      "system_core": "SİSTEM_ÇEKİRDEĞİ",
+      "operator": "OPERATÖR"
+    }
+  }
+}
