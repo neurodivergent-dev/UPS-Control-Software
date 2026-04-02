@@ -417,8 +417,8 @@ export default function AIChatScreen() {
   return (
     <KeyboardAvoidingView
       style={[styles.root, { backgroundColor: theme.colors.background }]}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
+      behavior="padding"
+      keyboardVerticalOffset={0}
     >
       <StatusBar
         barStyle={isDark ? "light-content" : "dark-content"}
