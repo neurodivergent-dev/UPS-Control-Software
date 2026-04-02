@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
 import { Database, Monitor, Globe, Thermometer, ShieldCheck, Zap, Activity, Battery } from 'lucide-react-native';
 import { useUPSData } from '../../services/upsService';
+import { useTranslation } from 'react-i18next';
 import Animated, { FadeIn, FadeInDown, FadeInUp } from 'react-native-reanimated';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -35,6 +36,7 @@ const HardwareCheckLabel = ({ text, isDark, palette }: any) => (
 
 export default function HardwareScreen() {
   const { theme, isDark, palette, serverIp } = useTheme();
+  const { t } = useTranslation();
   const { data } = useUPSData(serverIp);
   const insets = useSafeAreaInsets();
 
@@ -42,7 +44,7 @@ export default function HardwareScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <ScrollView 
+      <ScrollView
         contentContainerStyle={[styles.scrollContent, { paddingTop: insets.top + 20, paddingBottom: insets.bottom + 40 }]}
         showsVerticalScrollIndicator={false}
       >
@@ -53,18 +55,18 @@ export default function HardwareScreen() {
               <Database size={20} color="#fff" />
             </View>
             <View>
-              <Text style={[styles.headerTitle, { color: theme.colors.text.primary, fontFamily: 'Outfit_800ExtraBold' }]}>GRID HARDWARE</Text>
-              <Text style={[styles.headerSubtitle, { color: theme.colors.text.tertiary, fontFamily: 'Outfit_600SemiBold' }]}>FSP CHAMP 1KVA ONLINE SERIES</Text>
+              <Text style={[styles.headerTitle, { color: theme.colors.text.primary, fontFamily: 'Outfit_800ExtraBold' }]}>{t('hardware.header')}</Text>
+              <Text style={[styles.headerSubtitle, { color: theme.colors.text.tertiary, fontFamily: 'Outfit_600SemiBold' }]}>{t('hardware.subtitle')}</Text>
             </View>
           </View>
         </Animated.View>
 
         {/* Top Info Cards Grid */}
         <View style={styles.infoGrid}>
-          <InfoCard icon={Monitor} label="Model Identity" value="CHAMP 1K 1/1" isDark={isDark} palette={palette} delay={100} />
-          <InfoCard icon={Globe} label="Grid Topology" value="ONLINE TOWER" isDark={isDark} palette={palette} delay={200} />
-          <InfoCard icon={Thermometer} label="Thermal Profile" value={`${parseFloat(workInfo?.temperatureView || '0')} °C`} isDark={isDark} palette={palette} delay={300} />
-          <InfoCard icon={ShieldCheck} label="System Interface" value={`VIEWPOWER ${data?.version || 'V1.0'}`} isDark={isDark} palette={palette} delay={400} />
+          <InfoCard icon={Monitor} label={t('hardware.info.model')} value="CHAMP 1K 1/1" isDark={isDark} palette={palette} delay={100} />
+          <InfoCard icon={Globe} label={t('hardware.info.topology')} value="ONLINE TOWER" isDark={isDark} palette={palette} delay={200} />
+          <InfoCard icon={Thermometer} label={t('hardware.info.thermal')} value={`${parseFloat(workInfo?.temperatureView || '0')} °C`} isDark={isDark} palette={palette} delay={300} />
+          <InfoCard icon={ShieldCheck} label={t('hardware.info.interface')} value={`VIEWPOWER ${data?.version || 'V1.0'}`} isDark={isDark} palette={palette} delay={400} />
         </View>
 
         {/* Hardware Integrity Check Section */}
@@ -72,20 +74,25 @@ export default function HardwareScreen() {
           <GlowCard palette={palette} isDark={isDark} borderRadius={28}>
             <View style={styles.integrityCard}>
               <View style={styles.integrityHeader}>
-                 <View style={[styles.dot, { backgroundColor: palette.primary }]} />
-                 <Text style={[styles.integrityTitle, { color: isDark ? '#fff' : '#000', fontFamily: 'Outfit_800ExtraBold' }]}>HARDWARE INTEGRITY CHECK</Text>
+                <View style={[styles.dot, { backgroundColor: palette.primary }]} />
+                <Text style={[styles.integrityTitle, { color: isDark ? '#fff' : '#000', fontFamily: 'Outfit_800ExtraBold' }]}>{t('hardware.integrity.title')}</Text>
               </View>
-              
+
               <View style={styles.integrityBody}>
                 <Text style={[styles.integrityText, { color: isDark ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.6)', fontFamily: 'Outfit_500Medium' }]}>
-                  DEVICE: <Text style={{ color: palette.primary }}>FSP CHAMP 1KVA ONLINE.</Text>{"\n"}
-                  INPUT VOLTAGE STABILIZED AT {parseFloat(workInfo?.inputVoltage || '0')}V RMS. TOWER-TYPE HIGH-PRECISION ONLINE GRID PROTECTION ACTIVE.
+                  {t('hardware.integrity.description', { voltage: parseFloat(workInfo?.inputVoltage || '0') }).split('<colored>').map((part, i) => {
+                    if (part.includes('</colored>')) {
+                      const [colored, rest] = part.split('</colored>');
+                      return <React.Fragment key={i}><Text style={{ color: palette.primary }}>{colored}</Text>{rest}</React.Fragment>;
+                    }
+                    return part;
+                  })}
                 </Text>
               </View>
 
               <View style={styles.checkLabelsRow}>
-                 <HardwareCheckLabel text="1KVA_CHAMP" isDark={isDark} palette={palette} />
-                 <HardwareCheckLabel text="ONLINE_UPS" isDark={isDark} palette={palette} />
+                <HardwareCheckLabel text={t('hardware.labels.champ')} isDark={isDark} palette={palette} />
+                <HardwareCheckLabel text={t('hardware.labels.online')} isDark={isDark} palette={palette} />
               </View>
             </View>
           </GlowCard>
@@ -94,35 +101,35 @@ export default function HardwareScreen() {
         {/* Regulation Status Section */}
         <Animated.View entering={FadeInUp.delay(600)} style={styles.sectionMargin}>
           <GlowCard palette={palette} isDark={isDark} borderRadius={28}>
-             <View style={styles.regulationCard}>
-                <View style={styles.regulationHeader}>
-                   <View style={[styles.regIconBg, { backgroundColor: palette.primary + '20' }]}>
-                      <Zap size={18} color={palette.primary} fill={palette.primary + '40'} />
-                   </View>
-                   <View>
-                      <Text style={[styles.regLabel, { color: isDark ? palette.primary + '80' : 'rgba(0,0,0,0.4)', fontFamily: 'Outfit_700Bold' }]}>REGULATION STATUS</Text>
-                      <Text style={[styles.regValue, { color: isDark ? '#fff' : '#000', fontFamily: 'Outfit_800ExtraBold' }]}>{workInfo?.workMode?.toUpperCase() || 'LINE MODE'}</Text>
-                   </View>
+            <View style={styles.regulationCard}>
+              <View style={styles.regulationHeader}>
+                <View style={[styles.regIconBg, { backgroundColor: palette.primary + '20' }]}>
+                  <Zap size={18} color={palette.primary} fill={palette.primary + '40'} />
+                </View>
+                <View>
+                  <Text style={[styles.regLabel, { color: isDark ? palette.primary + '80' : 'rgba(0,0,0,0.4)', fontFamily: 'Outfit_700Bold' }]}>{t('hardware.regulation.title')}</Text>
+                  <Text style={[styles.regValue, { color: isDark ? '#fff' : '#000', fontFamily: 'Outfit_800ExtraBold' }]}>{workInfo?.workMode?.toUpperCase() || 'LINE MODE'}</Text>
+                </View>
+              </View>
+
+              <View style={styles.regStats}>
+                <View style={[styles.regStatRow, { backgroundColor: palette.primary + '08' }]}>
+                  <View style={styles.regStatLeft}>
+                    <Activity size={14} color={palette.primary} />
+                    <Text style={[styles.regStatLabel, { color: isDark ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.5)', fontFamily: 'Outfit_700Bold' }]}>{t('hardware.regulation.load')}</Text>
+                  </View>
+                  <Text style={[styles.regStatValue, { color: isDark ? '#fff' : '#000', fontFamily: 'Outfit_800ExtraBold' }]}>{t('hardware.regulation.load_value', { percent: parseInt(workInfo?.outputLoadPercent || '0') })}</Text>
                 </View>
 
-                <View style={styles.regStats}>
-                    <View style={[styles.regStatRow, { backgroundColor: palette.primary + '08' }]}>
-                       <View style={styles.regStatLeft}>
-                          <Activity size={14} color={palette.primary} />
-                          <Text style={[styles.regStatLabel, { color: isDark ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.5)', fontFamily: 'Outfit_700Bold' }]}>LOAD REGULATION</Text>
-                       </View>
-                       <Text style={[styles.regStatValue, { color: isDark ? '#fff' : '#000', fontFamily: 'Outfit_800ExtraBold' }]}>{parseInt(workInfo?.outputLoadPercent || '0')}% LOAD</Text>
-                    </View>
-
-                    <View style={[styles.regStatRow, { backgroundColor: palette.primary + '08' }]}>
-                       <View style={styles.regStatLeft}>
-                          <Battery size={14} color={palette.primary} />
-                          <Text style={[styles.regStatLabel, { color: isDark ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.5)', fontFamily: 'Outfit_700Bold' }]}>BATTERY SYNC</Text>
-                       </View>
-                       <Text style={[styles.regStatValue, { color: isDark ? '#fff' : '#000', fontFamily: 'Outfit_800ExtraBold' }]}>{parseInt(workInfo?.batteryCapacity as any || '0')}% SYNC</Text>
-                    </View>
+                <View style={[styles.regStatRow, { backgroundColor: palette.primary + '08' }]}>
+                  <View style={styles.regStatLeft}>
+                    <Battery size={14} color={palette.primary} />
+                    <Text style={[styles.regStatLabel, { color: isDark ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.5)', fontFamily: 'Outfit_700Bold' }]}>{t('hardware.regulation.sync')}</Text>
+                  </View>
+                  <Text style={[styles.regStatValue, { color: isDark ? '#fff' : '#000', fontFamily: 'Outfit_800ExtraBold' }]}>{t('hardware.regulation.sync_value', { percent: parseInt(workInfo?.batteryCapacity as any || '0') })}</Text>
                 </View>
-             </View>
+              </View>
+            </View>
           </GlowCard>
         </Animated.View>
 
@@ -141,19 +148,19 @@ const styles = StyleSheet.create({
   headerSubtitle: { fontSize: 10, letterSpacing: 1.5, marginTop: 2 },
   infoGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12, marginBottom: 24 },
   infoCardWrapper: { width: (width - 52) / 2 },
-  infoCard: { 
-    borderRadius: 20, 
-    padding: 12, 
-    borderWidth: 1.5, 
-    flexDirection: 'row', 
-    alignItems: 'center', 
+  infoCard: {
+    borderRadius: 20,
+    padding: 12,
+    borderWidth: 1.5,
+    flexDirection: 'row',
+    alignItems: 'center',
     gap: 10,
-    height: 100, // Fixed height for absolute symmetry
+    height: 100,
   },
   infoIconBg: { width: 32, height: 32, borderRadius: 10, justifyContent: 'center', alignItems: 'center' },
   infoContent: { flex: 1, gap: 2 },
   infoLabel: { fontSize: 8, letterSpacing: 0.5, opacity: 0.7 },
-  infoValue: { fontSize: 10.5, lineHeight: 14 }, // Optimized size for fixed height
+  infoValue: { fontSize: 10.5, lineHeight: 14 },
   sectionMargin: { marginBottom: 16 },
   integrityCard: { borderRadius: 28, padding: 24, borderWidth: 1.5 },
   integrityHeader: { flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 16 },

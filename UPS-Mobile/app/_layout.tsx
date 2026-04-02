@@ -14,8 +14,6 @@ export {
   ErrorBoundary,
 } from 'expo-router';
 
-import { KeyboardProvider } from 'react-native-keyboard-controller';
-
 // Create a client for React Query
 const queryClient = new QueryClient();
 
@@ -61,12 +59,10 @@ function RootLayoutNav() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        <KeyboardProvider>
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-          </Stack>
-        </KeyboardProvider>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+        </Stack>
       </ThemeProvider>
     </QueryClientProvider>
   );

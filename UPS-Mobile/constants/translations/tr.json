@@ -14,5 +14,181 @@
       "system_core": "SİSTEM_ÇEKİRDEĞİ",
       "operator": "OPERATÖR"
     }
+  },
+  "settings": {
+    "header": "KONTROL PANELİ",
+    "subtitle": "SİSTEM_KONFİGÜRASYONU_AKTİF",
+    "sections": {
+      "palette": "PALET MOTORU",
+      "appearance": "GÖRÜNÜM",
+      "network": "AĞ YAPILANDIRMASI",
+      "neural": "NÖRAL BAĞ YETKİLENDİRME",
+      "language": "ARAYÜZ YERELLEŞTİRME"
+    },
+    "language": {
+      "title": "SİSTEM DİLİ",
+      "description": "UPS Kontrol çekirdeği için ana arayüz dilini seçin.",
+      "current": "AKTİF_YERELLEŞTİRME",
+      "selector": "YERELLEŞTİRME_PORTALINI_AÇ"
+    },
+    "appearance": {
+      "light": "GÜNDÜZ",
+      "dark": "GECE",
+      "system": "SİSTEM"
+    },
+    "network": {
+      "description": "Yerel telemetriyi donanım çekirdeğiyle senkronize etmek için hedef UPS sunucu adresini tanımlayın.",
+      "label": "SUNUCU IP ADRESİ",
+      "placeholder": "Örn: 192.168.1.100",
+      "button": "AĞI BAŞLAT"
+    },
+    "neural": {
+      "description": "Groq destekli donanım teşhislerini etkinleştirmek için BYOK (Kendi Anahtarını Getir) bağlantısını kurun.",
+      "key_label": "API ANAHTARI",
+      "key_placeholder": "Groq API Anahtarını Girin...",
+      "model_label": "MODEL KİMLİĞİ",
+      "model_placeholder": "Model ID...",
+      "button": "YAPILANDIRMAYI KAYDET"
+    },
+    "system": {
+      "core_engine": "ÇEKİRDEK_MOTORU",
+      "stable": "STABİL",
+      "active_atmosphere": "AKTİF_ATMOSFER"
+    },
+    "toast": {
+      "title": "GÜVENLİ BAĞLANTI KURULDU",
+      "subtitle": "AI ÇEKİRDEK YAPILANDIRMASI SENKRONİZE EDİLDİ"
+    }
+  },
+  "dashboard": {
+    "status_online": "SİSTEM ÇEVRİMİÇİ",
+    "battery": {
+      "title": "ENERJİ_REZERVI",
+      "status": "STABİL",
+      "remaining": "{{hours}}S {{mins}}D KALAN"
+    },
+    "voltage": {
+      "title": "GİRİŞ VOLTAJI",
+      "unit": "V RMS",
+      "min": "MİN",
+      "max": "MAKS",
+      "avg": "ORT",
+      "footer": "GERÇEK ZAMANLI DENETİM",
+      "samples": "{{count}} ÖRNEK"
+    },
+    "cards": {
+      "output_voltage": "Çıkış Voltajı",
+      "system_flow": "Sistem Akışı",
+      "thermal_core": "Termal Çekirdek",
+      "active_load": "Aktif Yük"
+    }
+  },
+  "logs": {
+    "header": "OLAY UFUKU",
+    "subtitle": "ZAMANSAL DÜĞÜM AKTİVİTE KAYDI",
+    "stream_badge": "GERÇEK ZAMANLI AKIŞ",
+    "section_analysis": "KRİTİK VEKTÖR ANALİZİ",
+    "section_history": "ZAMANSAL DÜĞÜM GEÇMİŞİ",
+    "shield": {
+      "label": "KALKAN DURUMU",
+      "text": "TÜM SİSTEMLER NORMAL. DONANIM İHLALİ YOK."
+    },
+    "status": {
+      "info": "BİLGİ",
+      "warn": "UYARI",
+      "error": "HATA"
+    }
+  },
+  "hardware": {
+    "header": "IZGARA DONANIMI",
+    "subtitle": "FSP CHAMP 1KVA ONLINE SERİSİ",
+    "info": {
+      "model": "Model Kimliği",
+      "topology": "Şebeke Topolojisi",
+      "thermal": "Termal Profil",
+      "interface": "Sistem Arayüzü"
+    },
+    "integrity": {
+      "title": "DONANIM BÜTÜNLÜK KONTROLÜ",
+      "description": "CİHAZ: <colored>FSP CHAMP 1KVA ONLINE.</colored>\nGİRİŞ VOLTAJI {{voltage}}V RMS DEĞERİNDE SABİTLENDİ. KULE TİPİ YÜKSEK HASSASİYETLİ ÇEVRİMİÇİ ŞEBEKE KORUMASI AKTİF."
+    },
+    "regulation": {
+      "title": "DÜZENLEME DURUMU",
+      "load": "YÜK DÜZENLEME",
+      "sync": "BATARYA SENKRON",
+      "load_value": "%{{percent}} YÜK",
+      "sync_value": "%{{percent}} SENKRON"
+    },
+    "labels": {
+      "champ": "1KVA_CHAMP",
+      "online": "ONLINE_UPS"
+    }
+  },
+  "diagnostics": {
+    "header": "TEŞHİS MERKEZİ",
+    "subtitle": "SEKTÖR 7 BÜTÜNLÜK PROTOKOLÜ",
+    "link_strength": "BAĞLANTI GÜCÜ",
+    "secure": "%100 GÜVENLİ",
+    "footer": "SİSTEM_ÇEKİRDEĞİ_AKTİF // SON_SENKRON: {{time}}",
+    "status": {
+      "nominal": "NORMAL",
+      "critical": "KRİTİK",
+      "low": "DÜŞÜK"
+    },
+    "cards": {
+      "grid_phase": {
+        "title": "ŞEBEKE FAZI",
+        "subtitle": "{{freq}}HZ ŞEBEKE SENKRON"
+      },
+      "thermal": {
+        "title": "TERMAL PROFİL",
+        "subtitle": "SOĞUTMA AKTİF"
+      },
+      "load": {
+        "title": "YÜK DÜZENLEME",
+        "subtitle": "İŞLEM YÜRÜTÜLÜYOR"
+      },
+      "capacity": {
+        "title": "HÜCRE KAPASİTESİ",
+        "subtitle": "{{voltage}} VDC REZERV"
+      },
+      "backup": {
+        "title": "YEDEKLEME VEKTÖRÜ",
+        "subtitle": "TAHMİNİ YÖRÜNGE"
+      },
+      "node": {
+        "title": "DÜĞÜM KAYDI",
+        "subtitle": "BAĞLANTI AKTİF"
+      }
+    }
+  },
+  "tabs": {
+    "monitor": "İzleme",
+    "diagnostics": "Tanılama",
+    "hardware": "Donanım",
+    "logs": "Kayıtlar",
+    "ai_audit": "Yapay Zeka",
+    "control": "Panel"
+  },
+  "ai_audit": {
+    "header": "ÇEKİRDEK ZEKA",
+    "subtitle": "NÖRAL BAĞ VE SİSTEM TEŞHİSİ",
+    "telemetry_section": "CANLI TELEMETRİ",
+    "output_section": "ZEKA ÇIKTISI",
+    "labels": {
+      "core_health": "ÇEKİRDEK SAĞLIĞI",
+      "grid_input": "ŞEBEKE GİRİŞİ",
+      "logic_mode": "MANTIK MODU"
+    },
+    "buttons": {
+      "initiate": "ANALİZİ BAŞLAT",
+      "update_auth": "KİMLİK DOĞRULAMA ANAHTARINI GÜNCELLE",
+      "flush": "YEREL_ÖNBELLEĞİ_TEMİZLE"
+    },
+    "status": {
+      "analyzing": "VERİ AKIŞI İŞLENİYOR...",
+      "awaiting": "BAĞLANTI BEKLENİYOR",
+      "awaiting_sub": "KONTROL MERKEZİ ÜZERİNDEN DONANIM ANALİZİ BAŞLATIN"
+    }
   }
 }

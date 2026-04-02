@@ -1,13 +1,15 @@
 import React from 'react';
 import { Tabs } from 'expo-router';
-import { Monitor, Cpu, ShieldCheck, Database, Brain, Settings as SettingsIcon, History as LucideHistory, Activity, MessageSquare } from 'lucide-react-native';
+import { Monitor, Database, ShieldCheck, History as LucideHistory, Brain, Settings as SettingsIcon } from 'lucide-react-native';
 import { BlurView } from 'expo-blur';
-import { StyleSheet, Platform, View } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 
 export default function TabLayout() {
   const { theme, isDark } = useTheme();
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
 
   return (
@@ -41,7 +43,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Monitor',
+          title: t('tabs.monitor'),
           tabBarIcon: ({ color, focused }) => (
             <Monitor
               size={22}
@@ -54,7 +56,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="diagnostics"
         options={{
-          title: 'Diagnostics',
+          title: t('tabs.diagnostics'),
           tabBarIcon: ({ color, focused }) => (
             <ShieldCheck
               size={22}
@@ -67,7 +69,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="hardware"
         options={{
-          title: 'Hardware',
+          title: t('tabs.hardware'),
           tabBarIcon: ({ color, focused }) => (
             <Database
               size={22}
@@ -80,7 +82,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="logs"
         options={{
-          title: 'Logs',
+          title: t('tabs.logs'),
           tabBarIcon: ({ color, focused }) => (
             <LucideHistory
               size={22}
@@ -90,7 +92,6 @@ export default function TabLayout() {
           ),
         }}
       />
-
       <Tabs.Screen
         name="chat"
         options={{
@@ -100,7 +101,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="two"
         options={{
-          title: 'AI Audit',
+          title: t('tabs.ai_audit'),
           tabBarIcon: ({ color, focused }) => (
             <Brain
               size={22}
@@ -113,7 +114,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="settings"
         options={{
-          title: 'Control',
+          title: t('tabs.control'),
           tabBarIcon: ({ color, focused }) => (
             <SettingsIcon
               size={22}

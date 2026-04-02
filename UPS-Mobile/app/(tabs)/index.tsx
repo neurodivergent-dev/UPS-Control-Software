@@ -4,14 +4,15 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Power, Activity, Fan, Layers, Clock, Shield, Cpu, Terminal, Battery, Zap, Thermometer } from 'lucide-react-native';
 import { useUPSData } from '../../services/upsService';
-import Animated, { 
-   FadeIn, 
-   FadeInUp, 
-   useSharedValue, 
-   useAnimatedStyle, 
-   withTiming, 
-   withRepeat, 
-   withSequence 
+import { useTranslation } from 'react-i18next';
+import Animated, {
+   FadeIn,
+   FadeInUp,
+   useSharedValue,
+   useAnimatedStyle,
+   withTiming,
+   withRepeat,
+   withSequence
 } from 'react-native-reanimated';
 import { useTheme } from '../../contexts/ThemeContext';
 import { Svg, Path, Defs, LinearGradient as SvgGradient, Stop, Rect } from 'react-native-svg';
@@ -29,6 +30,7 @@ import { GlowCard } from '../../components/GlowCard';
 
 // 1. BATTERY STATION
 const BatteryMonitor = ({ capacity, remainTime, voltage, theme, palette, isDark }: any) => {
+   const { t } = useTranslation();
    const cap = parseInt(capacity) || 0;
    const hours = Math.floor(remainTime / 60);
    const mins = remainTime % 60;
@@ -39,10 +41,10 @@ const BatteryMonitor = ({ capacity, remainTime, voltage, theme, palette, isDark 
             <View style={styles.batteryMainHeader}>
                <View style={styles.bTitleRow}>
                   <Battery size={16} color={palette.primary} strokeWidth={2.5} />
-                  <Text style={[styles.bTitleText, { color: isDark ? palette.primary : '#000', fontFamily: 'Outfit_700Bold' }]}>ENERGY_RESERVE</Text>
+                  <Text style={[styles.bTitleText, { color: isDark ? palette.primary : '#000', fontFamily: 'Outfit_700Bold' }]}>{t('dashboard.battery.title')}</Text>
                </View>
                <View style={[styles.bStatusBadge, { backgroundColor: palette.primary + '15' }]}>
-                  <Text style={[styles.bStatusText, { color: palette.primary, fontFamily: 'Outfit_900Black' }]}>STABLE</Text>
+                  <Text style={[styles.bStatusText, { color: palette.primary, fontFamily: 'Outfit_900Black' }]}>{t('dashboard.battery.status')}</Text>
                </View>
             </View>
 
@@ -52,7 +54,7 @@ const BatteryMonitor = ({ capacity, remainTime, voltage, theme, palette, isDark 
                   <View style={styles.bRuntimeRow}>
                      <Clock size={12} color={palette.primary + '80'} />
                      <Text style={[styles.bRuntimeText, { color: isDark ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.6)', fontFamily: 'Outfit_700Bold' }]}>
-                        {hours}H {mins}M REMAINING
+                        {t('dashboard.battery.remaining', { hours, mins })}
                      </Text>
                   </View>
                </View>
@@ -88,6 +90,7 @@ const BatteryMonitor = ({ capacity, remainTime, voltage, theme, palette, isDark 
 
 // 2. VOLTAGE MONITOR (FIXED FOR THEME ENGINE)
 const VoltageDisplay = ({ voltage, frequency, theme, palette, isDark }: any) => {
+   const { t } = useTranslation();
    const currentV = parseFloat(voltage) || 0;
    const [history, setHistory] = useState<number[]>([currentV, currentV, currentV, currentV, currentV]);
 
@@ -114,7 +117,7 @@ const VoltageDisplay = ({ voltage, frequency, theme, palette, isDark }: any) => 
             <View style={styles.voltageHeader}>
                <View style={styles.vTitleRow}>
                   <View style={[styles.vDot, { backgroundColor: palette.primary }]} />
-                  <Text style={[styles.vLabel, { color: palette.primary, fontFamily: 'Outfit_700Bold' }]}>INPUT VOLTAGE</Text>
+                  <Text style={[styles.vLabel, { color: palette.primary, fontFamily: 'Outfit_700Bold' }]}>{t('dashboard.voltage.title')}</Text>
                </View>
                <View style={[styles.vFreqBadge, { backgroundColor: palette.primary + '15' }]}>
                   <Text style={[styles.vFreqText, { color: palette.primary, fontFamily: 'Outfit_700Bold' }]}>{parseFloat(frequency)} Hz</Text>
@@ -123,20 +126,20 @@ const VoltageDisplay = ({ voltage, frequency, theme, palette, isDark }: any) => 
 
             <View style={styles.vMainRow}>
                <Text style={[styles.vMainValue, { color: isDark ? '#fff' : '#000', fontFamily: 'Outfit_900Black' }]}>{currentV}</Text>
-               <Text style={[styles.vMainUnit, { color: palette.primary + '60', fontFamily: 'Outfit_700Bold' }]}>V RMS</Text>
+               <Text style={[styles.vMainUnit, { color: palette.primary + '60', fontFamily: 'Outfit_700Bold' }]}>{t('dashboard.voltage.unit')}</Text>
             </View>
 
             <View style={styles.vStatsGrid}>
                <View style={[styles.vStatBox, { backgroundColor: palette.primary + '10' }]}>
-                  <Text style={[styles.vStatLabel, { color: palette.primary + '60' }]}>MIN</Text>
+                  <Text style={[styles.vStatLabel, { color: palette.primary + '60' }]}>{t('dashboard.voltage.min')}</Text>
                   <Text style={[styles.vStatValue, { color: isDark ? '#fff' : '#000' }]}>{minV}V</Text>
                </View>
                <View style={[styles.vStatBox, { backgroundColor: palette.primary + '20' }]}>
-                  <Text style={[styles.vStatLabel, { color: palette.primary }]}>AVG</Text>
+                  <Text style={[styles.vStatLabel, { color: palette.primary }]}>{t('dashboard.voltage.avg')}</Text>
                   <Text style={[styles.vStatValue, { color: palette.primary }]}>{avgV}V</Text>
                </View>
                <View style={[styles.vStatBox, { backgroundColor: palette.primary + '10' }]}>
-                  <Text style={[styles.vStatLabel, { color: palette.primary + '60' }]}>MAX</Text>
+                  <Text style={[styles.vStatLabel, { color: palette.primary + '60' }]}>{t('dashboard.voltage.max')}</Text>
                   <Text style={[styles.vStatValue, { color: isDark ? '#fff' : '#000' }]}>{maxV}V</Text>
                </View>
             </View>
@@ -154,8 +157,8 @@ const VoltageDisplay = ({ voltage, frequency, theme, palette, isDark }: any) => 
             </View>
 
             <View style={[styles.vFooter, { borderTopColor: palette.primary + '10' }]}>
-               <Text style={[styles.vFooterLabel, { color: palette.primary + '60' }]}>REAL-TIME AUDIT</Text>
-               <Text style={[styles.vFooterLabel, { color: palette.primary + '60' }]}>{history.length} SAMPLES</Text>
+               <Text style={[styles.vFooterLabel, { color: palette.primary + '60' }]}>{t('dashboard.voltage.footer')}</Text>
+               <Text style={[styles.vFooterLabel, { color: palette.primary + '60' }]}>{t('dashboard.voltage.samples', { count: history.length })}</Text>
             </View>
          </View>
       </GlowCard>
@@ -216,6 +219,7 @@ const PulseBadge = ({ color }: { color: string }) => {
 
 export default function MonitorScreen() {
    const { theme, isDark, palette, apiKey, modelId, serverIp } = useTheme();
+   const { t } = useTranslation();
    const { data, isLoading } = useUPSData(serverIp);
    const [time, setTime] = useState(new Date());
    const insets = useSafeAreaInsets();
@@ -284,10 +288,10 @@ export default function MonitorScreen() {
 
             {/* 3. GRID CARDS */}
             <View style={styles.grid}>
-               <TechCard icon={Power} label="Out Voltage" value={parseFloat(workInfo?.outputVoltage || '0').toString()} unit="VAC" isDark={isDark} palette={palette} delay={300} />
-               <TechCard icon={Activity} label="System Flow" value={parseFloat(workInfo?.outputCurrent || '0').toString()} unit="A" isDark={isDark} palette={palette} delay={400} />
-               <TechCard icon={Fan} label="Thermal Core" value={parseFloat(workInfo?.temperatureView || '0').toString()} unit="°C" isDark={isDark} palette={palette} delay={500} />
-               <TechCard icon={Layers} label="Active Load" value={parseInt(workInfo?.outputLoadPercent || '0').toString()} unit="%" isDark={isDark} palette={palette} delay={600} />
+               <TechCard icon={Power} label={t('dashboard.cards.output_voltage')} value={parseFloat(workInfo?.outputVoltage || '0').toString()} unit="VAC" isDark={isDark} palette={palette} delay={300} />
+               <TechCard icon={Activity} label={t('dashboard.cards.system_flow')} value={parseFloat(workInfo?.outputCurrent || '0').toString()} unit="A" isDark={isDark} palette={palette} delay={400} />
+               <TechCard icon={Fan} label={t('dashboard.cards.thermal_core')} value={parseFloat(workInfo?.temperatureView || '0').toString()} unit="°C" isDark={isDark} palette={palette} delay={500} />
+               <TechCard icon={Layers} label={t('dashboard.cards.active_load')} value={parseInt(workInfo?.outputLoadPercent || '0').toString()} unit="%" isDark={isDark} palette={palette} delay={600} />
             </View>
 
          </ScrollView>

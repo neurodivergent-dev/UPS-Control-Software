@@ -2,9 +2,11 @@ import React from 'react';
 import { useUPSData } from '../services/upsService';
 import { ShieldCheck, Activity, Cpu, Database, Gauge, Thermometer, Zap } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const Diagnostics: React.FC = () => {
   const { data } = useUPSData();
+  const { t } = useTranslation();
   const info = data?.workInfo;
 
   const DiagnosticCard = ({ label, value, status, icon: Icon, subValue }: {
@@ -56,7 +58,7 @@ const Diagnostics: React.FC = () => {
               status === 'warn' ? 'bg-yellow-500/10 border-yellow-500/20 text-yellow-500' :
                 'bg-red-500/10 border-red-500/20 text-red-500'
             }`}>
-            {status === 'ok' ? 'Nominal' : status === 'warn' ? 'Check' : 'Critical'}
+            {status === 'ok' ? t('diagnostics.status.nominal') : status === 'warn' ? t('diagnostics.status.critical') : t('diagnostics.status.low')}
           </div>
         </div>
 
@@ -79,14 +81,14 @@ const Diagnostics: React.FC = () => {
             <ShieldCheck size={28} strokeWidth={2.5} />
           </div>
           <div>
-            <h2 className="text-2xl xs:text-3xl sm:text-4xl font-black tracking-tighter uppercase text-white">Diagnostic Core</h2>
-            <p className="text-[8px] xs:text-sm font-bold text-white/40 uppercase tracking-[0.3em]">Sector 7 Integrity Protocol</p>
+            <h2 className="text-2xl xs:text-3xl sm:text-4xl font-black tracking-tighter uppercase text-white">{t('diagnostics.header')}</h2>
+            <p className="text-[8px] xs:text-sm font-bold text-white/40 uppercase tracking-[0.3em]">{t('diagnostics.subtitle')}</p>
           </div>
         </div>
         <div className="hidden lg:flex items-center space-x-6">
           <div className="flex flex-col text-right">
-            <span className="text-[10px] font-black uppercase text-white/20 tracking-widest leading-none mb-1">Link Strength</span>
-            <span className="text-xl font-black text-accent tracking-tighter">100% SECURE</span>
+            <span className="text-[10px] font-black uppercase text-white/20 tracking-widest leading-none mb-1">{t('diagnostics.link_strength')}</span>
+            <span className="text-xl font-black text-accent tracking-tighter">{t('diagnostics.secure')}</span>
           </div>
           <div className="flex space-x-1">
             {[1, 2, 3, 4, 5].map(i => <div key={i} className="w-1.5 h-6 bg-accent/20 rounded-full" />)}
@@ -95,12 +97,48 @@ const Diagnostics: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 xs:gap-6 sm:gap-8 lg:gap-10">
-        <DiagnosticCard label="Utility Grid Phase" value={`${info?.inputVoltage || '0'} VAC`} subValue={`${info?.inputFrequency || '0'}Hz Grid Sync`} status="ok" icon={Zap} />
-        <DiagnosticCard label="Thermal Profile" value={`${info?.temperatureView || '0'} °C`} subValue="Cooling Active" status={parseFloat(String(info?.temperatureView || '0')) > 45 ? 'warn' : 'ok'} icon={Thermometer} />
-        <DiagnosticCard label="Load Regulation" value={`${parseInt(String(info?.outputLoadPercent || '0'))}%`} subValue="Processing Task" status={parseInt(String(info?.outputLoadPercent || '0')) > 80 ? 'warn' : 'ok'} icon={Gauge} />
-        <DiagnosticCard label="Cell Capacity" value={`${parseInt(String(info?.batteryCapacity || '0'))}%`} subValue={`${info?.batteryVoltage || '0'} VDC Reserve`} status={parseInt(String(info?.batteryCapacity || '0')) < 30 ? 'warn' : 'ok'} icon={Database} />
-        <DiagnosticCard label="Back-up Vector" value={`${info?.batteryRemainTime || '0'} Min`} subValue="Estimated Orbit" status="ok" icon={Activity} />
-        <DiagnosticCard label="Node Registry" value="Online" subValue="USB-4A0DAEE" status="ok" icon={Cpu} />
+        <DiagnosticCard 
+          label={t('diagnostics.cards.grid_phase.title')} 
+          value={`${info?.inputVoltage || '0'} VAC`} 
+          subValue={t('diagnostics.cards.grid_phase.subtitle', { freq: info?.inputFrequency || '0' })} 
+          status="ok" 
+          icon={Zap} 
+        />
+        <DiagnosticCard 
+          label={t('diagnostics.cards.thermal.title')} 
+          value={`${info?.temperatureView || '0'} °C`} 
+          subValue={t('diagnostics.cards.thermal.subtitle')} 
+          status={parseFloat(String(info?.temperatureView || '0')) > 45 ? 'warn' : 'ok'} 
+          icon={Thermometer} 
+        />
+        <DiagnosticCard 
+          label={t('diagnostics.cards.load.title')} 
+          value={`${parseInt(String(info?.outputLoadPercent || '0'))}%`} 
+          subValue={t('diagnostics.cards.load.subtitle')} 
+          status={parseInt(String(info?.outputLoadPercent || '0')) > 80 ? 'warn' : 'ok'} 
+          icon={Gauge} 
+        />
+        <DiagnosticCard 
+          label={t('diagnostics.cards.capacity.title')} 
+          value={`${parseInt(String(info?.batteryCapacity || '0'))}%`} 
+          subValue={t('diagnostics.cards.capacity.subtitle', { voltage: info?.batteryVoltage || '0' })} 
+          status={parseInt(String(info?.batteryCapacity || '0')) < 30 ? 'warn' : 'ok'} 
+          icon={Database} 
+        />
+        <DiagnosticCard 
+          label={t('diagnostics.cards.backup.title')} 
+          value={`${info?.batteryRemainTime || '0'} Min`} 
+          subValue={t('diagnostics.cards.backup.subtitle')} 
+          status="ok" 
+          icon={Activity} 
+        />
+        <DiagnosticCard 
+          label={t('diagnostics.cards.node.title')} 
+          value="Online" 
+          subValue={t('diagnostics.cards.node.subtitle')} 
+          status="ok" 
+          icon={Cpu} 
+        />
       </div>
 
     </div>

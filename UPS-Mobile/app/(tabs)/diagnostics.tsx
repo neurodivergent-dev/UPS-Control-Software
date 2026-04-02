@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
 import { ShieldCheck, Zap, Thermometer, Gauge, Battery, Activity, Cpu } from 'lucide-react-native';
 import { useUPSData } from '../../services/upsService';
+import { useTranslation } from 'react-i18next';
 import Animated, { FadeIn, FadeInDown, FadeInUp } from 'react-native-reanimated';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -73,6 +74,7 @@ const DiagnosticCard = ({
 
 export default function DiagnosticScreen() {
   const { theme, isDark, palette, serverIp } = useTheme();
+  const { t } = useTranslation();
   const { data } = useUPSData(serverIp);
   const insets = useSafeAreaInsets();
 
@@ -81,45 +83,45 @@ export default function DiagnosticScreen() {
   const diagnostics = [
     {
       icon: Zap,
-      title: "UTILITY GRID PHASE",
+      title: t('diagnostics.cards.grid_phase.title'),
       value: `${parseFloat(workInfo?.inputVoltage || '0')} VAC`,
-      subtitle: `${parseFloat(workInfo?.inputFrequency || '0')}HZ GRID SYNC`,
-      status: "NOMINAL"
+      subtitle: t('diagnostics.cards.grid_phase.subtitle', { freq: parseFloat(workInfo?.inputFrequency || '0') }),
+      status: t('diagnostics.status.nominal')
     },
     {
       icon: Thermometer,
-      title: "THERMAL PROFILE",
+      title: t('diagnostics.cards.thermal.title'),
       value: `${parseFloat(workInfo?.temperatureView || '0')} °C`,
-      subtitle: "COOLING ACTIVE",
-      status: "NOMINAL"
+      subtitle: t('diagnostics.cards.thermal.subtitle'),
+      status: t('diagnostics.status.nominal')
     },
     {
       icon: Gauge,
-      title: "LOAD REGULATION",
+      title: t('diagnostics.cards.load.title'),
       value: `${parseInt(workInfo?.outputLoadPercent || '0')}%`,
-      subtitle: "PROCESSING TASK",
-      status: parseInt(workInfo?.outputLoadPercent || '0') > 80 ? "CRITICAL" : "NOMINAL"
+      subtitle: t('diagnostics.cards.load.subtitle'),
+      status: parseInt(workInfo?.outputLoadPercent || '0') > 80 ? t('diagnostics.status.critical') : t('diagnostics.status.nominal')
     },
     {
       icon: Battery,
-      title: "CELL CAPACITY",
+      title: t('diagnostics.cards.capacity.title'),
       value: `${parseInt(workInfo?.batteryCapacity as any || '0')}%`,
-      subtitle: `${parseFloat(workInfo?.batteryVoltage || '0')} VDC RESERVE`,
-      status: (parseInt(workInfo?.batteryCapacity as any || '0')) < 20 ? "LOW" : "NOMINAL"
+      subtitle: t('diagnostics.cards.capacity.subtitle', { voltage: parseFloat(workInfo?.batteryVoltage || '0') }),
+      status: (parseInt(workInfo?.batteryCapacity as any || '0')) < 20 ? t('diagnostics.status.low') : t('diagnostics.status.nominal')
     },
     {
       icon: Activity,
-      title: "BACK-UP VECTOR",
+      title: t('diagnostics.cards.backup.title'),
       value: `${parseInt(workInfo?.batteryRemainTime as any || '0')} MIN`,
-      subtitle: "ESTIMATED ORBIT",
-      status: "NOMINAL"
+      subtitle: t('diagnostics.cards.backup.subtitle'),
+      status: t('diagnostics.status.nominal')
     },
     {
       icon: Cpu,
-      title: "NODE REGISTRY",
+      title: t('diagnostics.cards.node.title'),
       value: "ONLINE",
-      subtitle: "USB-4A0DAEE",
-      status: "NOMINAL"
+      subtitle: t('diagnostics.cards.node.subtitle'),
+      status: t('diagnostics.status.nominal')
     }
   ];
 
@@ -136,14 +138,14 @@ export default function DiagnosticScreen() {
               <ShieldCheck size={20} color="#fff" />
             </View>
             <View>
-              <Text style={[styles.headerTitle, { color: theme.colors.text.primary, fontFamily: 'Outfit_800ExtraBold' }]}>DIAGNOSTIC CORE</Text>
-              <Text style={[styles.headerSubtitle, { color: theme.colors.text.tertiary, fontFamily: 'Outfit_600SemiBold' }]}>SECTOR 7 INTEGRITY PROTOCOL</Text>
+              <Text style={[styles.headerTitle, { color: theme.colors.text.primary, fontFamily: 'Outfit_800ExtraBold' }]}>{t('diagnostics.header')}</Text>
+              <Text style={[styles.headerSubtitle, { color: theme.colors.text.tertiary, fontFamily: 'Outfit_600SemiBold' }]}>{t('diagnostics.subtitle')}</Text>
             </View>
           </View>
           
           <View style={styles.headerRight}>
-             <Text style={[styles.strengthLabel, { color: theme.colors.text.tertiary, fontFamily: 'Outfit_700Bold' }]}>LINK STRENGTH</Text>
-             <Text style={[styles.strengthValue, { color: theme.colors.accent.primary, fontFamily: 'Outfit_800ExtraBold' }]}>100% SECURE</Text>
+             <Text style={[styles.strengthLabel, { color: theme.colors.text.tertiary, fontFamily: 'Outfit_700Bold' }]}>{t('diagnostics.link_strength')}</Text>
+             <Text style={[styles.strengthValue, { color: theme.colors.accent.primary, fontFamily: 'Outfit_800ExtraBold' }]}>{t('diagnostics.secure')}</Text>
           </View>
         </Animated.View>
 
@@ -168,7 +170,7 @@ export default function DiagnosticScreen() {
         >
           <Activity size={14} color={theme.colors.text.tertiary} />
           <Text style={[styles.footerText, { color: theme.colors.text.tertiary, fontFamily: 'Outfit_500Medium' }]}>
-            SYSTEM_KERNEL_ACTIVE // LAST_SYNC: {new Date().toLocaleTimeString()}
+            {t('diagnostics.footer', { time: new Date().toLocaleTimeString() })}
           </Text>
         </Animated.View>
       </ScrollView>

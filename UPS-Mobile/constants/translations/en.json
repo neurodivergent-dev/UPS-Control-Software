@@ -14,5 +14,182 @@
       "system_core": "SYSTEM_CORE",
       "operator": "OPERATOR"
     }
+  },
+  "settings": {
+    "header": "CONTROL PANEL",
+    "subtitle": "SYSTEM_CONFIGURATION_ACTIVE",
+    "sections": {
+      "palette": "PALETTE ENGINE",
+      "appearance": "APPEARANCE",
+      "network": "NETWORK CONFIGURATION",
+      "neural": "NEURAL LINK AUTHORIZATION",
+      "language": "INTERFACE LOCALIZATION"
+    },
+    "language": {
+      "title": "SYSTEM LANGUAGE",
+      "description": "Select the primary interface language for the UPS Control kernel.",
+      "current": "CURRENT_LOCALE",
+      "selector": "OPEN_LOCALIZATION_PORTAL"
+    },
+    "appearance": {
+      "light": "LIGHT",
+      "dark": "DARK",
+      "system": "SYSTEM"
+    },
+    "network": {
+      "description": "Define the target UPS server address to synchronize local telemetry with the hardware core.",
+      "label": "SERVER IP ADDRESS",
+      "placeholder": "e.g. 192.168.1.100",
+      "button": "INITIALIZE NETWORK"
+    },
+    "neural": {
+      "description": "Connect your BYOK (Bring Your Own Key) to activate Groq powered hardware diagnostics.",
+      "key_label": "API KEY",
+      "key_placeholder": "Enter Groq API Key...",
+      "model_label": "MODEL ID",
+      "model_placeholder": "Model ID...",
+      "button": "SAVE CONFIGURATION"
+    },
+    "system": {
+      "core_engine": "CORE_ENGINE",
+      "stable": "STABLE",
+      "active_atmosphere": "ACTIVE_ATMOSPHERE"
+    },
+    "toast": {
+      "title": "SECURE UPLINK ESTABLISHED",
+      "subtitle": "AI CORE CONFIGURATION SYNCHRONIZED"
+    }
+  },
+  "dashboard": {
+    "status_online": "SYSTEM ONLINE",
+    "battery": {
+      "title": "ENERGY_RESERVE",
+      "status": "STABLE",
+      "remaining": "{{hours}}H {{mins}}M REMAINING"
+    },
+    "voltage": {
+      "title": "INPUT VOLTAGE",
+      "unit": "V RMS",
+      "min": "MIN",
+      "max": "MAX",
+      "avg": "AVG",
+      "footer": "REAL-TIME AUDIT",
+      "samples": "{{count}} SAMPLES"
+    },
+    "cards": {
+      "output_voltage": "Out Voltage",
+      "system_flow": "System Flow",
+      "thermal_core": "Thermal Core",
+      "active_load": "Active Load"
+    }
+  },
+  "logs": {
+    "header": "EVENT HORIZON",
+    "subtitle": "TEMPORAL NODE ACTIVITY LOG",
+    "stream_badge": "REAL-TIME STREAM",
+    "section_analysis": "CRITICAL VECTOR ANALYSIS",
+    "section_history": "TEMPORAL NODE HISTORY",
+    "shield": {
+      "label": "SHIELD STATUS",
+      "text": "ALL SYSTEMS NOMINAL. NO HARDWARE BREACHES.",
+      "events_detected": "DETECTED {{count}} RECENT EVENTS"
+    },
+    "status": {
+      "info": "INFO",
+      "warn": "WARN",
+      "error": "ERROR"
+    }
+  },
+  "hardware": {
+    "header": "GRID HARDWARE",
+    "subtitle": "FSP CHAMP 1KVA ONLINE SERIES",
+    "info": {
+      "model": "Model Identity",
+      "topology": "Grid Topology",
+      "thermal": "Thermal Profile",
+      "interface": "System Interface"
+    },
+    "integrity": {
+      "title": "HARDWARE INTEGRITY CHECK",
+      "description": "DEVICE: <colored>FSP CHAMP 1KVA ONLINE.</colored>\nINPUT VOLTAGE STABILIZED AT {{voltage}}V RMS. TOWER-TYPE HIGH-PRECISION ONLINE GRID PROTECTION ACTIVE."
+    },
+    "regulation": {
+      "title": "REGULATION STATUS",
+      "load": "LOAD REGULATION",
+      "sync": "BATTERY SYNC",
+      "load_value": "{{percent}}% LOAD",
+      "sync_value": "{{percent}}% SYNC"
+    },
+    "labels": {
+      "champ": "1KVA_CHAMP",
+      "online": "ONLINE_UPS"
+    }
+  },
+  "diagnostics": {
+    "header": "DIAGNOSTIC CORE",
+    "subtitle": "SECTOR 7 INTEGRITY PROTOCOL",
+    "link_strength": "LINK STRENGTH",
+    "secure": "100% SECURE",
+    "footer": "SYSTEM_KERNEL_ACTIVE // LAST_SYNC: {{time}}",
+    "status": {
+      "nominal": "NOMINAL",
+      "critical": "CRITICAL",
+      "low": "LOW"
+    },
+    "cards": {
+      "grid_phase": {
+        "title": "UTILITY GRID PHASE",
+        "subtitle": "{{freq}}HZ GRID SYNC"
+      },
+      "thermal": {
+        "title": "THERMAL PROFILE",
+        "subtitle": "COOLING ACTIVE"
+      },
+      "load": {
+        "title": "LOAD REGULATION",
+        "subtitle": "PROCESSING TASK"
+      },
+      "capacity": {
+        "title": "CELL CAPACITY",
+        "subtitle": "{{voltage}} VDC RESERVE"
+      },
+      "backup": {
+        "title": "BACK-UP VECTOR",
+        "subtitle": "ESTIMATED ORBIT"
+      },
+      "node": {
+        "title": "NODE REGISTRY",
+        "subtitle": "CONNECTION ACTIVE"
+      }
+    }
+  },
+  "tabs": {
+    "monitor": "Monitor",
+    "diagnostics": "Diagnostics",
+    "hardware": "Hardware",
+    "logs": "Logs",
+    "ai_audit": "AI Audit",
+    "control": "Control"
+  },
+  "ai_audit": {
+    "header": "CORE INTELLIGENCE",
+    "subtitle": "NEURAL LINK & SYSTEM DIAGNOSTICS",
+    "telemetry_section": "LIVE TELEMETRY",
+    "output_section": "INTELLIGENCE OUTPUT",
+    "labels": {
+      "core_health": "CORE HEALTH",
+      "grid_input": "GRID INPUT",
+      "logic_mode": "LOGIC MODE"
+    },
+    "buttons": {
+      "initiate": "INITIATE ANALYSIS",
+      "update_auth": "UPDATE AUTHENTICATION KEY",
+      "flush": "FLUSH_LOCAL_CACHE"
+    },
+    "status": {
+      "analyzing": "STREAMS INHALING...",
+      "awaiting": "AWAITING UPLINK",
+      "awaiting_sub": "INITIATE HARDWARE ANALYSIS THROUGH THE CORE HUB"
+    }
   }
 }

@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet, View, ViewProps, LayoutChangeEvent, Pressable } from 'react-native';
-import Animated, { 
-  useAnimatedStyle, 
-  useSharedValue, 
-  withRepeat, 
-  withTiming, 
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withTiming,
   Easing,
   withSpring,
   interpolate
@@ -46,7 +46,7 @@ export const GlowCard = ({ children, palette, isDark, borderRadius = 28, style, 
     .onBegin((event) => {
       isActive.value = withTiming(1, { duration: 150 });
       scale.value = withSpring(0.96);
-      
+
       const centerX = layout.width / 2;
       const centerY = layout.height / 2;
       tiltRotateY.value = withSpring(((event.x - centerX) / centerX) * 15);
@@ -83,7 +83,7 @@ export const GlowCard = ({ children, palette, isDark, borderRadius = 28, style, 
   return (
     <GestureHandlerRootView>
       <GestureDetector gesture={gesture}>
-        <Animated.View 
+        <Animated.View
           onLayout={onLayout}
           style={[styles.container, { borderRadius }, animatedTilt, style]}
           {...props}
@@ -107,11 +107,11 @@ export const GlowCard = ({ children, palette, isDark, borderRadius = 28, style, 
 
           {/* Sitedeki .glass-panel iç katmanı (1.5px border sızıntısı için marjinli) */}
           <View style={[
-            styles.innerContent, 
-            { 
-              borderRadius: borderRadius - 1.5, 
+            styles.innerContent,
+            {
+              borderRadius: borderRadius - 1.5,
               backgroundColor: isDark ? '#020617' : '#FFFFFF',
-              margin: 1.5 
+              margin: 1.5
             }
           ]}>
             <Pressable onPress={onPress} style={{ flex: 1 }}>
