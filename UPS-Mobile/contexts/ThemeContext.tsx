@@ -48,6 +48,10 @@ interface ThemeContextType {
   setModelId: (id: string) => void;
   serverIp: string;
   setServerIp: (ip: string) => void;
+  upsModel: string;
+  setUpsModel: (model: string) => void;
+  upsTopology: string;
+  setUpsTopology: (topology: string) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -58,6 +62,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [apiKey, setApiKey] = useState<string>('');
   const [modelId, setModelId] = useState<string>('llama-3.3-70b-versatile');
   const [serverIp, setServerIp] = useState<string>('192.168.1.203');
+  const [upsModel, setUpsModel] = useState<string>('CHAMP 1K 1/1');
+  const [upsTopology, setUpsTopology] = useState<string>('ONLINE TOWER');
   const [isLoaded, setIsLoaded] = useState(false);
   const systemColorScheme = useColorScheme();
 
@@ -73,6 +79,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
           if (config.apiKey) setApiKey(config.apiKey);
           if (config.modelId) setModelId(config.modelId);
           if (config.serverIp) setServerIp(config.serverIp);
+          if (config.upsModel) setUpsModel(config.upsModel);
+          if (config.upsTopology) setUpsTopology(config.upsTopology);
         }
       } catch (e) {
         console.error('Failed to load system config:', e);
@@ -89,7 +97,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       const saveConfig = async () => {
         try {
           await AsyncStorage.setItem('UPS_CORE_CONFIG', JSON.stringify({
-            mode, accent, apiKey, modelId, serverIp
+            mode, accent, apiKey, modelId, serverIp, upsModel, upsTopology
           }));
         } catch (e) {
           console.error('Failed to save system config:', e);
@@ -144,9 +152,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       modelId,
       setModelId,
       serverIp,
-      setServerIp
+      setServerIp,
+      upsModel,
+      setUpsModel,
+      upsTopology,
+      setUpsTopology
     };
-  }, [isDark, mode, accent, palette, apiKey, modelId, serverIp]);
+  }, [isDark, mode, accent, palette, apiKey, modelId, serverIp, upsModel, upsTopology]);
 
   if (!isLoaded) return null; // Wait for config hydration
 

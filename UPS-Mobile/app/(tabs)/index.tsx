@@ -29,7 +29,7 @@ const getDeepColors = (palette: any, isDark: boolean): readonly [string, string]
 import { GlowCard } from '../../components/GlowCard';
 
 // 1. BATTERY STATION
-const BatteryMonitor = ({ capacity, remainTime, voltage, theme, palette, isDark }: any) => {
+const BatteryMonitor = ({ capacity, remainTime, voltage, temperature, theme, palette, isDark }: any) => {
    const { t } = useTranslation();
    const cap = parseInt(capacity) || 0;
    const hours = Math.floor(remainTime / 60);
@@ -80,7 +80,7 @@ const BatteryMonitor = ({ capacity, remainTime, voltage, theme, palette, isDark 
                </View>
                <View style={styles.bFooterItem}>
                   <Thermometer size={14} color={palette.primary} />
-                  <Text style={[styles.bFooterValue, { color: isDark ? '#fff' : '#000' }]}>32°C</Text>
+                  <Text style={[styles.bFooterValue, { color: isDark ? '#fff' : '#000' }]}>{parseInt(temperature || '0')}°C</Text>
                </View>
             </View>
          </View>
@@ -167,6 +167,16 @@ const VoltageDisplay = ({ voltage, frequency, theme, palette, isDark }: any) => 
 
 // 3. TECH GRID CARDS
 const TechCard = ({ icon: Icon, label, value, unit, delay, isDark, palette }: any) => {
+   const numericValue = parseFloat(value) || 0;
+   
+   const getBarWidth = () => {
+      if (unit === '%') return `${Math.min(numericValue, 100)}%`;
+      if (unit === 'VAC') return `${Math.min((numericValue / 250) * 100, 100)}%`;
+      if (unit === '°C') return `${Math.min((numericValue / 80) * 100, 100)}%`;
+      if (unit === 'A') return `${Math.min((numericValue / 20) * 100, 100)}%`;
+      return '0%';
+   };
+
    return (
       <Animated.View entering={FadeInUp.delay(delay)} style={styles.techCardWrapper}>
          <GlowCard palette={palette} isDark={isDark} borderRadius={24}>
@@ -186,7 +196,7 @@ const TechCard = ({ icon: Icon, label, value, unit, delay, isDark, palette }: an
                      <LinearGradient
                         colors={palette.gradient as any}
                         start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                        style={[styles.techBarFill, { width: '60%' }]}
+                        style={[styles.techBarFill, { width: getBarWidth() as any }]}
                      />
                   </View>
                </View>
@@ -254,9 +264,9 @@ export default function MonitorScreen() {
             <Animated.View entering={FadeIn} style={styles.header}>
                <View>
                   <View style={styles.statusBadge}>
-                     <PulseBadge color={palette.primary} />
-                     <Text style={[styles.statusText, { color: palette.primary, fontFamily: 'Outfit_900Black' }]}>
-                        SYSTEM ONLINE
+                     <PulseBadge color={isOnline ? palette.primary : '#ef4444'} />
+                     <Text style={[styles.statusText, { color: isOnline ? palette.primary : '#ef4444', fontFamily: 'Outfit_900Black' }]}>
+                        {isOnline ? 'SYSTEM ONLINE' : 'SYSTEM OFFLINE'}
                      </Text>
                   </View>
                   <Text style={[styles.title, { color: theme.colors.text.primary, fontFamily: 'Outfit_800ExtraBold' }]}>UPS-CORE X1</Text>
@@ -274,6 +284,7 @@ export default function MonitorScreen() {
                   capacity={workInfo?.batteryCapacity || '0'}
                   remainTime={workInfo?.batteryRemainTime || 0}
                   voltage={workInfo?.batteryVoltage || '0'}
+                  temperature={workInfo?.temperatureView || '0'}
                   theme={theme} palette={palette} isDark={isDark}
                />
             </Animated.View>

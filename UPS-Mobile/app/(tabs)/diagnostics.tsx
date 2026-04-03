@@ -21,7 +21,8 @@ const DiagnosticCard = ({
   index,
   theme,
   isDark,
-  palette
+  palette,
+  percent
 }: { 
   icon: any, 
   title: string, 
@@ -31,7 +32,8 @@ const DiagnosticCard = ({
   index: number,
   theme: any,
   isDark: boolean,
-  palette: any
+  palette: any,
+  percent: number
 }) => {
   return (
     <Animated.View 
@@ -62,7 +64,7 @@ const DiagnosticCard = ({
               <LinearGradient
                   colors={palette.gradient as any}
                   start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                  style={[styles.progressFill, { width: '70%' }]}
+                  style={[styles.progressFill, { width: `${percent}%` }]}
               />
             </View>
           </View>
@@ -79,49 +81,55 @@ export default function DiagnosticScreen() {
   const insets = useSafeAreaInsets();
 
   const workInfo = data?.workInfo;
-
+  
   const diagnostics = [
     {
       icon: Zap,
       title: t('diagnostics.cards.grid_phase.title'),
       value: `${parseFloat(workInfo?.inputVoltage || '0')} VAC`,
       subtitle: t('diagnostics.cards.grid_phase.subtitle', { freq: parseFloat(workInfo?.inputFrequency || '0') }),
-      status: t('diagnostics.status.nominal')
+      status: t('diagnostics.status.nominal'),
+      percent: Math.min((parseFloat(workInfo?.inputVoltage || '0') / 240) * 100, 100)
     },
     {
       icon: Thermometer,
       title: t('diagnostics.cards.thermal.title'),
       value: `${parseFloat(workInfo?.temperatureView || '0')} °C`,
       subtitle: t('diagnostics.cards.thermal.subtitle'),
-      status: t('diagnostics.status.nominal')
+      status: t('diagnostics.status.nominal'),
+      percent: Math.min((parseFloat(workInfo?.temperatureView || '0') / 80) * 100, 100)
     },
     {
       icon: Gauge,
       title: t('diagnostics.cards.load.title'),
       value: `${parseInt(workInfo?.outputLoadPercent || '0')}%`,
       subtitle: t('diagnostics.cards.load.subtitle'),
-      status: parseInt(workInfo?.outputLoadPercent || '0') > 80 ? t('diagnostics.status.critical') : t('diagnostics.status.nominal')
+      status: parseInt(workInfo?.outputLoadPercent || '0') > 80 ? t('diagnostics.status.critical') : t('diagnostics.status.nominal'),
+      percent: Math.min(parseInt(workInfo?.outputLoadPercent || '0'), 100)
     },
     {
       icon: Battery,
       title: t('diagnostics.cards.capacity.title'),
       value: `${parseInt(workInfo?.batteryCapacity as any || '0')}%`,
       subtitle: t('diagnostics.cards.capacity.subtitle', { voltage: parseFloat(workInfo?.batteryVoltage || '0') }),
-      status: (parseInt(workInfo?.batteryCapacity as any || '0')) < 20 ? t('diagnostics.status.low') : t('diagnostics.status.nominal')
+      status: (parseInt(workInfo?.batteryCapacity as any || '0')) < 20 ? t('diagnostics.status.low') : t('diagnostics.status.nominal'),
+      percent: Math.min(parseInt(workInfo?.batteryCapacity as any || '0'), 100)
     },
     {
       icon: Activity,
       title: t('diagnostics.cards.backup.title'),
       value: `${parseInt(workInfo?.batteryRemainTime as any || '0')} MIN`,
       subtitle: t('diagnostics.cards.backup.subtitle'),
-      status: t('diagnostics.status.nominal')
+      status: t('diagnostics.status.nominal'),
+      percent: Math.min((parseInt(workInfo?.batteryRemainTime as any || '0') / 60) * 100, 100) // Assuming 60 min as 100% for visualization
     },
     {
       icon: Cpu,
       title: t('diagnostics.cards.node.title'),
       value: "ONLINE",
       subtitle: t('diagnostics.cards.node.subtitle'),
-      status: t('diagnostics.status.nominal')
+      status: t('diagnostics.status.nominal'),
+      percent: 100
     }
   ];
 

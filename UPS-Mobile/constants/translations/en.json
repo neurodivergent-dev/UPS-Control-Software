@@ -40,6 +40,8 @@
       "description": "Define the target UPS server address to synchronize local telemetry with the hardware core.",
       "label": "SERVER IP ADDRESS",
       "placeholder": "e.g. 192.168.1.100",
+      "ups_model": "UPS MODEL",
+      "ups_topology": "TOPOLOGY",
       "button": "INITIALIZE NETWORK"
     },
     "neural": {
@@ -111,7 +113,7 @@
     },
     "integrity": {
       "title": "HARDWARE INTEGRITY CHECK",
-      "description": "DEVICE: <colored>FSP CHAMP 1KVA ONLINE.</colored>\nINPUT VOLTAGE STABILIZED AT {{voltage}}V RMS. TOWER-TYPE HIGH-PRECISION ONLINE GRID PROTECTION ACTIVE."
+      "description": "DEVICE: <colored>{{model}}.</colored>\nINPUT VOLTAGE STABILIZED AT {{voltage}}V RMS. TOWER-TYPE HIGH-PRECISION ONLINE GRID PROTECTION ACTIVE."
     },
     "regulation": {
       "title": "REGULATION STATUS",
@@ -190,6 +192,34 @@
       "analyzing": "STREAMS INHALING...",
       "awaiting": "AWAITING UPLINK",
       "awaiting_sub": "INITIATE HARDWARE ANALYSIS THROUGH THE CORE HUB"
+    }
+  },
+  "onboarding": {
+    "welcome": {
+      "title": "UPS CORE INTELLIGENCE",
+      "subtitle": "SECURE INTERFACE V3.1",
+      "description": "Initialize connection to the industrial power grid. Monitor, analyze, and protect your hardware with AI-enhanced precision."
+    },
+    "features": {
+      "title": "GRID TELEMETRY",
+      "description": "Real-time auditing of voltage, load, and thermal profiles. Visualize energy flow with high-fidelity industrial animations."
+    },
+    "neural": {
+      "title": "NEURAL LINK",
+      "description": "Connect Groq AI for deep hardware diagnostics. Your UPS now speaks technical logic, explaining every grid anomaly."
+    },
+    "setup": {
+      "title": "CORE UPLINK",
+      "description": "Configure the target server address and establish neural link credentials.",
+      "server_label": "SERVER IP ADDRESS",
+      "api_label": "GROQ API KEY (OPTIONAL)",
+      "button": "INITIALIZE SYSTEM"
+    },
+    "buttons": {
+      "next": "PROCEED",
+      "back": "BACK",
+      "skip": "SKIP",
+      "start": "ENTER CORE"
     }
   }
 }

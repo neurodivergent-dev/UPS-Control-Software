@@ -35,7 +35,7 @@ const HardwareCheckLabel = ({ text, isDark, palette }: any) => (
 );
 
 export default function HardwareScreen() {
-  const { theme, isDark, palette, serverIp } = useTheme();
+  const { theme, isDark, palette, serverIp, upsModel, upsTopology } = useTheme();
   const { t } = useTranslation();
   const { data } = useUPSData(serverIp);
   const insets = useSafeAreaInsets();
@@ -63,8 +63,8 @@ export default function HardwareScreen() {
 
         {/* Top Info Cards Grid */}
         <View style={styles.infoGrid}>
-          <InfoCard icon={Monitor} label={t('hardware.info.model')} value="CHAMP 1K 1/1" isDark={isDark} palette={palette} delay={100} />
-          <InfoCard icon={Globe} label={t('hardware.info.topology')} value="ONLINE TOWER" isDark={isDark} palette={palette} delay={200} />
+          <InfoCard icon={Monitor} label={t('hardware.info.model')} value={upsModel} isDark={isDark} palette={palette} delay={100} />
+          <InfoCard icon={Globe} label={t('hardware.info.topology')} value={upsTopology} isDark={isDark} palette={palette} delay={200} />
           <InfoCard icon={Thermometer} label={t('hardware.info.thermal')} value={`${parseFloat(workInfo?.temperatureView || '0')} °C`} isDark={isDark} palette={palette} delay={300} />
           <InfoCard icon={ShieldCheck} label={t('hardware.info.interface')} value={`VIEWPOWER ${data?.version || 'V1.0'}`} isDark={isDark} palette={palette} delay={400} />
         </View>
@@ -80,7 +80,7 @@ export default function HardwareScreen() {
 
               <View style={styles.integrityBody}>
                 <Text style={[styles.integrityText, { color: isDark ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.6)', fontFamily: 'Outfit_500Medium' }]}>
-                  {t('hardware.integrity.description', { voltage: parseFloat(workInfo?.inputVoltage || '0') }).split('<colored>').map((part, i) => {
+                  {t('hardware.integrity.description', { voltage: parseFloat(workInfo?.inputVoltage || '0'), model: upsModel }).split('<colored>').map((part, i) => {
                     if (part.includes('</colored>')) {
                       const [colored, rest] = part.split('</colored>');
                       return <React.Fragment key={i}><Text style={{ color: palette.primary }}>{colored}</Text>{rest}</React.Fragment>;

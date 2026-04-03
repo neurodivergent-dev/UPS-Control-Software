@@ -125,7 +125,6 @@ export default function LogsScreen() {
               ) : logs && logs.length > 0 ? (
                 logs.map((log: any, index: number) => {
                   const { date, time } = parseUPSDate(log.occurTime);
-                  const isWarn = log.eventLevel === "1" || log.eventName.toLowerCase().includes('fail');
                   return (
                     <LogItem 
                       key={log.id || index} 
@@ -133,7 +132,7 @@ export default function LogsScreen() {
                       time={time}
                       title={log.eventName}
                       subtitle={log.devName || "UPS_NODE_0"}
-                      status={isWarn ? "WARN" : "INFO"}
+                      status={log.eventLevel}
                       isDark={isDark} 
                       palette={palette} 
                       delay={200 + (index * 50)} 

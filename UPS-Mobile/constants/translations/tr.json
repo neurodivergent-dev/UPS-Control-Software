@@ -40,6 +40,8 @@
       "description": "Yerel telemetriyi donanım çekirdeğiyle senkronize etmek için hedef UPS sunucu adresini tanımlayın.",
       "label": "SUNUCU IP ADRESİ",
       "placeholder": "Örn: 192.168.1.100",
+      "ups_model": "UPS MODELİ",
+      "ups_topology": "TOPOLOJİ",
       "button": "AĞI BAŞLAT"
     },
     "neural": {
@@ -110,7 +112,7 @@
     },
     "integrity": {
       "title": "DONANIM BÜTÜNLÜK KONTROLÜ",
-      "description": "CİHAZ: <colored>FSP CHAMP 1KVA ONLINE.</colored>\nGİRİŞ VOLTAJI {{voltage}}V RMS DEĞERİNDE SABİTLENDİ. KULE TİPİ YÜKSEK HASSASİYETLİ ÇEVRİMİÇİ ŞEBEKE KORUMASI AKTİF."
+      "description": "CİHAZ: <colored>{{model}}.</colored>\nGİRİŞ VOLTAJI {{voltage}}V RMS DEĞERİNDE SABİTLENDİ. KULE TİPİ YÜKSEK HASSASİYETLİ ÇEVRİMİÇİ ŞEBEKE KORUMASI AKTİF."
     },
     "regulation": {
       "title": "DÜZENLEME DURUMU",
@@ -189,6 +191,34 @@
       "analyzing": "VERİ AKIŞI İŞLENİYOR...",
       "awaiting": "BAĞLANTI BEKLENİYOR",
       "awaiting_sub": "KONTROL MERKEZİ ÜZERİNDEN DONANIM ANALİZİ BAŞLATIN"
+    }
+  },
+  "onboarding": {
+    "welcome": {
+      "title": "UPS ÇEKİRDEK ZEKASI",
+      "subtitle": "GÜVENLİ ARAYÜZ V3.1",
+      "description": "Endüstriyel güç şebekesine bağlantıyı başlatın. Donanımınızı yapay zeka destekli hassasiyetle izleyin, analiz edin ve koruyun."
+    },
+    "features": {
+      "title": "ŞEBEKE TELEMETRİSİ",
+      "description": "Voltaj, yük ve termal profillerin gerçek zamanlı denetimi. Enerji akışını yüksek kaliteli endüstriyel animasyonlarla görselleştirin."
+    },
+    "neural": {
+      "title": "NÖRAL BAĞ",
+      "description": "Derin donanım teşhisleri için Groq AI'ı bağlayın. Artık UPS'iniz teknik mantıkla konuşacak ve her şebeke anomalisini açıklayacak."
+    },
+    "setup": {
+      "title": "ÇEKİRDEK BAĞLANTISI",
+      "description": "Hedef sunucu adresini yapılandırın ve nöral bağ kimlik bilgilerini oluşturun.",
+      "server_label": "SUNUCU IP ADRESİ",
+      "api_label": "GROQ API ANAHTARI (OPSİYONEL)",
+      "button": "SİSTEMİ BAŞLAT"
+    },
+    "buttons": {
+      "next": "İLERLE",
+      "back": "GERİ",
+      "skip": "ATLA",
+      "start": "ÇEKİRDEĞE GİR"
     }
   }
 }

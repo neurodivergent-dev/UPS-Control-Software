@@ -87,7 +87,12 @@ const NeuralToast = ({ visible, palette, isDark }: { visible: boolean; palette: 
 };
 
 export default function SettingsScreen() {
-  const { theme, mode, setMode, isDark, accent, setAccent, apiKey, setApiKey, modelId, setModelId, serverIp, setServerIp } = useTheme();
+  const { 
+    theme, mode, setMode, isDark, accent, setAccent, 
+    apiKey, setApiKey, modelId, setModelId, 
+    serverIp, setServerIp, upsModel, setUpsModel, 
+    upsTopology, setUpsTopology 
+  } = useTheme();
   const { t, i18n } = useTranslation();
   const insets = useSafeAreaInsets();
   const [showToast, setShowToast] = useState(false);
@@ -104,6 +109,8 @@ export default function SettingsScreen() {
   const [localKey, setLocalKey] = useState(apiKey);
   const [localModel, setLocalModel] = useState(modelId);
   const [localIp, setLocalIp] = useState(serverIp);
+  const [localUpsModel, setLocalUpsModel] = useState(upsModel);
+  const [localUpsTopology, setLocalUpsTopology] = useState(upsTopology);
 
   useEffect(() => {
     setLocalKey(apiKey);
@@ -117,6 +124,14 @@ export default function SettingsScreen() {
     setLocalIp(serverIp);
   }, [serverIp]);
 
+  useEffect(() => {
+    setLocalUpsModel(upsModel);
+  }, [upsModel]);
+
+  useEffect(() => {
+    setLocalUpsTopology(upsTopology);
+  }, [upsTopology]);
+
   const toggleSection = useCallback((key: keyof typeof sections) => {
     setSections(prev => ({ ...prev, [key]: !prev[key] }));
   }, []);
@@ -129,6 +144,8 @@ export default function SettingsScreen() {
     setApiKey(localKey);
     setModelId(localModel);
     setServerIp(localIp);
+    setUpsModel(localUpsModel);
+    setUpsTopology(localUpsTopology);
     setShowToast(true);
     setTimeout(() => setShowToast(false), 3000);
   };
@@ -232,20 +249,55 @@ export default function SettingsScreen() {
               <Text style={[styles.aiDescription, { color: theme.colors.text.tertiary, fontFamily: 'Outfit_500Medium' }]}>
                 {t('settings.network.description')}
               </Text>
-              <View style={{ gap: 8 }}>
-                <Text style={[styles.inputLabel, { color: theme.colors.accent.primary, fontFamily: 'Outfit_800ExtraBold' }]}>{t('settings.network.label')}</Text>
-                <TextInput
-                  value={localIp}
-                  onChangeText={setLocalIp}
-                  placeholder={t('settings.network.placeholder')}
-                  placeholderTextColor="rgba(255,255,255,0.2)"
-                  style={[styles.textInput, {
-                    backgroundColor: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.03)',
-                    borderColor: theme.colors.accent.primary + '30',
-                    color: theme.colors.text.primary,
-                    fontFamily: 'Outfit_600SemiBold'
-                  }]}
-                />
+              <View style={{ gap: 16 }}>
+                <View style={{ gap: 8 }}>
+                  <Text style={[styles.inputLabel, { color: theme.colors.accent.primary, fontFamily: 'Outfit_800ExtraBold' }]}>{t('settings.network.label')}</Text>
+                  <TextInput
+                    value={localIp}
+                    onChangeText={setLocalIp}
+                    placeholder={t('settings.network.placeholder')}
+                    placeholderTextColor="rgba(255,255,255,0.2)"
+                    style={[styles.textInput, {
+                      backgroundColor: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.03)',
+                      borderColor: theme.colors.accent.primary + '30',
+                      color: theme.colors.text.primary,
+                      fontFamily: 'Outfit_600SemiBold'
+                    }]}
+                  />
+                </View>
+
+                <View style={styles.inputRow}>
+                  <View style={{ flex: 1, gap: 8 }}>
+                    <Text style={[styles.inputLabel, { color: theme.colors.text.tertiary, fontFamily: 'Outfit_800ExtraBold' }]}>{t('settings.network.ups_model')}</Text>
+                    <TextInput
+                      value={localUpsModel}
+                      onChangeText={setLocalUpsModel}
+                      placeholder="CHAMP 1K 1/1"
+                      placeholderTextColor="rgba(255,255,255,0.2)"
+                      style={[styles.textInput, {
+                        backgroundColor: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.03)',
+                        borderColor: theme.colors.border,
+                        color: theme.colors.text.primary,
+                        fontFamily: 'Outfit_600SemiBold'
+                      }]}
+                    />
+                  </View>
+                  <View style={{ flex: 1, gap: 8 }}>
+                    <Text style={[styles.inputLabel, { color: theme.colors.text.tertiary, fontFamily: 'Outfit_800ExtraBold' }]}>{t('settings.network.ups_topology')}</Text>
+                    <TextInput
+                      value={localUpsTopology}
+                      onChangeText={setLocalUpsTopology}
+                      placeholder="ONLINE TOWER"
+                      placeholderTextColor="rgba(255,255,255,0.2)"
+                      style={[styles.textInput, {
+                        backgroundColor: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.03)',
+                        borderColor: theme.colors.border,
+                        color: theme.colors.text.primary,
+                        fontFamily: 'Outfit_600SemiBold'
+                      }]}
+                    />
+                  </View>
+                </View>
               </View>
               <TouchableOpacity
                 activeOpacity={0.8}

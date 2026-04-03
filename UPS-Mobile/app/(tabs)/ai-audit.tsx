@@ -129,7 +129,10 @@ export default function AIScreen() {
             </View>
           </GlowCard>
 
-          <TouchableOpacity style={styles.authLink}>
+          <TouchableOpacity 
+            style={styles.authLink}
+            onPress={() => router.push('/settings')}
+          >
             <Text style={[styles.authLinkText, { color: theme.colors.text.tertiary, fontFamily: 'Outfit_700Bold' }]}>{t('ai_audit.buttons.update_auth')}</Text>
           </TouchableOpacity>
         </Animated.View>

@@ -93,13 +93,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="chat"
-        options={{
-          href: null,
-        }}
-      />
-      <Tabs.Screen
-        name="two"
+        name="ai-audit"
         options={{
           title: t('tabs.ai_audit'),
           tabBarIcon: ({ color, focused }) => (
